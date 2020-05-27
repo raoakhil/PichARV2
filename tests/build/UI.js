@@ -91,7 +91,7 @@ function chgtxt(e) {
 	if (e.id == 'buttext') {
 		var str = document.getElementById('buticn').value;
 		cta.innerText = str + ' ' + e.value;
-		
+
 	} else if (e.id == 'buticn') {
 		var str = document.getElementById('buttext').value;
 		cta.innerText = e.value + ' ' + str;
@@ -127,7 +127,7 @@ function phrasechanged(e) {
 	}else{
 		$('.f-text').text(e.value);
 	}
-	
+
 }
 var col;
 function editphr(e) {
@@ -226,20 +226,20 @@ function addbut(e) {
 	linkid= x.id;
 	x.style.height = 'fit-content';
 	x.classList.add('exp2');
-	
-	
+
+
 	x.classList.add('linkbttn');
-	
-	
+
+
 	x.setAttribute('data-toggle', 'modal');
 	x.setAttribute('data-target', '#ctaModal');
 	var d2 = document.getElementById('d2');
 	d2.appendChild(x);
-	
+
 	$("#" + x.id).click(function (event) {
 		event.preventDefault();
 	});
-	
+
 }
 
 function ctaset(e) {
@@ -250,34 +250,34 @@ function ctaset(e) {
 
 
 function linkvisit(){
-	
+
 	window.open(document.getElementById(linkid).href);
-	
+
 }
 
 
 
 function ctaUnpushed(e) {
-	
-	//document.getElementById(e.dataset.idaud.slice(0, e.dataset.idaud.length-3)).remove();	
+
+	//document.getElementById(e.dataset.idaud.slice(0, e.dataset.idaud.length-3)).remove();
 	var play=document.getElementById(e.dataset.idcta);
 	var q=play.style.marginLeft;
 	var p=parseInt(q.substring(0,q.indexOf("p")));
 	var rmvnode=(p-10)/120;
-	
-	
+
+
 	// console.log(u); //total nodes added
 	// console.log(rmvnode); //position of removed node
 	for(var i=rmvnode+1; i<=u; i++)
 	{
-		
+
 		play=play.nextSibling;
 		var l=play.style.marginLeft;
 		var a=parseInt(play.style.marginLeft.substring(0,play.style.marginLeft.indexOf("p")));
 		a=a-120;
 		play.style.marginLeft=a+"px";
-	}	
-	
+	}
+
 	document.getElementById(e.dataset.idcta).remove();
 	u--;
 }
@@ -304,7 +304,7 @@ function delimg(e) {
 
 function editimg(e) {
 	// console.log(e.parentNode.parentNode.childNodes[0].id);
-	
+
 	c = new Croppie(e.parentNode.parentNode.childNodes[0], {
 		viewport: { width: 70, height: 70 },
 		boundary: { width: 125, height: 125 }
@@ -384,8 +384,8 @@ function pushObj(e) {
 				// 		mtl[1].style.display = 'block';
 				// 	}
 				// }
-				
-				
+
+
 				function pushAud(e) {
 					w++;
 					a=(10 + w * 60);
@@ -393,13 +393,13 @@ function pushObj(e) {
 					var node = document.createElement('audio');
 					var id = e.id + 'aud';
 					node.id = id;
-					
+
 					var idAudioLoop = e.id.substr(3);
 					var audioValue = document.getElementById('audioLoop' + idAudioLoop).dataset.loop;
 					if (audioValue === 'true') {
 						node.setAttribute('loop', true);
 					}
-					
+
 					var src = document.createElement('source');
 					src.src = e.dataset.source;
 					node.appendChild(src);
@@ -415,19 +415,19 @@ function pushObj(e) {
 					play.setAttribute('onclick', 'audioset(this)');
 					play.setAttribute('data-toggle', 'modal');
 					play.setAttribute('data-target', '#audioModal');
-					
+
 					play.classList.add('exp2');
 					node.classList.add('exp2');
 					d2.appendChild(play);
 					$('#music .close').click();
 					$('.modal-backdrop').remove();
 				}
-				
+
 				function audioset(e) {
 					document.getElementById('audBtnUnpushed').setAttribute('data-idaud', e.id);
 					document.getElementById('audBtnPlayModal').setAttribute('data-source', e.id.slice(0, e.id.length - 3));
 				}
-				
+
 				function audBtnUnpushed(e) {
 					//document.getElementById(e.dataset.idaud).remove();
 					document.getElementById(e.dataset.idaud.slice(0, e.dataset.idaud.length - 3)).remove();
@@ -435,23 +435,23 @@ function pushObj(e) {
 					var q=play.style.marginLeft;
 					var p=parseInt(q.substring(0,q.indexOf("p")));
 					var rmvnode=(p-10)/60;
-					
+
 					// console.log(w); //total nodes added
 					// console.log(rmvnode); //position of removed node
 					for(var i=rmvnode+1; i<=w; i++)
 					{
-						
+
 						play=play.nextSibling.nextSibling;
 						// console.log(play);
 						var l=play.style.marginLeft;
 						var a=parseInt(play.style.marginLeft.substring(0,play.style.marginLeft.indexOf("p")));
 						a=a-60;
 						play.style.marginLeft=a+"px";
-					}	
-					
+					}
+
 					document.getElementById(e.dataset.idaud).remove();
 					w--;
-					
+
 				}
 
 				function previewAudio(e) {
@@ -465,7 +465,7 @@ function pushObj(e) {
 					playAudio(e);
 					//node.play();
 				}
-				
+
 				function pauseAudio(e) {
 					e.innerHTML = "<i class='fa fa-play'></i>&nbsp;&nbsp;&nbsp;";
 					e.removeAttribute('onclick');
@@ -503,10 +503,10 @@ function toogleLoop(e) {
 }
 var pos=0;
 function pushYT(e) {
-	
+
 	if (cnt<3){
 		//if (pos<=3){
-			cnt++;	
+			cnt++;
 			ytembed = document.getElementById('ytembed');
 			ytembed.src = 'https://www.youtube.com/embed/' + e.dataset.source;
 			var d2 = document.getElementById('d2');
@@ -527,35 +527,35 @@ function pushYT(e) {
 			node.setAttribute('data-toggle', 'modal');
 			node.setAttribute('data-target', '#ytmodal');
 			d2.appendChild(node);
-			
+
 		}
 		else{
 			alert("Limit Reached");
-		}				
-		
-		
+		}
+
+
 	}
-	
+
 	function ytremove(e) {
-		document.getElementById('ytembed').src = '';	
+		document.getElementById('ytembed').src = '';
 	}
-	
+
 	function ytset(e) {
 		ytembed = document.getElementById('ytembed');
 		ytembed.src = 'https://www.youtube.com/embed/' + e.dataset.source;
 		document.getElementById('ytBtnUnpushed').setAttribute('data-idyt', e.id);
 	}
-	
+
 	function ytUnpushedVideo(e) {
-		
+
 		var play=document.getElementById(e.dataset.idyt);
 		var q=play.style.top;
 		var p=parseInt(q.substring(0,q.indexOf("p")));
-		
+
 		var rmvnode=(p-50)/100;
 		// console.log(rmvnode); //position of removed video
 		// console.log(cnt); //total video
-		
+
 		for(var i=rmvnode+1; i<=cnt; i++)
 		{
 			play=play.nextSibling;
@@ -564,12 +564,12 @@ function pushYT(e) {
 			var a=parseInt(play.style.top.substring(0,play.style.top.indexOf("p")));
 			a=a-100;
 			play.style.top=a+"px";
-			
+
 		}
-		
+
 		document.getElementById(e.dataset.idyt).remove();
 		cnt--;
-		
+
 	}
 
 function readURL(input) {
@@ -585,13 +585,13 @@ function readURL(input) {
 				enableResize: false,
 				enableOrientation: false
 			});
-			
+
 			resize.result('blob').then(function (dataImg) {
 				// use ajax to send data to php
 				imgfil = dataImg;
 				uploadImg();
 			});
-			
+
 		};
 		reader.readAsDataURL(input.files[0]);
 	}
@@ -619,7 +619,7 @@ $('.obj-file').change(function () {
 	if($('#3d-type').val() == 'gltf' && $('.obj-file.gltf').val()){
 		uploadObj();
 	}
-	
+
 });
 function uploadImg(event) {
 	let form = document.querySelector('#form');
@@ -633,7 +633,7 @@ function uploadImg(event) {
 		contentType: false,
 		xhr: function () {
 			var xhr = new window.XMLHttpRequest();
-			
+
 			// Upload progress
 			xhr.upload.addEventListener(
 				'progress',
@@ -647,7 +647,7 @@ function uploadImg(event) {
 				},
 				false
 				);
-				
+
 				// Download progress
 				xhr.addEventListener(
 					'progress',
@@ -661,7 +661,7 @@ function uploadImg(event) {
 					},
 					false
 					);
-					
+
 					return xhr;
 				},
 				success(data) {
@@ -690,8 +690,8 @@ function uploadImg(event) {
 				}
 			});
 		}
-		
-		
+
+
 		//for edit name
 		function editNameAsset(e) {
 			let formData = new FormData();
@@ -701,11 +701,11 @@ function uploadImg(event) {
 			var newName = document.getElementById('newname').value;
 			var newTags = document.getElementById('newtags').value;
 			var pid = document.getElementById('elementid').value;
-			
+
 			formData.append('name', newName);
 			formData.append('project_id', pid);
 			formData.append('tags', newTags);
-			
+
 			if (edittype == 'a') {
 				$.ajax({
 					method: 'POST',
@@ -715,7 +715,7 @@ function uploadImg(event) {
 					contentType: false,
 					xhr: function () {
 						var xhr = new window.XMLHttpRequest();
-						
+
 						// Upload progress
 						xhr.upload.addEventListener(
 							'progress',
@@ -729,7 +729,7 @@ function uploadImg(event) {
 							},
 							false
 							);
-							
+
 				// Download progress
 				xhr.addEventListener(
 					'progress',
@@ -743,7 +743,7 @@ function uploadImg(event) {
 					},
 					false
 					);
-					
+
 					return xhr;
 				},
 				success(data) {
@@ -760,7 +760,7 @@ function uploadImg(event) {
 				contentType: false,
 				xhr: function () {
 					var xhr = new window.XMLHttpRequest();
-					
+
 				// Upload progress
 				xhr.upload.addEventListener(
 					'progress',
@@ -774,7 +774,7 @@ function uploadImg(event) {
 					},
 					false
 					);
-					
+
 					// Download progress
 					xhr.addEventListener(
 						'progress',
@@ -788,7 +788,7 @@ function uploadImg(event) {
 						},
 						false
 				);
-				
+
 				return xhr;
 			},
 			success(data) {
@@ -817,7 +817,7 @@ $('#imagebut').click(function(){
 	document.getElementById('my-image').src = '#';
 	document.getElementsByClassName('searchbar')[0].value = '';
 	document.getElementsByClassName('searchbar')[1].value = '';
-	
+
 	document.getElementById('unsplashImgs').innerHTML = '';
 	// $('#modal-show-more').modal('show');
 	var pane = $(this).attr("show-panel");
@@ -829,7 +829,7 @@ $('#imagebut').click(function(){
 		node.setAttribute('crossorigin', 'anonymous');
 		document.getElementById('unsplashImgs').appendChild(node);
 	}
-	
+
 	$.ajax({
 		method: 'post',
 		url: 'https://pitchar.io/api/_fetch-assets.php',
@@ -853,7 +853,7 @@ $('#imagebut').click(function(){
 				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 				<span class="tooltiptext">
 				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-				
+
 				<div class="w-100 float-left">Crop</div>
 				<div data-typ="a" class="w-100 float-left edit_info" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)'>Edit</div>
 				<h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -862,12 +862,12 @@ $('#imagebut').click(function(){
 				</div>
 				</div>
 				<div class="w-100 float-left col-sm-12 p-0">
-				
+
 					  <img onclick="pushImg(this);" class="w-100 pt-4 pb-4 ${show_none}" src="${asset.Projectimage}" id="${imgid}" alt="Chania" style="height: 150px">
 					  </div>
 					<div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
 					</div>`;
-					
+
 					var node = document.createElement('img');
 					node.src = asset.Projectimage;
 					node.id = 'img' + i;
@@ -879,7 +879,7 @@ $('#imagebut').click(function(){
 					div.appendChild(node);
 					var overlay = document.createElement('div');
 					overlay.setAttribute('class', 'options');
-					
+
 					var del = document.createElement('button');
 					del.setAttribute('onclick', 'delimg(this)');
 					del.setAttribute('data-pid', asset.id);
@@ -897,7 +897,7 @@ $('#imagebut').click(function(){
 					overlay.appendChild(edit);
 					div.appendChild(node);
 					div.appendChild(overlay);
-					
+
 					if (asset.Assetstype == 'image' && asset.Projectimage != ''){
 					// document.getElementById('galleryimgs').appendChild(div);
 					$(elem).appendTo('#galleryimgs');
@@ -908,10 +908,10 @@ $('#imagebut').click(function(){
 		});
 		k = 1;
 	});
-	
-	
-	
-	
+
+
+
+
 	var l = 15;
 	var m = 20;
 	function fetchnew() { }
@@ -935,7 +935,7 @@ $('#imagebut').click(function(){
 				$('#galleryimgs').hide();
 				document.getElementById('galleryimgsrch').innerHTML = '';
 				var assets = result.assets;
-				
+
 				for (var i = 0; i < assets.length; i++) {
 					asset = assets[i];
 					var imgid = 'img'+i;
@@ -949,7 +949,7 @@ $('#imagebut').click(function(){
 				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 				<span class="tooltiptext">
 				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-				
+
 				<div class="w-100 float-left">Crop</div>
 				<div data-typ="a" class="w-100 float-left edit_info" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)'>Edit</div>
 				<h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -958,7 +958,7 @@ $('#imagebut').click(function(){
 				</div>
 				</div>
 				<div class="w-100 float-left col-sm-12 p-0">
-				
+
 					  <img onclick="pushImg(this);" class="w-100 pt-4 pb-4 ${show_none}" src="${asset.Projectimage}" id="${imgid}" alt="Chania" style="height: 150px">
 					  </div>
 					<div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
@@ -966,7 +966,7 @@ $('#imagebut').click(function(){
 					if (asset.Assetstype == 'image'){
 						$(elem).appendTo('#galleryimgsrch');
 					}
-					
+
 			}
 		}
 	});
@@ -977,7 +977,7 @@ $('body').on('keyup','.searchYT', function (event) {
 	event.preventDefault();
 	var q = $(this).val();
 	if (event.keyCode === 13) {
-		
+
 		var request = gapi.client.youtube.search.list({
 			q: q,
 			maxResults: 12,
@@ -986,17 +986,17 @@ $('body').on('keyup','.searchYT', function (event) {
 			videoEmbeddable: 'true',
 			videoSyndicated: 'true'
 		});
-		
+
 		request.execute(function (response) {
 			console.log(response);
 			document.getElementById('ytImgs').innerHTML = '';
 			var assets = response.result.items;
-			
-			
+
+
 			for (var i = 0; i < assets.length; i++) {
 				asset = assets[i];
 				var node = document.createElement('img');
-				
+
 				node.src = asset.snippet.thumbnails.high.url;
 				node.width = 125;
 				node.id = 'ytimg' + i;
@@ -1020,23 +1020,23 @@ let asset = document.getElementById('asset');
 $('.3d_assets').click(function(){
 	var panel = $(this).attr('panel-name');
 	selectItem('vertical-bars', 'active', panel);
-	selectItem('left-fixed-bar', 'selected', this);			 
+	selectItem('left-fixed-bar', 'selected', this);
 	var t = $(this);
 	document.getElementById('galleryobjs').innerHTML = '';
 	document.getElementsByClassName('searchbar')[2].value = '';
 	document.getElementsByClassName('searchbar')[3].value = '';
-	
+
 	var scene = new THREE.Scene();
 	var container = new THREE.Group();
 	scene.add(container);
-	
+
 	const API_KEY = 'AIzaSyANZMpdihFsQgcJkFIEjasfiLgX6Nyb8SE';
 	//var searchGooglePoly = document.getElementsByClassName('searchGooglePoly');
 	//searchGooglePoly[0].addEventListener('keyup', function (event) {
 		//event.preventDefault();
 		//if (event.keyCode === 13) {
 			//alert("searchGooglePoly");
-			
+
 			var settings = {
 				async: true,
 				crossDomain: true,
@@ -1047,7 +1047,7 @@ $('.3d_assets').click(function(){
 			$.ajax(settings).done(function (response) {
 				//console.log(response);
 				document.getElementById('googlePolyImgs').innerHTML = '';
-				
+
 				var modResults = response.assets;
 				console.log(modResults, 'test')
 			//console.log(modResults);
@@ -1076,7 +1076,7 @@ $('.3d_assets').click(function(){
 				node.height = 125;
 				node.id = 'img' + i;
 				node.style = 'margin:4px;';
-				
+
 				var format = modResults[i].formats.find((format) => {
 					return format.formatType === 'OBJ';
 				});
@@ -1085,15 +1085,15 @@ $('.3d_assets').click(function(){
 					return resource.url.endsWith('mtl');
 				});
 				var path = obj.url.slice(0, obj.url.indexOf(obj.relativePath));
-				
+
 				node.setAttribute('data-obj', obj.url);
 				node.setAttribute('data-mtl', mtl.url);
-				
+
 				//node.setAttribute("onclick","pushAud(this);");
 				if (format !== undefined) {
 					node.setAttribute('onclick', 'pushPolyModel(this);');
 				}
-				
+
 				node.setAttribute('class', 'image');
 				node.setAttribute('data-source', modResults[i].name);
 				var div = document.createElement('div');
@@ -1108,7 +1108,7 @@ $('.3d_assets').click(function(){
 				div.appendChild(node);
 				div.appendChild(overlay);
 				document.getElementById('googlePolyImgs').appendChild(div);
-				
+
 				div.appendChild(node);
 				div.appendChild(overlay);
 				var src = modResults[i].thumbnail.url;
@@ -1118,13 +1118,13 @@ $('.3d_assets').click(function(){
 				if (format !== undefined) {
 					$(elem).appendTo('.googlepolyImgs');
 				}
-				
+
 			}
 		});
 		//}
 		//});
-		
-		
+
+
 		$.ajax({
 			method: 'post',
 			url: 'https://pitchar.io/api/_fetch-assets.php',
@@ -1177,7 +1177,7 @@ $('.3d_assets').click(function(){
 							overlay.appendChild(edit);
 							div.appendChild(node);
 							div.appendChild(overlay);
-							
+
 							var imgid = 'img' + i;
 							var th_nail = asset.objthumbnail?asset.objthumbnail:'https://fsb.zobj.net/crop.php?r=qEpBmAgJQlOtYSK5lOz77XR83AiINmYurl-s0CZwBULw_FGcrpnc5QbuIqlr1lb5ZiuFD-2EpgERJdGYdjngJAESNHLBXa_L3TAH10rcQW-xXSuvqxbQuRyaFwjzVjW3G7HNq0zV71ptdlKF';
 							var elem = `
@@ -1188,7 +1188,7 @@ $('.3d_assets').click(function(){
 							<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 							<span class="tooltiptext">
 							<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-							
+
 							<div class="w-100 float-left">Crop</div>
 							<div class="w-100 float-left edit_info" data-typ="a" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 							<h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -1257,7 +1257,7 @@ $('body').on('keyup','.searchObj', function (event) {
 					<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 					<span class="tooltiptext">
 					<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-					
+
 					<div class="w-100 float-left">Crop</div>
 					<div class="w-100 float-left edit_info" data-typ="a" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 					<h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -1274,7 +1274,7 @@ $('body').on('keyup','.searchObj', function (event) {
 					if (asset.Assetstype == 'zip' || asset.Assetstype == 'fbx' || asset.Assetstype == 'gltf' || asset.Assetstype == 'obj'){
 						$(elem).appendTo('#galleryimgsrch');
 					}
-						
+
 				}
 			}
 		});
@@ -1295,7 +1295,7 @@ function delobj(e) {
 function uploadObj(event) {
 	let form = document.querySelector('#form2');
 	let formData = new FormData(form);
-	
+
 	$.ajax({
 		method: 'POST',
 		url: 'https://pitchar.io/api/_create-assets.php',
@@ -1304,7 +1304,7 @@ function uploadObj(event) {
 		contentType: false,
 		xhr: function () {
 			var xhr = new window.XMLHttpRequest();
-			
+
 			// Upload progress
 			xhr.upload.addEventListener(
 				'progress',
@@ -1318,7 +1318,7 @@ function uploadObj(event) {
 				},
 				false
 				);
-				
+
 				// Download progress
 				xhr.addEventListener(
 					'progress',
@@ -1332,7 +1332,7 @@ function uploadObj(event) {
 					},
 					false
 					);
-					
+
 					return xhr;
 				},
 				success(data) {
@@ -1372,7 +1372,7 @@ $('.audio_assets').click(function(){
 	var panel = $(this).attr('panel-name');
 	selectItem('vertical-bars', 'active', panel);
 	selectItem('left-fixed-bar', 'selected', this);
-	
+
 	document.getElementById('galleryauds').innerHTML = '';
 	document.getElementsByClassName("searchbar")[5].value="";
 	document.getElementsByClassName("searchbar")[6].value="";
@@ -1381,7 +1381,7 @@ $('.audio_assets').click(function(){
 		//	event.preventDefault();
 		//	if (event.keyCode === 13) {
 			//alert("searchFS");
-			
+
 			var settings = {
 				async: true,
 				crossDomain: true,
@@ -1391,13 +1391,13 @@ $('.audio_assets').click(function(){
 				'&fields=name,previews&token=EGxQRoYUVQsqYXQ5gbbk9oSp5zU9MICs4KEa9404',
 				method: 'GET'
 			};
-			
+
 			$.ajax(settings).done(function (response) {
 				//console.log(response);
 				document.getElementById('fsImgs').innerHTML = '';
-				
+
 				var audResults = response.results;
-				
+
 				//console.log(audResults);
 				$('.FS_audio').html('');
 				$('.free_sound').html('');
@@ -1432,7 +1432,7 @@ $('.audio_assets').click(function(){
 					//if(media.type=='audio')
 					//document.getElementById("galleryauds").appendChild(div);
 					//perm=i;
-					
+
 					var audioPrev = document.createElement('button');
 					audioPrev.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
 					audioPrev.id = audResults[i].name;
@@ -1441,7 +1441,7 @@ $('.audio_assets').click(function(){
 					overlay.appendChild(audioPrev);
 					div.appendChild(node);
 					div.appendChild(overlay);
-					
+
 					var audioLoop = document.createElement('select');
 					audioLoop.id = 'audioLoop' + i;
 					var opt1 = document.createElement('option');
@@ -1455,10 +1455,10 @@ $('.audio_assets').click(function(){
 				audioLoop.setAttribute('data-loop', false);
 				audioLoop.setAttribute('onclick', 'toogleLoop(this)');
 				overlay.appendChild(audioLoop);
-				
+
 				div.appendChild(node);
 				div.appendChild(overlay);
-				
+
 			}
 		});
 		//}
@@ -1498,7 +1498,7 @@ $('.audio_assets').click(function(){
 				overlay.appendChild(del);
 				div.appendChild(node);
 				div.appendChild(overlay);
-				
+
 				var edit = document.createElement('button');
 				edit.setAttribute('onclick', 'editAssetId(this)');
 				edit.setAttribute('data-toggle', "modal");
@@ -1515,7 +1515,7 @@ $('.audio_assets').click(function(){
 				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 				<span class="tooltiptext">
 				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-				
+
 				<div class="w-100 float-left">Crop</div>
 				<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 				<h5 onclick='delaud(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -1537,7 +1537,7 @@ $('.audio_assets').click(function(){
 					count_aud++;
 				}
 				perm = i;
-				
+
 				var audioPrev = document.createElement('button');
 				audioPrev.setAttribute('data-source', media.audio);
 				audioPrev.setAttribute('onclick', 'previewAudio(this);');
@@ -1545,7 +1545,7 @@ $('.audio_assets').click(function(){
 				overlay.appendChild(audioPrev);
 				div.appendChild(node);
 				div.appendChild(overlay);
-				
+
 				var audioLoop = document.createElement('select');
 				audioLoop.id = 'audioLoop' + i;
 				var opt1 = document.createElement('option');
@@ -1591,7 +1591,7 @@ $('body').on('keyup','.searchAud', function (event) {
 			success(result) {
 				$('#galleryimgs').hide();
 				document.getElementById('galleryimgsrch').innerHTML = '';
-				
+
 				var medias = result.media;
 				for (var i = 0; i < medias.length; i++) {
 					media = medias[i];
@@ -1603,7 +1603,7 @@ $('body').on('keyup','.searchAud', function (event) {
 					<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
 					<span class="tooltiptext">
 					<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-					
+
 					<div class="w-100 float-left">Crop</div>
 					<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 					<h5 onclick='delaud(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
@@ -1653,7 +1653,7 @@ $('body').on('keyup','.searchAud', function (event) {
 
 				if (media.type.toLowerCase().includes("audio") && !media.type.toLowerCase().includes("2D"||'360')) {
 					document.getElementById('galleryauds').appendChild(div);
-					
+
 				}
 				perm = i;
 
@@ -2003,7 +2003,7 @@ $('.video_assets').click(function(){
 		},
 		dataType: 'json',
 		success(result) {
-			
+
 			var medias = result.media;
 			if(medias.length>0){
 			$('.video_gallery').html('');
@@ -2062,7 +2062,7 @@ $('.video_assets').click(function(){
 					<div class="w-100 float-left col-sm-12 p-0">
 					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
 					</div>
-					
+
 				  </div>
 					`
 				if ((media.type == '2D' || media.type == '360') && media.video){
@@ -2074,7 +2074,7 @@ $('.video_assets').click(function(){
 						$(ele).appendTo('.video_gallery');
 						count_vid++;
 					}
-					
+
 				}
 				perm = i;
 			}
@@ -2128,7 +2128,7 @@ $('body').on('keyup','.searchVid', function (event) {
 					<div class="w-100 float-left col-sm-12 p-0">
 					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
 					</div>
-					
+
 				  </div>
 					`
 					if ((media.type == '2D' || media.type == '360') && media.video){
@@ -2171,7 +2171,7 @@ $('body').on('keyup','.searchGooglePoly', function (event) {
 	if(que!=''){
 	if (event.keyCode === 13) {
 		//alert("searchGooglePoly");
-		
+
 		var settings = {
 			async: true,
 			crossDomain: true,
@@ -2227,7 +2227,7 @@ $('body').on('keyup','.searchGooglePoly', function (event) {
 				div.appendChild(node);
 				div.appendChild(overlay);
 				document.getElementById('googlePolyImgs').appendChild(div);
-				
+
 				$(div).appendTo('.googlepoly_srch');
 				div.appendChild(node);
 				div.appendChild(overlay);
@@ -2326,12 +2326,12 @@ document.getElementById('choosemarkerbut').addEventListener('click', function (e
 				<div class="overlay">
 						<div class="icons float-right mt-3 mr-2">
 						  <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-						
+
 						  </i>
 						</div>
 					  </div>
 				<div class="w-100 float-left col-sm-12 p-0">
-				  
+
 				  <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="${marker.linkmarker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" style="height: 150px">
 				</div>
 				<div class="mt-1 float-left w-100" id="name_"><small></small></div>
@@ -2366,17 +2366,16 @@ $(document).ready(function(){
 			for (var i = 0; i < assets.length; i++) {
 				var asset = assets[i];
 				var src = asset.Projectimage;
-				
+
 				if (asset.Assetstype == 'image' && asset.Projectimage != ''){
 					if(count_ast < 6){
 						var imag = `<img onclick="pushImg(this);" src="${src}" alt="">`;
-						$(imag).appendTo('.galleryimgs');	
+						$(imag).appendTo('.galleryimgs');
 					}
 					count_ast++;
 				}
-				
+
 			}
 		}
 	});
 });
-
