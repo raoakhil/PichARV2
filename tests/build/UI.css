@@ -828,6 +828,16 @@ opacity: 1;
   left: 15%;
   right: 15%;
 }
+/*.modal-header{
+  height: 15%;
+}
+.modal-body{
+  height: 80%;
+  overflow-y: auto;
+}
+.modal-footer{
+  height: 10%;
+}*/
 .modal-custom .modal-dialog.modal-lg {
   position: absolute;
   top: 0px;
@@ -837,14 +847,13 @@ opacity: 1;
   max-width: 95%;
   margin: 5px 30px;
 }
-.modal-content{
-height: 100%;
-}
+
 .modal-content{
 border: 0;
 }
 .left-panel{
 background: #f4fafe;
+
 padding: 30px;
 color: #32536a!important;
 font-size: 12px;
@@ -854,15 +863,19 @@ height: 100%;
 }
 .left-panel .btn-upload-media{
 margin-bottom: 15px;
+
 }
 .left-panel .left-panel-option{
 cursor: pointer;
+
 padding: 10px 5px;
 }
 .left-panel .left-panel-option:hover, .left-panel .left-panel-option.selected{
   background: #d5edfd;
 }
 .right-panel {
+  background: red;
+
 display: none;
 overflow: hidden!important;
 }

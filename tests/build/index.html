@@ -108,41 +108,37 @@
 </head>
 
 <body>
-		<section id="header">
-			<nav class="navbar navbar-expand-md navbar-default fixed-top">
-				<a href="#" class="navbar-brand p-0">
-				  <h3 style="margin: 0;font-size: 30px;">PitchAR</h3>
-				</a>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<div class="navbar-nav">
-						<a href="#" class="nav-item nav-link active m-1">Page:
-						  </a>
-					  <input class="form-control" placeholder="Enter project name" type="text" name="product" id="project-title" />
-					  <!-- <datalist id="productName">
-						  <option value="1">Project 1</option>
-						  <option value="2">Project 2</option>
-						  <option value="3">Project 3</option>
-					  </datalist> -->
-					</div>
-					<div class="navbar-nav ml-auto">
-						<a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
-							<i class="fa fa-undo"></i><br>
-							redo
-						</a>
-						<a href="#"  class="nav-item nav-link redo-undo text-center pl-0 mt-2 mr-4" id="undobtn">
-							<i class="fa fa-repeat"></i><br>
-							undo
-						</a>
-						
-						<a id="authg" class="nav-item nav-link button-bordered">Drive</a>
-						<a href="#" class="nav-link button-solid btn-publish" data-toggle="modal" data-target="#modal-publish">Share</a>
-					</div>
+	<section id="header">
+		<nav class="navbar navbar-expand-md navbar-default fixed-top">
+			<a href="#" class="navbar-brand p-0">
+				<h3 style="margin: 0;font-size: 30px;">PitchAR</h3>
+			</a>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<div class="navbar-nav">
+					<a href="#" class="nav-item nav-link active m-1">Page:</a>
+					<input class="form-control" placeholder="Enter project name" type="text" name="product" id="project-title" />
+					<!-- <datalist id="productName">
+						<option value="1">Project 1</option>
+						<option value="2">Project 2</option>
+						<option value="3">Project 3</option>
+					</datalist> -->
 				</div>
-			</nav>
-
-			  </section>
+				<div class="navbar-nav ml-auto">
+					<a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
+						<i class="fa fa-undo"></i><br>
+							redo
+					</a>
+					<a href="#"  class="nav-item nav-link redo-undo text-center pl-0 mt-2 mr-4" id="undobtn">
+						<i class="fa fa-repeat"></i><br>
+							undo
+					</a>
+					<a id="authg" class="nav-item nav-link button-bordered">Drive</a>
+					<a href="#" class="nav-link button-solid btn-publish" data-toggle="modal" data-target="#modal-publish">Share</a>
+				</div>
+			</div>
+		</nav>
+	</section>
 	<a-scene id='perswin' vr-mode-ui="enabled: false">
-
 		<a-assets>
 			<img src="honeycomb.jpg" crossorigin="anonymous" id="wireframe">
 			<img src="marker/hiro.png" crossorigin="anonymous" id="logo">
@@ -207,12 +203,12 @@
 	<div id="result"></div>
 	<!-- modals -->
 	<div class="modal fade modal-custom" id="modal-publish" aria-modal="true">
-			<div class="modal-dialog modal-lg">
-			  <div class="modal-content">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header bg-blue text-white text-center">
-				  <h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
-				  <div class="btn-close m-0" data-dismiss="modal">×</div>
+					<h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
+					<div class="btn-close m-0" data-dismiss="modal">×</div>
 				</div>
 	  
 				<!-- Modal body -->
@@ -222,22 +218,21 @@
 							<img src="marker/hiro.png">
 					  	</div>
 					  	<!-- <form id="form0" enctype="multipart/form-data" method="post">
-						<input id='auth' name="authtoken" type="hidden" value="">
-						<label>Name :</label>
-						<input id="" name="name" type="text">
-						<br>
-						<label style='position: relative;top: -15px;'>Description :</label>&Tab;
-						<textarea id="" name="description" type="textarea"></textarea>
-						<input type="hidden" name="submit" value="1">
-						<br>
-						<label>Tags :</label>&nbsp;
-						<input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" />
-						<input type="hidden" name='experience' id='exptxt'>
-					</form>
-					<button type="button" onclick="sharelnk(this)" style='width:200px;' class="uploadbut">Get sharable link</button>
-					<input type='text' id='shrlnk' placeholder='Sharing Link'>
-					<button type="button" onclick="gotolink()" style='width:10px;'><i class="fa fa-external-link"></i> -->
-					<!-- </button> -->
+							<input id='auth' name="authtoken" type="hidden" value="">
+							<label>Name :</label>
+							<input id="" name="name" type="text">
+							<br>
+							<label style='position: relative;top: -15px;'>Description :</label>&Tab;
+							<textarea id="" name="description" type="textarea"></textarea>
+							<input type="hidden" name="submit" value="1">
+							<br>
+							<label>Tags :</label>&nbsp;
+							<input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" />
+							<input type="hidden" name='experience' id='exptxt'>
+						</form>
+						<button type="button" onclick="sharelnk(this)" style='width:200px;' class="uploadbut">Get sharable link</button>
+						<input type='text' id='shrlnk' placeholder='Sharing Link'>
+						<button type="button" onclick="gotolink()" style='width:10px;'><i class="fa fa-external-link"></i></button> -->
 						<form id="form0" enctype="multipart/form-data" method="post">
 					  		<div class="col-sm-7 float-right form-container pl-5 pr-5">
 								<div class="form-ele">
@@ -302,17 +297,16 @@
 	</div>
 	<div class="modal fade modal-custom" id="modal-show-more">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content container">
+			<div class="modal-content">
 				<!-- Modal Header -->
-				<div class="modal-header row bg-blue text-white">
+				<div class="modal-header bg-blue text-white">
 					<h5 class="modal-title">Choose Media Files</h5>
-					<div class="btn-close m-0" data-dismiss="modal">&times;
-					</div>
+					<div class="btn-close m-0" data-dismiss="modal">&times;</div>
 				</div>
 				<!-- Modal body -->
-				<div class="modal-body row p-0">
+				<div class="modal-body p-0">
 					<div class="upload-media-panel col-sm-12 p-0 h-100 float-left">
-						<div class="col-sm-2 left-panel h-100 float-left">
+						<div class="col-sm-2 left-panel float-left">
 							<button class="btn btn-primary btn-upload-media btn-round-blue w-100">+ Upload Media</button>
 							<div class="left-panel-menu">
 								<h6><small><b>MANAGE</b></small></h6>
@@ -325,8 +319,12 @@
 							<div class="left-panel-menu mt-3">
 								<h6><small><b>EXPLORE</b></small></h6>
 								<div class="left-panel-options">
-									<!-- <div class="left-panel-option" show_class=".wix">Media From Wix</div> -->
-									<!-- <div class="left-panel-option" show_class=".shutterstock">Shutterstock</div> -->
+									<!-- <div class="left-panel-option" show_class=".wix">
+                        				  Media From Wix
+                        			</div> -->
+									<!-- <div class="left-panel-option" show_class=".shutterstock">
+                         				 Shutterstock
+                        			</div> -->
                   					<div class="left-panel-option unsplash_media" show_class=".unsplash">Unsplash</div>
                   					<div class="left-panel-option googlepoly_media" show_class=".googlepoly">Google Poly</div>
                   					<div class="left-panel-option youtube_media" show_class=".youtube_panel">Youtube</div>
@@ -338,7 +336,8 @@
 							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
 								<div class="panel-header float-left w-100">
 									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+										<div class="form-group has-search m-0"> 
+											<span class="fa fa-search form-control-feedback"></span>
 											<input type="text" class="form-control searchImg search_input" placeholder="Search Image">
 											<input type="text" class="form-control searchAud search_input" placeholder="Search Audio">
 											<input type="text" class="form-control searchVid search_input" placeholder="Search Video">
@@ -358,7 +357,7 @@
 									<div class="col-sm-5 mt-2 mb-2 float-left">
 										<div class="menu-text">Site File</div>
 									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4">
+									<div class="float-right filter-menu  mt-2 mb-2 pr-4"> 
 										<span>Create new folder <i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
 									</div>
 								</div>
@@ -367,8 +366,7 @@
 										<div id="galleryimgs" class="col" class="style-scroll"></div>
 										<div id="galleryimgsrch" class="col" class="style-scroll"></div>
 										<div class="col text-left border-blue-l h-100 media-info">
-											<div class="close-media-info text-white"> 
-												<b>&times</b> 
+											<div class="close-media-info text-white"> <b>&times</b>
 											</div>
 											<!-- <img src="images/4220.jpg" alt="" width="260" height="100"> -->
 											<div class="col-sm-12 float-left">
@@ -377,134 +375,125 @@
                           							<input type='hidden' id='elementid' value=''></small>
 												</div>
 											</div>
-											<div class="col-sm-12 pt-2 float-left"> 
-												<small><strong>Action</strong></small>
-												<div class="border-b text-blue pb-2 ">
-													<i class="fa fa-crop" aria-hidden="true"></i>  
-													<small>Crop</small>
+											<div class="col-sm-12 pt-2 float-left"> <small><strong>Action</strong></small>
+												<div class="border-b text-blue pb-2 "><i class="fa fa-crop" aria-hidden="true"></i>  <small>Crop</small>
 												</div>
 											</div>
 											<div class="col-sm-12 float-left">
-												<div class="w-100 float-left  pt-2 pb-2"> 
+												<div class="w-100 float-left  pt-2 pb-2">
                           							<span class="float-left"><small><strong>Tags</strong></small></span>
                           							<span class="float-right btn-edit-tags"><small>Edit Tags</small></span>
 												</div>
                       						</div>
                       						<div class="col-sm-12 float-left edit-tags d-none">
-                          						<div class="w-100 border-b float-left  pt-2 pb-2">
-                            						<input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
-                          						</div>
-                      						</div>
-                      						<div class="col-sm-12 float-left saved-tags">
-                          						<div class="w-100 border-b float-left  pt-2 pb-2">
-						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
-						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
-						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
-						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
-						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
-						                        </div>
-                        					</div>
-											<div class="col-sm-12 pt-2 float-left">
-												<div class="w-100"> <span><small><strong>File Info</strong></small></span></div>
-												<div class="col-sm-12 float-left p-0">
-													<div class="w-100 float-left mb-1"> 
-														<span class="float-left"><small><strong>Type</strong></small></span>
-														<span class="float-right"><small>png</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> 
-														<span class="float-left"><small><strong>Size</strong></small></span>
-														<span class="float-right"><small>100KB</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> 
-														<span class="float-left"><small><strong>Resolution</strong></small></span>
-														<span class="float-right"><small>1000x560</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> 
-														<span class="float-left"><small><strong>Uploaded On</strong></small></span>
-														<span class="float-right"><small>22-06-2019</small></span>
-													</div>
+                          					<div class="w-100 border-b float-left  pt-2 pb-2">
+                            					<input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
+
+                          					</div>
+                      					</div>
+                      					<div class="col-sm-12 float-left saved-tags">
+                          					<div class="w-100 border-b float-left  pt-2 pb-2">
+                            					<span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
+                            					<span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
+                            					<span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
+                            					<span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
+                            					<span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
+                            				</div>
+                        				</div>
+										<div class="col-sm-12 pt-2 float-left">
+											<div class="w-100"> <span><small><strong>File Info</strong></small></span>
+											</div>
+											<div class="col-sm-12 float-left p-0">
+												<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Type</strong></small></span>
+													<span class="float-right"><small>png</small></span>
+												</div>
+												<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Size</strong></small></span>
+													<span class="float-right"><small>100KB</small></span>
+												</div>
+												<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Resolution</strong></small></span>
+													<span class="float-right"><small>1000x560</small></span>
+												</div>
+												<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Uploaded On</strong></small></span>
+													<span class="float-right"><small>22-06-2019</small></span>
 												</div>
 											</div>
 										</div>
 									</div>
-               					</div>
-                				<div class="left-panel-footer w-100">
-									<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
 								</div>
+                			</div>
+                			<div class="left-panel-footer w-100">
+								<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
 							</div>
 						</div>
-						<div class="favourites col-sm-10 right-panel float-left p-0 h-100">
-							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-								<div class="panel-header float-left w-100">
-									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> 
-											<span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control" placeholder="Search">
-										</div>
-									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> 
-										<span class="my_favorites">
-                        					<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-											<span> | </span>
-										</span> 
-										<span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
-										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
+					</div>
+					<div class="favourites col-sm-10 right-panel float-left p-0 h-100">
+						<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+							<div class="panel-header float-left w-100">
+								<div class="col-sm-5 mt-2 mb-2 float-left">
+									<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+										<input type="text" class="form-control" placeholder="Search">
 									</div>
 								</div>
-								<div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
-									<div class="col-container h-100">
-										<div class="col">
-											<div class="col-sm-2 float-left img-panel">
-												<div class="overlay">
-													<div class="w-100 float-left col-sm-12 p-0">
-														<div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-															<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-                                    <span class="tooltiptext">
-                                      <h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
-                                      <p class="w-100 float-left">Rename</p>
-                                      <p class="w-100 float-left">Crop & edit</p>
-                                      <p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
-                                      <p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
-
-                                      <h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
-                                    </span>
-                                </i>
-														</div>
-													</div>
-													<img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
-												</div>
-												<p class="mt-1 float-left w-100"><small>Image name</small>
-												</p>
-											</div>
-											<div class="col-sm-2 float-left img-panel">
+								<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> 
+									<span class="my_favorites">
+                    			    	<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+										<span> | </span>
+									</span> 
+									<span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+									<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
+								</div>
+							</div>
+							<div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
+								<div class="col-container h-100">
+									<div class="col">
+										<div class="col-sm-2 float-left img-panel">
+											<div class="overlay">
 												<div class="w-100 float-left col-sm-12 p-0">
-													<div class="overlay">
-														<div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-															<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-                                    <span class="tooltiptext">
-                                      <h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
+													<div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+														<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+	                                    					<span class="tooltiptext">
+	                                      						<h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
+	                                      						<p class="w-100 float-left">Rename</p>
+	                                      						<p class="w-100 float-left">Crop & edit</p>
+	                                      						<p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
+	                                      						<p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
 
-                                      <p class="w-100 float-left">Rename</p>
-                                      <p class="w-100 float-left">Crop & edit</p>
-                                      <p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
-                                      <p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
-
-                                      <h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
-                                    </span>
-                                </i>
-														</div>
+	                                      						<h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
+	                                    					</span>
+                                						</i>
 													</div>
-													<img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
 												</div>
-												<p class="mt-1 float-left w-100"><small>Image name</small>
-												</p>
+													<img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
 											</div>
+											<p class="mt-1 float-left w-100"><small>Image name</small>	</p>
+										</div>
+										<div class="col-sm-2 float-left img-panel">
+											<div class="w-100 float-left col-sm-12 p-0">
+												<div class="overlay">
+													<div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+														<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+                                    						<span class="tooltiptext">
+                                      							<h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
+
+                                      							<p class="w-100 float-left">Rename</p>
+                                      							<p class="w-100 float-left">Crop & edit</p>
+                                      							<p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
+                                      							<p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
+
+                                      							<h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
+                                    						</span>
+                               							 </i>
+													</div>
+												</div>
+												<img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
+											</div>
+											<p class="mt-1 float-left w-100"><small>Image name</small>		</p>
 										</div>
 									</div>
-									
 								</div>
 							</div>
 						</div>
+					</div>
 						<div class="markers col-sm-10 right-panel float-left p-0 h-100">
 							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
 								<div class="panel-header float-left w-100">
@@ -521,13 +510,13 @@
 									</div>
 								</div>
 								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
-									
+
 									<div id="gallerymarkers" class="row m-0 mt-4 float-left w-100 style-scroll albums-media" style="height: 420px"></div>
 									<div class="left-panel-footer w-100">
 											<button id='buttonDownloadFullImage' class='btn btn-addToPage float-left pull-left'>Download Image</button>
 											<div id="buttonDownloadEncoded" class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes</div>
 										<div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go MarkerLess</div>
-										
+
 										<label id='buttonUpload' for='fileinput' class="btn btn-addToPage float-right mt-4 mr-4">
 												<input type='file' id='fileinput' style='display: none' accept='image/*'>Upload New Marker</label>
 									</div>
@@ -539,13 +528,13 @@
 								<div class="panel-header float-left w-100">
 									<div class="col-sm-5 mt-2 mb-2 float-left">
 										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control unsplash_srch_new" placeholder="Search images from Unsplash">
+											<input type="text" class="form-control unsplash_srch_new" placeholder="Search images from unsplash">
 										</div>
 									</div>
 								</div>
 								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
 									<h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-									<p class="float-left w-100">Choose from 1000s of stunning images</p>
+									<p class="float-left w-100">Choose from 1000s of stunnig images</p>
 									<div class="float-left w-100"> <span>Filter By:</span>
 										<button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
 										</button>
@@ -566,13 +555,13 @@
                   <div class="panel-header float-left w-100">
                     <div class="col-sm-5 mt-2 mb-2 float-left">
                       <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects from Google Poly">
+                        <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects fro googlepoly">
                       </div>
                     </div>
                   </div>
                   <div class="panel-content pl-4 pr-4 float-left w-100 explore">
                     <h2 class="mt-4 mb-1 float-left w-100">Media From Google Poly</h2>
-                    <p class="float-left w-100">Choose from 1000s of 3D objects</p>
+                    <p class="float-left w-100">Choose from 1000s of stunnig 3D Objects</p>
                     <div class="float-left w-100"> <span>Filter By:</span>
                       <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                       </button>
@@ -599,7 +588,7 @@
                       </div>
                     </div>
                     <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                      <h2 class="mt-4 mb-1 float-left w-100">Media From Free Sounds</h2>
+                      <h2 class="mt-4 mb-1 float-left w-100">Media From Sounds</h2>
                       <p class="float-left w-100">Choose from 1000s of sounds</p>
                       <div class="float-left w-100"> <span>Filter By:</span>
                         <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -611,7 +600,7 @@
                       </div>
 					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound"></div>
 					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound_srch">
-						  
+
 					  </div>
                       <div class="left-panel-footer w-100">
                         <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
@@ -624,13 +613,13 @@
                       <div class="panel-header float-left w-100">
                         <div class="col-sm-5 mt-2 mb-2 float-left">
                           <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control searchYT" placeholder="Search videos from Youtube">
+                            <input type="text" class="form-control searchYT" placeholder="Search videos from youtube">
                           </div>
                         </div>
                       </div>
                       <div class="panel-content pl-4 pr-4 float-left w-100 explore">
                         <h2 class="mt-4 mb-1 float-left w-100">Media From Youtube</h2>
-                        <p class="float-left w-100">Choose from 1000s of videos</p>
+                        <p class="float-left w-100">Choose from 1000s of stunnig videos</p>
                         <div class="float-left w-100"> <span>Filter By:</span>
                           <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                           </button>
@@ -2141,14 +2130,13 @@
 	</script>
 	<script>
 		$(document).ready(function(){
-			
+				// Show the project name as title when share button is clicked
 				$('.btn-publish').on('click',function(){
 					var proname=document.getElementById("project-title").value;
 					$('.modal-content').ready(function(){
 						document.getElementById('title').value=proname;
 					});
 				});
-
 
 		        // main menu, fixed left baar
 		       $('.left-fixed-bar').on('click','.menu-left', function() {
