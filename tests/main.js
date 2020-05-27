@@ -34,9 +34,8 @@ unsplash.photos.listPhotos(1, 10, "latest")
   .then(toJson)
   .then(json => {
     unpic = json;
-
   });
-window.onload = function () { 
+window.onload = function () {
   $('body').on("keyup",'.unsplash_srch_new' ,function (event) {
     event.preventDefault();
     document.getElementById("unsplashImgs").innerHTML = "";
