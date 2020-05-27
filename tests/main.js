@@ -34,6 +34,15 @@ unsplash.photos.listPhotos(1, 10, "latest")
     .then(toJson)
     .then(json => {
         unpic = json;
+        document.getElementById("unsplashImgs").innerHTML = "";
+        for (var i = 0; i < json.length; i++) {
+            var node = document.createElement("img");
+            node.src = json[i].urls.regular;
+            node.style = 'max-width:50%';
+            node.setAttribute("onclick", "pushImg(this);");
+            node.setAttribute("crossorigin", "anonymous");
+            document.getElementById("unsplashImgs").append(node);
+        }
     });
 window.onload = function() {
     $('body').on("keyup", '.unsplash_srch_new', function(event) {
@@ -47,9 +56,9 @@ window.onload = function() {
                     for (var i = 0; i < json.results.length; i++) {
                         var node = document.createElement("img");
                         node.src = json.results[i].urls.regular;
-                        node.width = 125;
-                        node.height = 125;
-                        node.style = 'margin:4px;';
+                        // node.width = 125;
+                        // node.height = 125;
+                        node.style = 'margin:4px;max-width:50%;';
                         node.setAttribute("onclick", "pushImg(this);");
                         node.setAttribute("crossorigin", "anonymous");
                         document.getElementById("unsplashImgs").append(node);
