@@ -23,10 +23,10 @@
 	<script type="text/javascript" src="colorpicker/js/colorpicker.js"></script>
 	<script type="text/javascript" src="https://johnresig.com/files/htmlparser.js"></script>
 	<!-- <script type="text/javascript" src="../src/.js"></script> -->
-
+	
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Roboto');
-
+		
 		    @font-face {
 		      font-family: 'orbitron';
 		      src: url('css/orbitron-black-webfont.eot');
@@ -37,7 +37,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'yatraone';
 		      src: url('css/YatraOne-Regular.ttf');
@@ -45,7 +45,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'greatvibes';
 		      src: url('css/GreatVibes-Regular.ttf');
@@ -53,7 +53,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'amita';
 		      src: url('css/Amita-Regular.ttf');
@@ -61,7 +61,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'leaguescript';
 		      src: url('css/LeagueScriptNumberOne-webfont.eot');
@@ -72,7 +72,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'leaguemono';
 		      src: url('css/LeagueMono-Regular.eot');
@@ -83,7 +83,7 @@
 		      font-weight: normal;
 		      font-style: normal;
 		    }
-
+		
 		    @font-face {
 		      font-family: 'knewave';
 		      src: url('css/knewave-webfont.eot');
@@ -111,18 +111,18 @@
 		<section id="header">
 			<nav class="navbar navbar-expand-md navbar-default fixed-top">
 				<a href="#" class="navbar-brand p-0">
-				  <h3 style="margin: 0;font-size: 30px;">Pitcher</h3>
+				  <h3 style="margin: 0;font-size: 30px;">PitchAR</h3>
 				</a>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<div class="navbar-nav">
 						<a href="#" class="nav-item nav-link active m-1">Page:
 						  </a>
-					  <input class="form-control" placeholder="Enter project name" type="text" name="product" list="productName"/>
-					  <datalist id="productName">
+					  <input class="form-control" placeholder="Enter project name" type="text" name="product" id="project-title" />
+					  <!-- <datalist id="productName">
 						  <option value="1">Project 1</option>
 						  <option value="2">Project 2</option>
 						  <option value="3">Project 3</option>
-					  </datalist>
+					  </datalist> -->
 					</div>
 					<div class="navbar-nav ml-auto">
 						<a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
@@ -133,7 +133,7 @@
 							<i class="fa fa-repeat"></i><br>
 							undo
 						</a>
-
+						
 						<a id="authg" class="nav-item nav-link button-bordered">Drive</a>
 						<a href="#" class="nav-link button-solid btn-publish" data-toggle="modal" data-target="#modal-publish">Share</a>
 					</div>
@@ -214,14 +214,14 @@
 				  <h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
 				  <div class="btn-close m-0" data-dismiss="modal">×</div>
 				</div>
-
+	  
 				<!-- Modal body -->
 				<div class="modal-body p-0">
-				  <div v="" class="col-sm-12 h-100 p-0">
-					  <div class="col-sm-5 float-left object-panel text-center" id="object-panel">
+				  	<div v="" class="col-sm-12 h-100 p-0">
+					  	<div class="col-sm-5 float-left object-panel text-center" id="object-panel">
 							<img src="marker/hiro.png">
-					  </div>
-					  <!-- <form id="form0" enctype="multipart/form-data" method="post">
+					  	</div>
+					  	<!-- <form id="form0" enctype="multipart/form-data" method="post">
 						<input id='auth' name="authtoken" type="hidden" value="">
 						<label>Name :</label>
 						<input id="" name="name" type="text">
@@ -238,82 +238,81 @@
 					<input type='text' id='shrlnk' placeholder='Sharing Link'>
 					<button type="button" onclick="gotolink()" style='width:10px;'><i class="fa fa-external-link"></i> -->
 					<!-- </button> -->
-					<form id="form0" enctype="multipart/form-data" method="post">
-					  <div class="col-sm-7 float-right form-container pl-5 pr-5">
-
-							<div class="form-ele">
-							<input id='auth' name="authtoken" type="hidden" value="">
-							<input type="hidden" name='experience' id='exptxt'>
-							<div class="form-group">
-							  <label for="title">Title:</label>
-							  <input type="text" class="form-control" id="title" placeholder="Enter A Title" name="name">
-							</div>
-							<div class="form-group">
-							  <label for="pwd">Description:</label>
-							  <textarea class="form-control"  name="description" id="" rows="3" placeholder="Enter Description"></textarea>
-							</div>
-							<input type="hidden" name="submit" value="1">
-							<div class="col-sm-12 text-center">
-							  <button type="submit" class="btn btn-default btn-round-blue pl-5 pr-5 btn-continue" onclick="sharelnk(this)">Continue <i class="fa fa-arrow-right"></i> </button>
-							</div>
-						</div>
-						  <div class="congo-screen p-4">
-							<div class="clearfix pb-2">
+						<form id="form0" enctype="multipart/form-data" method="post">
+					  		<div class="col-sm-7 float-right form-container pl-5 pr-5">
+								<div class="form-ele">
+									<input id='auth' name="authtoken" type="hidden" value="">
+									<input type="hidden" name='experience' id='exptxt'>
+									<div class="form-group">
+							  			<label for="title">Title:</label>
+							  			<input type="text" class="form-control" id="title" placeholder="Enter A Title" name="name">
+									</div>
+									<div class="form-group">
+							  			<label for="pwd">Description:</label>
+							  			<textarea class="form-control"  name="description" id="" rows="3" placeholder="Enter Description"></textarea>
+									</div>
+									<input type="hidden" name="submit" value="1">
+									<div class="col-sm-12 text-center">
+							  			<button type="submit" class="btn btn-default btn-round-blue pl-5 pr-5 btn-continue" onclick="sharelnk(this)">Continue <i class="fa fa-arrow-right"></i> </button>
+									</div>
+								</div>
+						  		<div class="congo-screen p-4">
+									<div class="clearfix pb-2">
 							  <!-- <img src="images/code.png" alt="..." class="float-right" height="100"> -->
-							  <div>
-								<h5><small>Your creation is now live</small></h5>
-								<small class="text-muted">Use the QR Code on your phone or choose any of the options below.</small>
-							  </div>
-							  <div class="input-group mt-4 pull-left form-group-lightblue">
-								<input type="text"  id='shrlnk' placeholder='Sharing Link' class="form-control m-0" aria-label="link">
-								<div class="input-group-append">
-								  <span class="input-group-text btn" onclick="copyLinkUrl()"><i class="fa fa-clipboard" aria-hidden="true"></i></span>
-								  <span class="input-group-text right-round-border btn" onclick="gotolink()"><i class="fa fa-external-link" aria-hidden="true"></i></span>
-								</div>
-							  </div>
-							</div>
-							<div class="col-sm-12 p-0">
-								<h5 class="text-center mt-5 mb-4"><small>Share to other media</small></h5>
-								<div class="media-options offset-sm-2 col-sm-8 ">
-								  <div class="m-option text-white" style="background: #e23e38">
-										&lt; &gt;
-								  </div>
-								  <div class="m-option text-white" style="background: #00a2f8">
-										<i class="fa fa-twitter"></i>
-								  </div>
-								  <div class="m-option text-white" style="background:#d93025">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-								  </div>
-								  <div class="m-option text-white" style="background:#00ca53">
-										<i class="fa fa-whatsapp"></i>
-								  </div>
-								</div>
-								<div class="col-sm-12 text-center mt-5">
-								  <button class="btn btn-default btn-round-blue-bordered btn-change-detail">Change Detail</button>
-								  <button class="btn btn-default btn-round-blue pl-5 pr-5" data-dismiss="modal">Done</button>
-								</div>
-							</div>
-						  </div>
-
-					  </div>
-					</form>
-				  </div>
+							  			<div>
+											<h5><small>Your creation is now live</small></h5>
+											<small class="text-muted">Use the QR Code on your phone or choose any of the options below.</small>
+							  			</div>
+							  			<div class="input-group mt-4 pull-left form-group-lightblue">
+											<input type="text"  id='shrlnk' placeholder='Sharing Link' class="form-control m-0" aria-label="link">
+											<div class="input-group-append">
+								  				<span class="input-group-text btn" onclick="copyLinkUrl()"><i class="fa fa-clipboard" aria-hidden="true"></i></span>
+								  				<span class="input-group-text right-round-border btn" onclick="gotolink()"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+											</div>
+							  			</div>
+									</div>
+									<div class="col-sm-12 p-0">
+										<h5 class="text-center mt-5 mb-4"><small>Share to other media</small></h5>
+										<div class="media-options offset-sm-2 col-sm-8 ">
+								  			<div class="m-option text-white" style="background: #e23e38">
+												&lt; &gt;
+								 		 	</div>
+								  			<div class="m-option text-white" style="background: #00a2f8">
+												<i class="fa fa-twitter"></i>
+								  			</div>
+								  			<div class="m-option text-white" style="background:#d93025">
+												<i class="fa fa-envelope-o" aria-hidden="true"></i>
+								  			</div>
+								  			<div class="m-option text-white" style="background:#00ca53">
+												<i class="fa fa-whatsapp"></i>
+								  			</div>
+										</div>
+										<div class="col-sm-12 text-center mt-5">
+								  			<button class="btn btn-default btn-round-blue-bordered btn-change-detail">Change Detail</button>
+								  			<button class="btn btn-default btn-round-blue pl-5 pr-5" data-dismiss="modal">Done</button>
+										</div>
+									</div>
+						  		</div>
+					  		</div>
+						</form>
+				  	</div>
 				</div>
 			</div>
-			</div>
-		  </div>
+		</div>
+	</div>
 	<div class="modal fade modal-custom" id="modal-show-more">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+			<div class="modal-content container">
 				<!-- Modal Header -->
-				<div class="modal-header bg-blue text-white">
+				<div class="modal-header row bg-blue text-white">
 					<h5 class="modal-title">Choose Media Files</h5>
-					<div class="btn-close m-0" data-dismiss="modal">&times;</div>
+					<div class="btn-close m-0" data-dismiss="modal">&times;
+					</div>
 				</div>
 				<!-- Modal body -->
-				<div class="modal-body p-0">
+				<div class="modal-body row p-0">
 					<div class="upload-media-panel col-sm-12 p-0 h-100 float-left">
-						<div class="col-sm-2 left-panel float-left">
+						<div class="col-sm-2 left-panel h-100 float-left">
 							<button class="btn btn-primary btn-upload-media btn-round-blue w-100">+ Upload Media</button>
 							<div class="left-panel-menu">
 								<h6><small><b>MANAGE</b></small></h6>
@@ -326,17 +325,12 @@
 							<div class="left-panel-menu mt-3">
 								<h6><small><b>EXPLORE</b></small></h6>
 								<div class="left-panel-options">
-									<!-- <div class="left-panel-option" show_class=".wix">
-                          Media From Wix
-                        </div> -->
-									<!-- <div class="left-panel-option" show_class=".shutterstock">
-                          Shutterstock
-                        </div> -->
-                  <div class="left-panel-option unsplash_media" show_class=".unsplash">Unsplash</div>
-                  <div class="left-panel-option googlepoly_media" show_class=".googlepoly">Google Poly</div>
-                  <div class="left-panel-option youtube_media" show_class=".youtube_panel">Youtube</div>
-                  <div class="left-panel-option fs_media_m" show_class=".FS_panel">Free Sound</div>
-
+									<!-- <div class="left-panel-option" show_class=".wix">Media From Wix</div> -->
+									<!-- <div class="left-panel-option" show_class=".shutterstock">Shutterstock</div> -->
+                  					<div class="left-panel-option unsplash_media" show_class=".unsplash">Unsplash</div>
+                  					<div class="left-panel-option googlepoly_media" show_class=".googlepoly">Google Poly</div>
+                  					<div class="left-panel-option youtube_media" show_class=".youtube_panel">Youtube</div>
+                  					<div class="left-panel-option fs_media_m" show_class=".FS_panel">Free Sound</div>
 								</div>
 							</div>
 						</div>
@@ -351,10 +345,12 @@
 											<input type="text" class="form-control searchObj search_input" placeholder="Search 3D object">
 										</div>
 									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
-                        <span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-										<span> | </span>
-										</span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> 
+										<span class="my_favorites">
+                        					<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+											<span> | </span>
+										</span> 
+										<span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
 										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
 									</div>
 								</div>
@@ -362,7 +358,8 @@
 									<div class="col-sm-5 mt-2 mb-2 float-left">
 										<div class="menu-text">Site File</div>
 									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4"> <span>Create new folder <i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
+									<div class="float-right filter-menu  mt-2 mb-2 pr-4">
+										<span>Create new folder <i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
 									</div>
 								</div>
 								<div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
@@ -370,79 +367,87 @@
 										<div id="galleryimgs" class="col" class="style-scroll"></div>
 										<div id="galleryimgsrch" class="col" class="style-scroll"></div>
 										<div class="col text-left border-blue-l h-100 media-info">
-											<div class="close-media-info text-white"> <b>&times</b>
+											<div class="close-media-info text-white"> 
+												<b>&times</b> 
 											</div>
 											<!-- <img src="images/4220.jpg" alt="" width="260" height="100"> -->
 											<div class="col-sm-12 float-left">
 												<div class="pt-2 pb-2"><small>
-                          <input class="form-control" oninput="editNameAsset(this)" id='newname' type='text' name='name' value="Screenshot 2019-19-01 at 01:30:49 A" placeholder="Rename">
-                          <input type='hidden' id='elementid' value=''>
-                        </small>
+                          							<input class="form-control" oninput="editNameAsset(this)" id='newname' type='text' name='name' value="Screenshot 2019-19-01 at 01:30:49 A" placeholder="Rename">
+                          							<input type='hidden' id='elementid' value=''></small>
 												</div>
 											</div>
-											<div class="col-sm-12 pt-2 float-left"> <small><strong>Action</strong></small>
-												<div class="border-b text-blue pb-2 "><i class="fa fa-crop" aria-hidden="true"></i>  <small>Crop</small>
+											<div class="col-sm-12 pt-2 float-left"> 
+												<small><strong>Action</strong></small>
+												<div class="border-b text-blue pb-2 ">
+													<i class="fa fa-crop" aria-hidden="true"></i>  
+													<small>Crop</small>
 												</div>
 											</div>
 											<div class="col-sm-12 float-left">
-												<div class="w-100 float-left  pt-2 pb-2">
-                          <span class="float-left"><small><strong>Tags</strong></small></span>
-                          <span class="float-right btn-edit-tags"><small>Edit Tags</small></span>
+												<div class="w-100 float-left  pt-2 pb-2"> 
+                          							<span class="float-left"><small><strong>Tags</strong></small></span>
+                          							<span class="float-right btn-edit-tags"><small>Edit Tags</small></span>
 												</div>
-                      </div>
-                      <div class="col-sm-12 float-left edit-tags d-none">
-                          <div class="w-100 border-b float-left  pt-2 pb-2">
-                            <input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
-
-                          </div>
-                      </div>
-                      <div class="col-sm-12 float-left saved-tags">
-                          <div class="w-100 border-b float-left  pt-2 pb-2">
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
-                            </div>
-                        </div>
+                      						</div>
+                      						<div class="col-sm-12 float-left edit-tags d-none">
+                          						<div class="w-100 border-b float-left  pt-2 pb-2">
+                            						<input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
+                          						</div>
+                      						</div>
+                      						<div class="col-sm-12 float-left saved-tags">
+                          						<div class="w-100 border-b float-left  pt-2 pb-2">
+						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
+						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
+						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
+						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
+						                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
+						                        </div>
+                        					</div>
 											<div class="col-sm-12 pt-2 float-left">
-												<div class="w-100"> <span><small><strong>File Info</strong></small></span>
-												</div>
+												<div class="w-100"> <span><small><strong>File Info</strong></small></span></div>
 												<div class="col-sm-12 float-left p-0">
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Type</strong></small></span>
+													<div class="w-100 float-left mb-1"> 
+														<span class="float-left"><small><strong>Type</strong></small></span>
 														<span class="float-right"><small>png</small></span>
 													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Size</strong></small></span>
+													<div class="w-100 float-left mb-1"> 
+														<span class="float-left"><small><strong>Size</strong></small></span>
 														<span class="float-right"><small>100KB</small></span>
 													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Resolution</strong></small></span>
+													<div class="w-100 float-left mb-1"> 
+														<span class="float-left"><small><strong>Resolution</strong></small></span>
 														<span class="float-right"><small>1000x560</small></span>
 													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Uploaded On</strong></small></span>
+													<div class="w-100 float-left mb-1"> 
+														<span class="float-left"><small><strong>Uploaded On</strong></small></span>
 														<span class="float-right"><small>22-06-2019</small></span>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-                </div>
-                <div class="left-panel-footer w-100">
-										<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
-									</div>
+               					</div>
+                				<div class="left-panel-footer w-100">
+									<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
+								</div>
 							</div>
 						</div>
 						<div class="favourites col-sm-10 right-panel float-left p-0 h-100">
 							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
 								<div class="panel-header float-left w-100">
 									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+										<div class="form-group has-search m-0"> 
+											<span class="fa fa-search form-control-feedback"></span>
 											<input type="text" class="form-control" placeholder="Search">
 										</div>
 									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
-                        <span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-										<span> | </span>
-										</span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> 
+										<span class="my_favorites">
+                        					<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+											<span> | </span>
+										</span> 
+										<span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
 										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
 									</div>
 								</div>
@@ -496,7 +501,7 @@
 											</div>
 										</div>
 									</div>
-
+									
 								</div>
 							</div>
 						</div>
@@ -516,13 +521,13 @@
 									</div>
 								</div>
 								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
-
+									
 									<div id="gallerymarkers" class="row m-0 mt-4 float-left w-100 style-scroll albums-media" style="height: 420px"></div>
 									<div class="left-panel-footer w-100">
 											<button id='buttonDownloadFullImage' class='btn btn-addToPage float-left pull-left'>Download Image</button>
 											<div id="buttonDownloadEncoded" class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes</div>
 										<div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go MarkerLess</div>
-
+										
 										<label id='buttonUpload' for='fileinput' class="btn btn-addToPage float-right mt-4 mr-4">
 												<input type='file' id='fileinput' style='display: none' accept='image/*'>Upload New Marker</label>
 									</div>
@@ -534,13 +539,13 @@
 								<div class="panel-header float-left w-100">
 									<div class="col-sm-5 mt-2 mb-2 float-left">
 										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control unsplash_srch_new" placeholder="Search images from unsplash">
+											<input type="text" class="form-control unsplash_srch_new" placeholder="Search images from Unsplash">
 										</div>
 									</div>
 								</div>
 								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
 									<h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-									<p class="float-left w-100">Choose from 1000s of stunnig images</p>
+									<p class="float-left w-100">Choose from 1000s of stunning images</p>
 									<div class="float-left w-100"> <span>Filter By:</span>
 										<button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
 										</button>
@@ -561,13 +566,13 @@
                   <div class="panel-header float-left w-100">
                     <div class="col-sm-5 mt-2 mb-2 float-left">
                       <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects fro googlepoly">
+                        <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects from Google Poly">
                       </div>
                     </div>
                   </div>
                   <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                    <h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-                    <p class="float-left w-100">Choose from 1000s of stunnig images</p>
+                    <h2 class="mt-4 mb-1 float-left w-100">Media From Google Poly</h2>
+                    <p class="float-left w-100">Choose from 1000s of 3D objects</p>
                     <div class="float-left w-100"> <span>Filter By:</span>
                       <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                       </button>
@@ -594,8 +599,8 @@
                       </div>
                     </div>
                     <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                      <h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-                      <p class="float-left w-100">Choose from 1000s of stunnig images</p>
+                      <h2 class="mt-4 mb-1 float-left w-100">Media From Free Sounds</h2>
+                      <p class="float-left w-100">Choose from 1000s of sounds</p>
                       <div class="float-left w-100"> <span>Filter By:</span>
                         <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </button>
@@ -606,7 +611,7 @@
                       </div>
 					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound"></div>
 					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound_srch">
-
+						  
 					  </div>
                       <div class="left-panel-footer w-100">
                         <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
@@ -619,13 +624,13 @@
                       <div class="panel-header float-left w-100">
                         <div class="col-sm-5 mt-2 mb-2 float-left">
                           <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control searchYT" placeholder="Search videos from youtube">
+                            <input type="text" class="form-control searchYT" placeholder="Search videos from Youtube">
                           </div>
                         </div>
                       </div>
                       <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                        <h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-                        <p class="float-left w-100">Choose from 1000s of stunnig images</p>
+                        <h2 class="mt-4 mb-1 float-left w-100">Media From Youtube</h2>
+                        <p class="float-left w-100">Choose from 1000s of videos</p>
                         <div class="float-left w-100"> <span>Filter By:</span>
                           <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                           </button>
@@ -762,7 +767,7 @@
                         <div class="mb-2">Or</div>
                         <button class="btn btn-primary btn-upload-media btn-round-blue mb-4">Upload from Computer</button> -->
 
-
+                        
                           <!-- <form id="form" enctype="multipart/form-data" method="post">
                               <input id='auth2' name="authtoken" type="hidden" value="">
                                <input id="image" type="file" accept='image/*'> -->
@@ -902,7 +907,7 @@
                           </div>
                           <div id="upload-gltf" class="tab-pane nav-link highlight" aria-expanded="false">
                             <div class="col-sm-12 float-left h-100">
-
+									
 										<div class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area">
 												<h1>GLTF</h1>
 												<input class="obj-file gltf" type="file"  name="gltf" required="required" />
@@ -1374,7 +1379,7 @@
 						<div class="content mb-3">
 							<div class="content-title">Upload Your media</div>
 							<div class="media-options">
-
+							
 								<div class="m-option upload-3d-media bg-blue" tab=".upload-3d" data-container="body" data-toggle="popover" data-placement="top" data-content="Upload Media">
 									<svg width="19" height="19" viewBox="0 0 19 19" class="symbol symbol-upload-btn">
 										<g fill-rule="evenodd">
@@ -1475,7 +1480,7 @@
 										<br> -->
 										<!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
 									</form>
-
+									
 								<div class="m-option me-upload-vid bg-blue" tab=".upload-pc" data-container="body" data-toggle="popover" data-placement="top" data-content="Upload Media">
 									<svg width="19" height="19" viewBox="0 0 19 19" class="symbol symbol-upload-btn">
 										<g fill-rule="evenodd">
@@ -1722,7 +1727,7 @@
 							<div class="float-left icon-clr-pickr" onclick="document.getElementById('change-text-color').click()" data-toggle="tooltip" data-placement="top" title="text color"></div>
 							<input id="change-text-color" type="color" class="form-control d-none textColor" oninput="colorpicker(this)"> <small class="float-left mt-2 ml-2 hashcode" style="color:#ccc">#cccccc</small>
 						</div>
-						<div class="float-right text-alignment">
+						<div class="float-right text-alignment"> 
               <i agln-val="left" class="fa fa-align-left rounded border border-dark p-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="align left"></i>
 							<i agln-val="center" class="fa fa-align-center rounded border border-dark p-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="align center"></i>
 							<i agln-val="right" class="fa fa-align-right rounded border border-dark p-1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="align right"></i>
@@ -1773,8 +1778,8 @@
 										<input id="buttext" type="text" onchange="chgtxt(this)" onfocus="msg()" onkeyup="chgtxt(this)" class="form-control" placeholder="Type Text">
 									</div>
 									<div class="select-color selectColor">
-										<div class="icon-clr-pickr" onclick="document.getElementById('change-btn-text-color').click()" data-toggle="tooltip" data-placement="top" title="CTA text color"></div> <small class="ml-2 text-muted color1">#cccccc</small>
-										<input  type="color" id="change-btn-text-color" oninput="colorpicker(this)" class="form-control d-none textCol">
+										<div class="icon-clr-pickr" onclick="document.getElementById('change-btn-text-color').click()" data-toggle="tooltip" data-placement="top" title="CTA text color"></div> <small class="ml-2 text-muted">#cccccc</small>
+										<input  type="color" id="change-btn-text-color" oninput="colorpicker(this)" class="form-control d-none">
 									</div>
 								</div>
 							</div>
@@ -1785,7 +1790,7 @@
                     <input id="butlink" class="form-control" type="text" placeholder="Input URL" onchange="chglnk(this)">
 									</div>
 									<div class="select-color selectColor">
-										<div class="icon-clr-pickr" onclick="document.getElementById('change-btn-bg').click()" data-toggle="tooltip" data-placement="top" title="CTA background color"></div> <small class="ml-2 text-muted color2">#cccccc</small>
+										<div class="icon-clr-pickr" onclick="document.getElementById('change-btn-bg').click()" data-toggle="tooltip" data-placement="top" title="CTA background color"></div> <small class="ml-2 text-muted">#cccccc</small>
 										<input type="color" id="change-btn-bg" oninput="colorpicker(this)" class="form-control d-none">
 									</div>
 								</div>
@@ -1860,7 +1865,7 @@
 		</div>
 		<div class="sidebar right-fixed-bar">
 			<div class="effect-options">
-				<div class="mb-3 "> <b><span class="show-effects">&larr;&nbsp;</span> Effects</b>
+				<div class="mb-3 "> <b><span class="show-effects">&larr;&nbsp;</span> Effects</b> 
 				</div>
 				<div class="effect-option" id="anim1"><span class="btn-select-effect fill"></span><span>Rotate</span>
 				</div>
@@ -1938,22 +1943,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.1/cropper.js" integrity="sha256-bEvzqfDdDJeGI3K2IyVfr13BqY1yTVYu0AkmDKhfiLc=" crossorigin="anonymous"></script>
 	<script>
 		var developerKey = 'AIzaSyDQAHzETBqVoteIYO0O6eZq2yxTpkZJzqI';
-
+		
 		    // The Client ID obtained from the Google API Console. Replace with your own Client ID.
 		    var clientId = '942791088244-a7mic0de50ft9iutuun1i2in7jtc09on.apps.googleusercontent.com';
-
+		
 		    // Scope to use to access user's photos.
 		    var scope = 'https://www.googleapis.com/auth/photos';
-
+		
 		    var pickerApiLoaded = false;
 		    var oauthToken;
-
+		
 		    // Use the API Loader script to load google.picker and gapi.auth.
 		    function onApiLoad() {
 		      gapi.load('auth2', onAuthApiLoad);
 		      gapi.load('picker', onPickerApiLoad);
 		    }
-
+		
 		    function onAuthApiLoad() {
 		      var authBtn = document.getElementById('authg');
 		      authBtn.disabled = false;
@@ -1964,19 +1969,19 @@
 		        }, handleAuthResult);
 		      });
 		    }
-
+		
 		    function onPickerApiLoad() {
 		      pickerApiLoaded = true;
 		      createPicker();
 		    }
-
+		
 		    function handleAuthResult(authResult) {
 		      if (authResult && !authResult.error) {
 		        oauthToken = authResult.access_token;
 		        createPicker();
 		      }
 		    }
-
+		
 		    // Create and render a Picker object for picking user Photos.
 		    function createPicker() {
 		      if (pickerApiLoaded && oauthToken) {
@@ -1990,7 +1995,7 @@
 				console.log(picker, 'pickerrrrrrrrrrr')
 		      }
 		    }
-
+		
 		    // A simple callback implementation.
 		    function pickerCallback(data) {
 		      var url = 'nothing';
@@ -2045,25 +2050,25 @@
 			console.log(data);
 			$(".showImagesUploaded").click();
 		}
-	});
+	}); 
 			  console.log(message)
 			  document.getElementById('result').innerHTML = message;
 		    }
-
-
+		
+		
 		    function init() {
 		      gapi.client.setApiKey("AIzaSyACc5T8EmsRDs1nK_i8zqmcK8T9hVy-ljs");
 		      gapi.client.load("youtube", "v3", function () {
 		      });
-
+		
 		    }
-
+		
 		    var innerImageURL = null
 		    var fullMarkerURL = null
-
+		
 		    innerImageURL = 'trainer/inner-images/inner-hiro.png'
 		    updateFullMarkerImage()
-
+		
 		    document.querySelector('#buttonDownloadEncoded').addEventListener('click', function () {
 				debugger;
 		      if (innerImageURL === null) {
@@ -2071,20 +2076,20 @@
 		        return false;
 		      }
 		      console.assert(innerImageURL)
-
+		
 		      THREEx.ArPatternFile.encodeImageURL(innerImageURL, function onComplete(patternFileString) {
 		        THREEx.ArPatternFile.triggerDownload(patternFileString);
 		      })
 		    })
-
-
+		
+		
 		    document.querySelector('#buttonDownloadFullImage').addEventListener('click', function () {
 		      // debugger
 		      if (innerImageURL === null) {
 		        alert('upload a file first')
 		        return
 		      }
-
+		
 		      // tech from https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
 		      var domElement = window.document.createElement('a');
 		      domElement.href = fullMarkerURL;
@@ -2093,25 +2098,25 @@
 		      domElement.click();
 		      document.body.removeChild(domElement)
 		    })
-
-
-
+		
+		
+		
 		    document.querySelector('#patternRatioSlider').addEventListener('input', function () {
 		      // update the patternRatio number
 		      var patternRatio = document.querySelector('#patternRatioSlider').value / 100
 		      var domElement = document.querySelector('[for=patternRatioSlider] span')
 		      domElement.innerHTML = `Pattern Ratio ${patternRatio.toFixed(2)}`
-
+		
 		      // update fullMarkerImage
 		      updateFullMarkerImage()
 		    })
-
-
+		
+		
 		    document.querySelector('#fileinput').addEventListener('change', function () {
 				//debugger;
 		      var file = this.files[0];
 		      // debugger
-
+		
 		      var reader = new FileReader();
 		      reader.onload = function (event) {
 		        innerImageURL = event.target.result
@@ -2119,23 +2124,32 @@
 		      };
 		      reader.readAsDataURL(file);
 		    })
-
+		
 		    function updateFullMarkerImage() {
 		      // get patternRatio
 		      var patternRatio = document.querySelector('#patternRatioSlider').value / 100
-
+			 
 		      THREEx.ArPatternFile.buildFullMarker(innerImageURL, patternRatio, function onComplete(markerUrl) {
 		        fullMarkerURL = markerUrl
-
-
+		
+		    
 		        // put fullMarkerImage into #imageContainer
-
-
+		    
+		
 		      })
 		    }
 	</script>
 	<script>
 		$(document).ready(function(){
+			
+				$('.btn-publish').on('click',function(){
+					var proname=document.getElementById("project-title").value;
+					$('.modal-content').ready(function(){
+						document.getElementById('title').value=proname;
+					});
+				});
+
+
 		        // main menu, fixed left baar
 		       $('.left-fixed-bar').on('click','.menu-left', function() {
 		         var panel = $(this).attr('panel-name');
@@ -2168,13 +2182,13 @@
 		          $('#image').click();
 				});
 				$('.me-opt-upload-aud').click(function(){
-
+              		
 		          $('#audio').click();
 				});
 				$('.me-upload-vid').click(function(){
 					  $('#video').click();
-				});
-
+				}); 
+				
 		        // show effects panel
 		        $('.show-effects').click(function(){
 		          $(".effect-options").toggleClass('slide');
@@ -2207,32 +2221,32 @@
 		           $($(this).attr("href")).show();
 		           selectItem('tabs', 'active', this);
 		        });
-
+		
 		        // upload media
 		        $('.btn-upload-media .btn-round-blue').click(function(){
 		          $('#fileid').click()
             });
-
-
+            
+            
 		        // fixed media nav panel left side inside modal
 		        $('.left-panel-option').click(function(){
 		            var panel = $(this).attr('show_class');
 		            selectItem('upload-media-panel', 'active', panel);
 		            selectItem('left-panel', 'selected', this);
 		        });
-
+		
 		        // close main leftbar
 		        $('.btn-close-panel').click(function(){
 		          $(this).closest('.left-bar-panel').removeClass('active');
 		          $('.left-bar-item.selected').removeClass('selected');
 		        });
-
+		
 		        // tooltip
 		        $(document).on("mouseover", ".custom-tooltip", function() {
 		          $('.custom-tooltip .tooltiptext').css({'opacity':0,'visibility': 'hidden'});
 		          $(this).find('.tooltiptext').css({'opacity':1,'visibility': 'visible'});
             });
-
+            
             $('.icons-holder i').click(function(){
               $('#buticn').val($(this).text());
               $('#buticn').change();
@@ -2245,9 +2259,9 @@
 			  $("#authg").click();
 			});
             $('.btn-edit-tags').click(function(){
-
+               
                 $('.edit-tags, .saved-tags').toggleClass('d-none');
-
+                
                 var id = $('#elementid').val();
                 if($('.edit-tags').hasClass('d-none')){
                   console.log($("#newtags").val(), "new tags  ssss")
@@ -2266,7 +2280,7 @@
                     $(this).html('');
                   }
                 }
-
+                
             });
 		        // image popup on hover
 		        $(".images-options img").mouseenter(function() {
@@ -2288,11 +2302,11 @@
 		            placement : 'top',
 		            trigger : 'hover'
 		        });
-
+		
 		        var slider = document.getElementById("myRange");
 		        var output = document.getElementById("demo");
 		        output.innerHTML = slider.value;
-
+		
 		        slider.oninput = function() {
 		          output.innerHTML = this.value;
 		        }
@@ -2311,11 +2325,11 @@
 		            $('.left-bar-item.selected').removeClass('selected');
 		          }
 		     });
-
+		
 		     function selectItem(parent,addclass,ele){
 		       $(ele).parents('.'+parent).find('.'+addclass).removeClass(addclass).end().end().addClass(addclass);
          }
-
+         
 		     function colorpicker(elem){
            var textColor = $(elem).hasClass('textColor')
 		       var color = $(elem).val();
@@ -2325,13 +2339,6 @@
               'background': $('#change-btn-bg').val(),
               'color': $('#change-btn-text-color').val()
             });
-						var textCol = $(elem).hasClass('textCol');
-						if(textCol){
-							$('.color1').text(color);
-						}
-						else{
-							$('.color2').text(color);
-						}
            }else{
              $('.font-option>div').css('color', $(elem).val());
              $('.hashcode').text(color);
@@ -2342,7 +2349,7 @@
 				copyText.select();
 				copyText.setSelectionRange(0, 99999)
 				document.execCommand("copy");
-
+				
 				alert("Copied the text: " + copyText.value);
 		   	}
 	</script>
