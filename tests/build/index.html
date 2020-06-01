@@ -113,7 +113,7 @@
 					  </datalist> -->
                 </div>
                 <div class="navbar-nav ml-auto">
-                    <a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
+                    <a href="#" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
                         <i class="fa fa-undo"></i><br> redo
                     </a>
                     <a href="#" class="nav-item nav-link redo-undo text-center pl-0 mt-2 mr-4" id="undobtn">
@@ -448,7 +448,8 @@
                                     <span class="tooltiptext">
                                       <h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
                                       <p class="w-100 float-left">Rename</p>
-                                      <p class="w-100 float-left">Crop & edit</p>
+                                      <p class="w-100 float-left">Crop</p>
+                                      <p class="w-100 float-left">Edit</p>
                                       <p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
                                       <p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
 
@@ -734,7 +735,7 @@
                                     <a class="nav-link upload-pc active" href="#tab-pc-upload"><i class="fa fa-desktop" aria-hidden="true"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link upload-drive" href="#tab-drive-upload">
+                                    <a class="nav-link upload-drive" href="#tab-drive-upload" id="authg">
                                         <svg width="26" height="22" viewBox="0 0 26 22" class="symbol symbol-media-manager-panel-googledrive-icon"><g fill="none"><path fill="#537ABD" d="M25.564 14.929H8.453L4.564 22h16.868"></path><path fill="#2EB672" d="M9.304 0L.748 14.143 4.638 22l8.338-15.443"></path><path fill="#FED14B" d="M17.082 0H9.304l8.36 14.929h7.973L17.082 0"></path></g></svg>
                                     </a>
                                 </li>
@@ -1514,7 +1515,7 @@
                     </div>
                 </div>
                 <div class="indicator">
-                    <div class="indicator-dot custom-tooltipj"> <span class="tooltiptext">Wix Free Images</span>
+                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Images</span>
                     </div>
                 </div>
                 <div class="indicator">
@@ -1934,7 +1935,7 @@
         var clientId = '942791088244-a7mic0de50ft9iutuun1i2in7jtc09on.apps.googleusercontent.com';
 
         // Scope to use to access user's photos.
-        var scope = 'https://www.googleapis.com/auth/photos';
+        var scopes = 'https://www.googleapis.com/auth/photos';
 
         var pickerApiLoaded = false;
         var oauthToken;
@@ -1951,7 +1952,7 @@
             authBtn.addEventListener('click', function() {
                 gapi.auth2.authorize({
                     client_id: clientId,
-                    scope: scope
+                    scope: scopes
                 }, handleAuthResult);
             });
         }
@@ -1973,6 +1974,7 @@
             if (pickerApiLoaded && oauthToken) {
                 var picker = new google.picker.PickerBuilder().
                 addView(google.picker.ViewId.PHOTOS).
+                setAppId(appId).
                 setOAuthToken(oauthToken).
                 setDeveloperKey(developerKey).
                 setCallback(pickerCallback).
@@ -1984,7 +1986,8 @@
 
         // A simple callback implementation.
         function pickerCallback(data) {
-            var url = 'nothing';
+            // var url = 'nothing';
+            var url;
             if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
                 var doc = data[google.picker.Response.DOCUMENTS][0];
                 url = doc[google.picker.Document.URL];
