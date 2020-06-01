@@ -194,7 +194,7 @@
     <!-- modals -->
     <div class="modal fade modal-custom" id="modal-publish" aria-modal="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content" id='publish'>
                 <!-- Modal Header -->
                 <div class="modal-header bg-blue text-white text-center">
                     <h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
@@ -205,7 +205,7 @@
                 <div class="modal-body p-0">
                     <div v="" class="col-sm-12 h-100 p-0">
                         <div class="col-sm-5 float-left object-panel text-center" id="object-panel">
-                            <img src="marker/hiro.png">
+                            <img src="marker/hiro.png" />
                         </div>
                         <!-- <form id="form0" enctype="multipart/form-data" method="post">
 						<input id='auth' name="authtoken" type="hidden" value="">
@@ -471,10 +471,10 @@
                                     <span class="tooltiptext">
                                       <h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
 
-                                      							<p class="w-100 float-left">Rename</p>
-                                      							<p class="w-100 float-left">Crop & edit</p>
-                                      							<p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
-                                      							<p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
+                                      <p class="w-100 float-left">Rename</p>
+                                      <p class="w-100 float-left">Crop & edit</p>
+                                      <p class="w-100 float-left"><span class="float-left">Preview</span> <span class="float-right">Space</span></p>
+                                      <p class="w-100 float-left"><span class="float-left">info Hide I</span> <span class="float-right">Clrt+I</span></p>
 
                                       <h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
                                     </span>
@@ -569,7 +569,7 @@
                       </button>
                                     </div>
                                     <div class="row m-0 mt-4 float-left w-100 style-scroll googlepolyImgs"></div>
-                                    <div class="row m-0 mt-4 float-left w-100 style-scroll googlepoly_srch"></div>
+                                    <div class="row m-0 mt-4 hidden float-left w-100 style-scroll googlepoly_srch"></div>
                                     <div class="left-panel-footer w-100">
                                         <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
                                     </div>
@@ -579,7 +579,7 @@
                         <div class="FS_panel col-sm-10 right-panel float-left p-0 h-100">
                             <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
                                 <div class="panel-header float-left w-100">
-                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                    <div class="col-sm-12 mt-2 mb-2 float-left">
                                         <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
                                             <input type="text" class="form-control searchFS" placeholder="Search Sound From Free Sounds">
                                         </div>
@@ -597,7 +597,7 @@
                         </button>
                                     </div>
                                     <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound"></div>
-                                    <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound_srch">
+                                    <div class="row m-0 mt-4 float-left hidden w-100 style-scroll free_sound_srch">
 
                                     </div>
                                     <div class="left-panel-footer w-100">
@@ -627,7 +627,7 @@
                           </button>
                                     </div>
                                     <div class="row m-0 mt-4 float-left w-100 style-scroll you_tube"></div>
-                                    <div class="row m-0 mt-4 float-left w-100 style-scroll you_tube_srch"></div>
+                                    <div class="row m-0 mt-4 float-left w-100 hidden style-scroll you_tube_srch"></div>
                                     <div class="left-panel-footer w-100">
                                         <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
                                     </div>
@@ -956,7 +956,7 @@
                             <!-- <div id='galleryimgs'></div> --></div>
                         <div id="unsplash" class="tab-pane ">
                             <input type="search" class="searchbar" autocomplete="on" onsubmit="searchImg(this)">
-                            <div id="unsplashImgs"></div>
+                            <!-- <div id="unsplashImgs"></div> -->
                             <br>
                             <br>
                         </div>
@@ -2357,7 +2357,7 @@
             alert("Copied the text: " + copyText.value);
         }
     </script>
-    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    <script src="https://apis.google.com/js/client ?onload=init"></script>
     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 </body>
 

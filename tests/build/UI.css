@@ -1368,6 +1368,10 @@ form .form-container .form-ele {
     border-radius: 4px;
 }
 
+#publish {
+    height: 100%;
+}
+
 label {
     display: inline-block;
     position: relative;
@@ -1445,14 +1449,14 @@ form .form-container .form-control {
 .googlepolyImgs img,
 .you_tube img,
 .free_sound img {
-    flex: 1 0 18%;
+    /*flex: 1 0 18%;*/
     /* The important bit. This percentage decides your columns. 
   The percent can be px. It just represents your minimum starting width.
    */
     margin: 5px;
-    height: 50px;
+    /*height: 50px;*/
     color: white;
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     justify-content: center;
     height: 100%;

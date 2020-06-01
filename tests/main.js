@@ -38,9 +38,10 @@ unsplash.photos.listPhotos(1, 10, "latest")
         for (var i = 0; i < json.length; i++) {
             var node = document.createElement("img");
             node.src = json[i].urls.regular;
-            node.style = 'max-width:50%';
             node.setAttribute("onclick", "pushImg(this);");
             node.setAttribute("crossorigin", "anonymous");
+            var style='max-width:50%;  ';
+            node.setAttribute('style',style);
             document.getElementById("unsplashImgs").append(node);
         }
     });
