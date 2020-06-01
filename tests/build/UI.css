@@ -1368,6 +1368,9 @@ form .form-container .form-ele {
     border-radius: 4px;
 }
 
+#publish{
+  height:100%;
+}
 label {
     display: inline-block;
     position: relative;
