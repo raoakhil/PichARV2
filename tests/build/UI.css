@@ -820,6 +820,7 @@ opacity: 1;
 
 /* modal customization  */
 .modal-custom .modal-dialog {
+  height: 100%;
   position: absolute;
   max-width: 100%;
   top: 15px;
@@ -828,16 +829,7 @@ opacity: 1;
   left: 15%;
   right: 15%;
 }
-/*.modal-header{
-  height: 15%;
-}
-.modal-body{
-  height: 80%;
-  overflow-y: auto;
-}
-.modal-footer{
-  height: 10%;
-}*/
+
 .modal-custom .modal-dialog.modal-lg {
   position: absolute;
   top: 0px;
@@ -874,7 +866,6 @@ padding: 10px 5px;
   background: #d5edfd;
 }
 .right-panel {
-  background: red;
 
 display: none;
 overflow: hidden!important;
@@ -888,6 +879,7 @@ border-bottom: 1px solid #ccc;
 .right-panel .has-search .form-control{
 border: 0;
 }
+
 .right-panel .filter-menu{
     line-height: 30px;
 }
@@ -1219,16 +1211,15 @@ color: #7f7f7f!important;
    height: 125px!important;
  }
  #unsplashImgs img, .googlepolyImgs img, .you_tube img, .free_sound img {
-  flex: 1 0 18%; /* The important bit. This percentage decides your columns. 
-  The percent can be px. It just represents your minimum starting width.
-   */
+  /*flex: 1 0 18%; /* The important bit. This percentage decides your columns. */
+  /*The percent can be px. It just represents your minimum starting width.*/
+   
    margin: 5px;
-   height: 50px;
    color: white;
-   display: flex;
+   /*display: flex;*/
    align-items: center;
-   justify-content: center;
-   height: 100%;
+   /*justify-content: center;*/
+   height: 180px;
  }
  
  
