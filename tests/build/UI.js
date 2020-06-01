@@ -1399,10 +1399,10 @@ $('.audio_assets').click(function() {
             var node = document.createElement('img');
             console.log(audResults[i])
             node.src = def_icon;
-            node.width = 125;
+            // node.width = 125;
             node.height = 125;
             node.id = 'img' + i;
-            node.style = 'margin:4px;';
+            node.style = 'margin:4px;width:85%';
             node.setAttribute('onclick', 'pushAud(this);');
             node.setAttribute('class', 'image');
             node.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
