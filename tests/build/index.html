@@ -108,69 +108,66 @@
 </head>
 
 <body>
-		<section id="header">
-			<nav class="navbar navbar-expand-md navbar-default fixed-top">
-				<a href="#" class="navbar-brand p-0">
-				  <h3 style="margin: 0;font-size: 30px;">PitchAR</h3>
-				</a>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<div class="navbar-nav">
-						<a href="#" class="nav-item nav-link active m-1">Page:
+    <section id="header">
+        <nav class="navbar navbar-expand-md navbar-default fixed-top">
+            <a href="#" class="navbar-brand p-0">
+                <h3 style="margin: 0;font-size: 30px;">PitchAR</h3>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="#" class="nav-item nav-link active m-1">Page:
 						  </a>
-					  <!-- <input class="form-control" placeholder="Enter project name" type="text" name="product" list="productName"/> -->
-					  <input class="form-control" placeholder="Enter project name" id="project-title" type="text" name="product" />
-					  <!-- <datalist id="productName">
+                    <input class="form-control" placeholder="Enter project name" type="text" name="product" id="project-title" />
+                    <!-- <datalist id="productName">
 						  <option value="1">Project 1</option>
 						  <option value="2">Project 2</option>
 						  <option value="3">Project 3</option>
 					  </datalist> -->
-					</div>
-					<div class="navbar-nav ml-auto">
-						<a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
-							<i class="fa fa-undo"></i><br>
-							redo
-						</a>
-						<a href="#"  class="nav-item nav-link redo-undo text-center pl-0 mt-2 mr-4" id="undobtn">
-							<i class="fa fa-repeat"></i><br>
-							undo
-						</a>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <a href="#" onclick="redo()" class="nav-item nav-link redo-undo text-center mt-2" id="redobtn">
+                        <i class="fa fa-undo"></i><br> redo
+                    </a>
+                    <a href="#" class="nav-item nav-link redo-undo text-center pl-0 mt-2 mr-4" id="undobtn">
+                        <i class="fa fa-repeat"></i><br> undo
+                    </a>
 
-						<a id="authg" class="nav-item nav-link button-bordered">Drive</a>
-						<a href="#" class="nav-link button-solid btn-publish" data-toggle="modal" data-target="#modal-publish">Share</a>
-					</div>
-				</div>
-			</nav>
+                    <a id="authg" class="nav-item nav-link button-bordered">Drive</a>
+                    <a href="#" class="nav-link button-solid btn-publish" data-toggle="modal" data-target="#modal-publish">Share</a>
+                </div>
+            </div>
+        </nav>
 
-			  </section>
-	<a-scene id='perswin' vr-mode-ui="enabled: false">
+    </section>
+    <a-scene id='perswin' vr-mode-ui="enabled: false">
 
-		<a-assets>
-			<img src="honeycomb.jpg" crossorigin="anonymous" id="wireframe">
-			<img src="marker/hiro.png" crossorigin="anonymous" id="logo">
-			<img src="z-axis.svg" crossorigin="anonymous" id="zpos">
-			<img src="x-rot.svg" crossorigin="anonymous" id="xrot">
-			<img src="y-rot.svg" crossorigin="anonymous" id="yrot">
-			<img src="z-rot.svg" crossorigin="anonymous" id="zrot">
-			<img src="scale.svg" crossorigin="anonymous" id="scale">
-		</a-assets>
-		<a-sky color=""></a-sky>
-		<a-box id='object' visible='false' click-drag position="0 0.5 0" rotation="0 0 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
-		<a-entity id="modifier" position="0 0 0">
-			<a-image id='zaxis' click-drag look-at='#cam' position="-1.25 0.6 0" rotation="0 0 0" src='#zpos' geometry="primitive: circle;radius:0.2;"></a-image>
-			<a-image id='rx' click-drag look-at='#cam' position="1.25 0.6 0" rotation="0 0 0" src='#xrot' geometry="primitive: circle;radius:0.2;"></a-image>
-			<a-image id='ry' click-drag look-at='#cam' position="0  -1.25 0" rotation="0 0 0" src='#yrot' geometry="primitive: circle;radius:0.2;"></a-image>
-			<a-image id='rz' click-drag look-at='#cam' position="0 2 0" rotation="0 0 0" src='#zrot' geometry="primitive: circle;radius:0.2;"></a-image>
-			<a-image id='sc' click-drag look-at='#cam' position="1.25 2 0" rotation="0 0 0" src='#scale' geometry="primitive: circle;radius:0.24;" material="color:#000000"></a-image>
-		</a-entity>
-		<a-camera id='cam' look-controls='enabled:false' wasd-controls='enabled:false;' position='0 1.5 6' rotation="0 0 0" orbit-controls="target: #imglogo;invertZoom:true;minPolarAngle:0.75;maxPolarAngle:1.5;enableKeys:false;">
-			<a-animation attribute="position" dur="3000" easing="linear" from="0 0.5 1" to="0 1.5 6"></a-animation>
-		</a-camera>
-		<a-image src="#wireframe" position="0 0 0" rotation="-90 0 0" scale="80 80 0" material="color: #ececec;opacity:0.2;"></a-image>
-		<a-image id='imglogo' src="#logo" position="0 0.1 0" rotation="-90 0 0" scale="2 2 0" material="color: #ececec;opacity:1;"></a-image>
-	</a-scene>
-	<div id='uploadbar' style="position:fixed;top:0px;left:0px;height:5px;width:0%;z-index:9999;background-color:#4846ae;"></div>
-	<div id="d2"></div>
-	<!-- <div id="p5">
+        <a-assets>
+            <img src="honeycomb.jpg" crossorigin="anonymous" id="wireframe">
+            <img src="marker/hiro.png" crossorigin="anonymous" id="logo">
+            <img src="z-axis.svg" crossorigin="anonymous" id="zpos">
+            <img src="x-rot.svg" crossorigin="anonymous" id="xrot">
+            <img src="y-rot.svg" crossorigin="anonymous" id="yrot">
+            <img src="z-rot.svg" crossorigin="anonymous" id="zrot">
+            <img src="scale.svg" crossorigin="anonymous" id="scale">
+        </a-assets>
+        <a-sky color=""></a-sky>
+        <a-box id='object' visible='false' click-drag position="0 0.5 0" rotation="0 0 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
+        <a-entity id="modifier" position="0 0 0">
+            <a-image id='zaxis' click-drag look-at='#cam' position="-1.25 0.6 0" rotation="0 0 0" src='#zpos' geometry="primitive: circle;radius:0.2;"></a-image>
+            <a-image id='rx' click-drag look-at='#cam' position="1.25 0.6 0" rotation="0 0 0" src='#xrot' geometry="primitive: circle;radius:0.2;"></a-image>
+            <a-image id='ry' click-drag look-at='#cam' position="0  -1.25 0" rotation="0 0 0" src='#yrot' geometry="primitive: circle;radius:0.2;"></a-image>
+            <a-image id='rz' click-drag look-at='#cam' position="0 2 0" rotation="0 0 0" src='#zrot' geometry="primitive: circle;radius:0.2;"></a-image>
+            <a-image id='sc' click-drag look-at='#cam' position="1.25 2 0" rotation="0 0 0" src='#scale' geometry="primitive: circle;radius:0.24;" material="color:#000000"></a-image>
+        </a-entity>
+        <a-camera id='cam' look-controls='enabled:false' wasd-controls='enabled:false;' position='0 1.5 6' rotation="0 0 0" orbit-controls="target: #imglogo;invertZoom:true;minPolarAngle:0.75;maxPolarAngle:1.5;enableKeys:false;">
+            <a-animation attribute="position" dur="3000" easing="linear" from="0 0.5 1" to="0 1.5 6"></a-animation>
+        </a-camera>
+        <a-image src="#wireframe" position="0 0 0" rotation="-90 0 0" scale="80 80 0" material="color: #ececec;opacity:0.2;"></a-image>
+        <a-image id='imglogo' src="#logo" position="0 0.1 0" rotation="-90 0 0" scale="2 2 0" material="color: #ececec;opacity:1;"></a-image>
+    </a-scene>
+    <div id='uploadbar' style="position:fixed;top:0px;left:0px;height:5px;width:0%;z-index:9999;background-color:#4846ae;"></div>
+    <div id="d2"></div>
+    <!-- <div id="p5">
 		<button id="p7"><i class="fa fa-rotate-left"></i>
 		</button>
 		<button id="p7"><i class="fa fa-rotate-right"></i>
@@ -205,24 +202,24 @@
 		<button id="videobut" type="button" data-toggle="modal" data-target="#videos"> <i id="p1" class="fa fa-video-camera"></i>
 		</button>
 	</div> -->
-	<div id="result"></div>
-	<!-- modals -->
-	<div class="modal fade modal-custom" id="modal-publish" aria-modal="true">
-			<div class="modal-dialog modal-lg">
-			  <div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header bg-blue text-white text-center">
-				  <h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
-				  <div class="btn-close m-0" data-dismiss="modal">×</div>
-				</div>
+    <div id="result"></div>
+    <!-- modals -->
+    <div class="modal fade modal-custom" id="modal-publish" aria-modal="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-blue text-white text-center">
+                    <h5 class="modal-title text-center w-100">Give your creation a title<br><small class="text-center w-100">Please add name and description to your creation before sharing it:</small></h5>
+                    <div class="btn-close m-0" data-dismiss="modal">×</div>
+                </div>
 
-				<!-- Modal body -->
-				<div class="modal-body p-0">
-				  <div v="" class="col-sm-12 h-100 p-0">
-					  <div class="col-sm-5 float-left object-panel text-center" id="object-panel">
-							<img src="marker/hiro.png">
-					  </div>
-					  <!-- <form id="form0" enctype="multipart/form-data" method="post">
+                <!-- Modal body -->
+                <div class="modal-body p-0">
+                    <div v="" class="col-sm-12 h-100 p-0">
+                        <div class="col-sm-5 float-left object-panel text-center" id="object-panel">
+                            <img src="marker/hiro.png">
+                        </div>
+                        <!-- <form id="form0" enctype="multipart/form-data" method="post">
 						<input id='auth' name="authtoken" type="hidden" value="">
 						<label>Name :</label>
 						<input id="" name="name" type="text">
@@ -238,222 +235,228 @@
 					<button type="button" onclick="sharelnk(this)" style='width:200px;' class="uploadbut">Get sharable link</button>
 					<input type='text' id='shrlnk' placeholder='Sharing Link'>
 					<button type="button" onclick="gotolink()" style='width:10px;'><i class="fa fa-external-link"></i> -->
-					<!-- </button> -->
-					<form id="form0" enctype="multipart/form-data" method="post">
-					  <div class="col-sm-7 float-right form-container pl-5 pr-5">
-
-							<div class="form-ele">
-							<input id='auth' name="authtoken" type="hidden" value="">
-							<input type="hidden" name='experience' id='exptxt'>
-							<div class="form-group">
-							  <label for="title">Title:</label>
-							  <input type="text" class="form-control" id="title" placeholder="Enter A Title" name="name">
-							</div>
-							<div class="form-group">
-							  <label for="pwd">Description:</label>
-							  <textarea class="form-control"  name="description" id="" rows="3" placeholder="Enter Description"></textarea>
-							</div>
-							<input type="hidden" name="submit" value="1">
-							<div class="col-sm-12 text-center">
-							  <button type="submit" class="btn btn-default btn-round-blue pl-5 pr-5 btn-continue" onclick="sharelnk(this)">Continue <i class="fa fa-arrow-right"></i> </button>
-							</div>
-						</div>
-						  <div class="congo-screen p-4">
-							<div class="clearfix pb-2">
-							  <!-- <img src="images/code.png" alt="..." class="float-right" height="100"> -->
-							  <div>
-								<h5><small>Your creation is now live</small></h5>
-								<small class="text-muted">Use the QR Code on your phone or choose any of the options below.</small>
-							  </div>
-							  <div class="input-group mt-4 pull-left form-group-lightblue">
-								<input type="text"  id='shrlnk' placeholder='Sharing Link' class="form-control m-0" aria-label="link">
-								<div class="input-group-append">
-								  <span class="input-group-text btn" onclick="copyLinkUrl()"><i class="fa fa-clipboard" aria-hidden="true"></i></span>
-								  <span class="input-group-text right-round-border btn" onclick="gotolink()"><i class="fa fa-external-link" aria-hidden="true"></i></span>
-								</div>
-							  </div>
-							</div>
-							<div class="col-sm-12 p-0">
-								<h5 class="text-center mt-5 mb-4"><small>Share to other media</small></h5>
-								<div class="media-options offset-sm-2 col-sm-8 ">
-								  <div class="m-option text-white" style="background: #e23e38">
-										&lt; &gt;
-								  </div>
-								  <div class="m-option text-white" style="background: #00a2f8">
-										<i class="fa fa-twitter"></i>
-								  </div>
-								  <div class="m-option text-white" style="background:#d93025">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-								  </div>
-								  <div class="m-option text-white" style="background:#00ca53">
-										<i class="fa fa-whatsapp"></i>
-								  </div>
-								</div>
-								<div class="col-sm-12 text-center mt-5">
-								  <button class="btn btn-default btn-round-blue-bordered btn-change-detail">Change Detail</button>
-								  <button class="btn btn-default btn-round-blue pl-5 pr-5" data-dismiss="modal">Done</button>
-								</div>
-							</div>
-						  </div>
-
-					  </div>
-					</form>
-				  </div>
-				</div>
-			</div>
-			</div>
-		  </div>
-	<div class="modal fade modal-custom" id="modal-show-more">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header bg-blue text-white">
-					<h5 class="modal-title">Choose Media Files</h5>
-					<div class="btn-close m-0" data-dismiss="modal">&times;</div>
-				</div>
-				<!-- Modal body -->
-				<div class="modal-body p-0">
-					<div class="upload-media-panel col-sm-12 p-0 h-100 float-left">
-						<div class="col-sm-2 left-panel float-left">
-							<button class="btn btn-primary btn-upload-media btn-round-blue w-100">+ Upload Media</button>
-							<div class="left-panel-menu">
-								<h6><small><b>MANAGE</b></small></h6>
-								<div class="left-panel-options">
-									<div class="left-panel-option selected gallery_media" show_class=".site-file">Site Files</div>
-									<div class="left-panel-option favorites" show_class=".favourites">My Favorites</div>
-									<div id="choosemarkerbut" class="left-panel-option" show_class=".markers">Markers</div>
-								</div>
-							</div>
-							<div class="left-panel-menu mt-3">
-								<h6><small><b>EXPLORE</b></small></h6>
-								<div class="left-panel-options">
-									<!-- <div class="left-panel-option" show_class=".wix">
-                          				Media From Wix
-                        			</div> -->
-									<!-- <div class="left-panel-option" show_class=".shutterstock">
-                          				Shutterstock
-                        			</div> -->
-				                	<div class="left-panel-option unsplash_media" show_class=".unsplash">Unsplash</div>
-				                  	<div class="left-panel-option googlepoly_media" show_class=".googlepoly">Google Poly</div>
-				                  	<div class="left-panel-option youtube_media" show_class=".youtube_panel">Youtube</div>
-				                  	<div class="left-panel-option fs_media_m" show_class=".FS_panel">Free Sound</div>
-								</div>
-							</div>
-						</div>
-						<div class="site-file active col-sm-10 right-panel float-left p-0 h-100">
-							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-								<div class="panel-header float-left w-100">
-									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control searchImg search_input" placeholder="Search Image">
-											<input type="text" class="form-control searchAud search_input" placeholder="Search Audio">
-											<input type="text" class="form-control searchVid search_input" placeholder="Search Video">
-											<input type="text" class="form-control searchObj search_input" placeholder="Search 3D object">
-										</div>
-									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
-                        <span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-										<span> | </span>
-										</span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
-										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
-									</div>
-								</div>
-								<div class="panel-header float-left w-100 manage active">
-									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="menu-text">Site File</div>
-									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4"> <span>Create new folder <i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
-									</div>
-								</div>
-								<div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
-									<div class="col-container h-100">
-										<div id="galleryimgs" class="col" class="style-scroll"></div>
-										<div id="galleryimgsrch" class="col" class="style-scroll"></div>
-										<div class="col text-left border-blue-l h-100 media-info">
-											<div class="close-media-info text-white"> <b>&times</b>
-											</div>
-											<!-- <img src="images/4220.jpg" alt="" width="260" height="100"> -->
-											<div class="col-sm-12 float-left">
-												<div class="pt-2 pb-2"><small>
-                          <input class="form-control" oninput="editNameAsset(this)" id='newname' type='text' name='name' value="Screenshot 2019-19-01 at 01:30:49 A" placeholder="Rename">
-                          <input type='hidden' id='elementid' value=''>
-                        </small>
-												</div>
-											</div>
-											<div class="col-sm-12 pt-2 float-left"> <small><strong>Action</strong></small>
-												<div class="border-b text-blue pb-2 "><i class="fa fa-crop" aria-hidden="true"></i>  <small>Crop</small>
-												</div>
-											</div>
-											<div class="col-sm-12 float-left">
-												<div class="w-100 float-left  pt-2 pb-2">
-                          <span class="float-left"><small><strong>Tags</strong></small></span>
-                          <span class="float-right btn-edit-tags"><small>Edit Tags</small></span>
-												</div>
-                      </div>
-                      <div class="col-sm-12 float-left edit-tags d-none">
-                          <div class="w-100 border-b float-left  pt-2 pb-2">
-                            <input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
-
-                          </div>
-                      </div>
-                      <div class="col-sm-12 float-left saved-tags">
-                          <div class="w-100 border-b float-left  pt-2 pb-2">
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
-                            <span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
+                        <!-- </button> -->
+                        <form id="form0" enctype="multipart/form-data" method="post">
+                            <div class="col-sm-7 float-right form-container pl-5 pr-5">
+                                <div class="form-ele">
+                                    <input id='auth' name="authtoken" type="hidden" value="">
+                                    <input type="hidden" name='experience' id='exptxt'>
+                                    <div class="form-group">
+                                        <label for="title">Title:</label>
+                                        <input type="text" class="form-control" id="title" placeholder="Enter A Title" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pwd">Description:</label>
+                                        <textarea class="form-control" name="description" id="" rows="3" placeholder="Enter Description"></textarea>
+                                    </div>
+                                    <input type="hidden" name="submit" value="1">
+                                    <div class="col-sm-12 text-center">
+                                        <button type="submit" class="btn btn-default btn-round-blue pl-5 pr-5 btn-continue" onclick="sharelnk(this)">Continue <i class="fa fa-arrow-right"></i> </button>
+                                    </div>
+                                </div>
+                                <div class="congo-screen p-4">
+                                    <div class="clearfix pb-2">
+                                        <!-- <img src="images/code.png" alt="..." class="float-right" height="100"> -->
+                                        <div>
+                                            <h5><small>Your creation is now live</small></h5>
+                                            <small class="text-muted">Use the QR Code on your phone or choose any of the options below.</small>
+                                        </div>
+                                        <div class="input-group mt-4 pull-left form-group-lightblue">
+                                            <input type="text" id='shrlnk' placeholder='Sharing Link' class="form-control m-0" aria-label="link">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text btn" onclick="copyLinkUrl()"><i class="fa fa-clipboard" aria-hidden="true"></i></span>
+                                                <span class="input-group-text right-round-border btn" onclick="gotolink()"><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 p-0">
+                                        <h5 class="text-center mt-5 mb-4"><small>Share to other media</small></h5>
+                                        <div class="media-options offset-sm-2 col-sm-8 ">
+                                            <div class="m-option text-white" style="background: #e23e38">
+                                                &lt; &gt;
+                                            </div>
+                                            <div class="m-option text-white" style="background: #00a2f8">
+                                                <i class="fa fa-twitter"></i>
+                                            </div>
+                                            <div class="m-option text-white" style="background:#d93025">
+                                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="m-option text-white" style="background:#00ca53">
+                                                <i class="fa fa-whatsapp"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 text-center mt-5">
+                                            <button class="btn btn-default btn-round-blue-bordered btn-change-detail">Change Detail</button>
+                                            <button class="btn btn-default btn-round-blue pl-5 pr-5" data-dismiss="modal">Done</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-custom" id="modal-show-more">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content container">
+                <!-- Modal Header -->
+                <div class="modal-header row bg-blue text-white">
+                    <h5 class="modal-title">Choose Media Files</h5>
+                    <div class="btn-close m-0" data-dismiss="modal">&times;
+                    </div>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body row p-0">
+                    <div class="upload-media-panel col-sm-12 p-0 h-100 float-left">
+                        <div class="col-sm-2 left-panel h-100 float-left">
+                            <button class="btn btn-primary btn-upload-media btn-round-blue w-100">+ Upload Media</button>
+                            <div class="left-panel-menu">
+                                <h6><small><b>MANAGE</b></small></h6>
+                                <div class="left-panel-options">
+                                    <div class="left-panel-option selected gallery_media" show_class=".site-file">Site Files</div>
+                                    <div class="left-panel-option favorites" show_class=".favourites">My Favorites</div>
+                                    <div id="choosemarkerbut" class="left-panel-option" show_class=".markers">Markers</div>
+                                </div>
+                            </div>
+                            <div class="left-panel-menu mt-3">
+                                <h6><small><b>EXPLORE</b></small></h6>
+                                <div class="left-panel-options">
+                                    <!-- <div class="left-panel-option" show_class=".wix">Media From Wix</div> -->
+                                    <!-- <div class="left-panel-option" show_class=".shutterstock">Shutterstock</div> -->
+                                    <div class="left-panel-option unsplash_media" show_class=".unsplash">Unsplash</div>
+                                    <div class="left-panel-option googlepoly_media" show_class=".googlepoly">Google Poly</div>
+                                    <div class="left-panel-option youtube_media" show_class=".youtube_panel">Youtube</div>
+                                    <div class="left-panel-option fs_media_m" show_class=".FS_panel">Free Sound</div>
+                                </div>
                             </div>
                         </div>
-											<div class="col-sm-12 pt-2 float-left">
-												<div class="w-100"> <span><small><strong>File Info</strong></small></span>
-												</div>
-												<div class="col-sm-12 float-left p-0">
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Type</strong></small></span>
-														<span class="float-right"><small>png</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Size</strong></small></span>
-														<span class="float-right"><small>100KB</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Resolution</strong></small></span>
-														<span class="float-right"><small>1000x560</small></span>
-													</div>
-													<div class="w-100 float-left mb-1"> <span class="float-left"><small><strong>Uploaded On</strong></small></span>
-														<span class="float-right"><small>22-06-2019</small></span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-                </div>
-                <div class="left-panel-footer w-100">
-					<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
-				</div>
-			</div>
-		</div>
-						<div class="favourites col-sm-10 right-panel float-left p-0 h-100">
-							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-								<div class="panel-header float-left w-100">
-									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control" placeholder="Search">
-										</div>
-									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
-                        <span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-										<span> | </span>
-										</span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
-										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
-									</div>
-								</div>
-								<div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
-									<div class="col-container h-100">
-										<div class="col">
-											<div class="col-sm-2 float-left img-panel">
-												<div class="overlay">
-													<div class="w-100 float-left col-sm-12 p-0">
-														<div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-															<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+                        <div class="site-file active col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control searchImg search_input" placeholder="Search Image">
+                                            <input type="text" class="form-control searchAud search_input" placeholder="Search Audio">
+                                            <input type="text" class="form-control searchVid search_input" placeholder="Search Video">
+                                            <input type="text" class="form-control searchObj search_input" placeholder="Search 3D object">
+                                        </div>
+                                    </div>
+                                    <div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active">
+                                        <span class="my_favorites">
+                        					<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                                        <span> | </span>
+                                        </span>
+                                        <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-th-large" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="panel-header float-left w-100 manage active">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="menu-text">Site File</div>
+                                    </div>
+                                    <div class="float-right filter-menu  mt-2 mb-2 pr-4">
+                                        <span>Create new folder <i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
+                                    <div class="col-container h-100">
+                                        <div id="galleryimgs" class="col" class="style-scroll"></div>
+                                        <div id="galleryimgsrch" class="col" class="style-scroll"></div>
+                                        <div class="col text-left border-blue-l h-100 media-info">
+                                            <div class="close-media-info text-white">
+                                                <b>&times</b>
+                                            </div>
+                                            <!-- <img src="images/4220.jpg" alt="" width="260" height="100"> -->
+                                            <div class="col-sm-12 float-left">
+                                                <div class="pt-2 pb-2"><small>
+                          							<input class="form-control" oninput="editNameAsset(this)" id='newname' type='text' name='name' value="Screenshot 2019-19-01 at 01:30:49 A" placeholder="Rename">
+                          							<input type='hidden' id='elementid' value=''></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 pt-2 float-left">
+                                                <small><strong>Action</strong></small>
+                                                <div class="border-b text-blue pb-2 ">
+                                                    <i class="fa fa-crop" aria-hidden="true"></i>
+                                                    <small>Crop</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 float-left">
+                                                <div class="w-100 float-left  pt-2 pb-2">
+                                                    <span class="float-left"><small><strong>Tags</strong></small></span>
+                                                    <span class="float-right btn-edit-tags"><small>Edit Tags</small></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 float-left edit-tags d-none">
+                                                <div class="w-100 border-b float-left  pt-2 pb-2">
+                                                    <input onchange="editNameAsset(this)" class="form-control" id='newtags' type="text" name="tags" value="" placeholder="Enter tags" data-role="tagsinput" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 float-left saved-tags">
+                                                <div class="w-100 border-b float-left  pt-2 pb-2">
+                                                    <span class="badge badge-pill badge-light btn-showmore mb-1">tag 1</span>
+                                                    <span class="badge badge-pill badge-light btn-showmore mb-1">tag 2</span>
+                                                    <span class="badge badge-pill badge-light btn-showmore mb-1">tag 3</span>
+                                                    <span class="badge badge-pill badge-light btn-showmore mb-1">tag 4</span>
+                                                    <span class="badge badge-pill badge-light btn-showmore mb-1">tag 5</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 pt-2 float-left">
+                                                <div class="w-100"> <span><small><strong>File Info</strong></small></span></div>
+                                                <div class="col-sm-12 float-left p-0">
+                                                    <div class="w-100 float-left mb-1">
+                                                        <span class="float-left"><small><strong>Type</strong></small></span>
+                                                        <span class="float-right"><small>png</small></span>
+                                                    </div>
+                                                    <div class="w-100 float-left mb-1">
+                                                        <span class="float-left"><small><strong>Size</strong></small></span>
+                                                        <span class="float-right"><small>100KB</small></span>
+                                                    </div>
+                                                    <div class="w-100 float-left mb-1">
+                                                        <span class="float-left"><small><strong>Resolution</strong></small></span>
+                                                        <span class="float-right"><small>1000x560</small></span>
+                                                    </div>
+                                                    <div class="w-100 float-left mb-1">
+                                                        <span class="float-left"><small><strong>Uploaded On</strong></small></span>
+                                                        <span class="float-right"><small>22-06-2019</small></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="left-panel-footer w-100">
+                                    <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="favourites col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0">
+                                            <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                    </div>
+                                    <div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active">
+                                        <span class="my_favorites">
+                        					<span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                                        <span> | </span>
+                                        </span>
+                                        <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-th-large" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0" style="border: none">
+                                    <div class="col-container h-100">
+                                        <div class="col">
+                                            <div class="col-sm-2 float-left img-panel">
+                                                <div class="overlay">
+                                                    <div class="w-100 float-left col-sm-12 p-0">
+                                                        <div class="icons float-right mt-3 mr-2"> <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+                                                            <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
                                     <span class="tooltiptext">
                                       <h5 class="w-100 float-left"><small>Add to my favorites</small><hr></h5>
                                       <p class="w-100 float-left">Rename</p>
@@ -487,89 +490,89 @@
                                       <h5 class="w-100 float-left pt-2" style="border-top: 1px solid #ccc"><small>Move To Trash</small></h5>
                                     </span>
                                 </i>
-														</div>
-													</div>
-													<img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
-												</div>
-												<p class="mt-1 float-left w-100"><small>Image name</small>
-												</p>
-											</div>
-										</div>
-									</div>
+                                                        </div>
+                                                    </div>
+                                                    <img class="w-100 pt-4 pb-4" src="https://static.wixstatic.com/media/9d7fe992a4814a7eb816b8e6b3767233.jpg/v1/fill/w_90,h_90/9d7fe992a4814a7eb816b8e6b3767233.jpg" alt="Chania" style="height: 150px!important">
+                                                </div>
+                                                <p class="mt-1 float-left w-100"><small>Image name</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-								</div>
-							</div>
-						</div>
-						<div class="markers col-sm-10 right-panel float-left p-0 h-100">
-							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-								<div class="panel-header float-left w-100">
-									<div class="col-sm-5 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control" placeholder="Search">
-										</div>
-									</div>
-									<div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="markers col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                    </div>
+                                    <div class="float-right filter-menu  mt-2 mb-2 pr-4 manage active"> <span class="my_favorites">
                         <span>Media Types(All) <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-										<span> | </span>
-										</span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
-										<span><i class="fa fa-th-large" aria-hidden="true"></i></span>
-									</div>
-								</div>
-								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
+                                        <span> | </span>
+                                        </span> <span><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-th-large" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                <div class="panel-content pl-4 pr-4 float-left w-100 explore">
 
-									<div id="gallerymarkers" class="row m-0 mt-4 float-left w-100 style-scroll albums-media" style="height: 420px"></div>
-									<div class="left-panel-footer w-100">
-											<button id='buttonDownloadFullImage' class='btn btn-addToPage float-left pull-left'>Download Image</button>
-											<div id="buttonDownloadEncoded" class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes</div>
-										<div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go MarkerLess</div>
+                                    <div id="gallerymarkers" class="row m-0 mt-4 float-left w-100 style-scroll albums-media" style="height: 420px"></div>
+                                    <div class="left-panel-footer w-100">
+                                        <button id='buttonDownloadFullImage' class='btn btn-addToPage float-left pull-left'>Download Image</button>
+                                        <div id="buttonDownloadEncoded" class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes</div>
+                                        <div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go MarkerLess</div>
 
-										<label id='buttonUpload' for='fileinput' class="btn btn-addToPage float-right mt-4 mr-4">
+                                        <label id='buttonUpload' for='fileinput' class="btn btn-addToPage float-right mt-4 mr-4">
 												<input type='file' id='fileinput' style='display: none' accept='image/*'>Upload New Marker</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="unsplash col-sm-10 right-panel float-left p-0 h-100">
-							<div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-								<div class="panel-header float-left w-100">
-									<div class="col-sm-12 mt-2 mb-2 float-left">
-										<div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-											<input type="text" class="form-control unsplash_srch_new" placeholder="Search images from unsplash">
-										</div>
-									</div>
-								</div>
-								<div class="panel-content pl-4 pr-4 float-left w-100 explore">
-									<h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
-									<p class="float-left w-100">Choose from 1000s of stunning images</p>
-									<div class="float-left w-100"> <span>Filter By:</span>
-										<button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="unsplash col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control unsplash_srch_new" placeholder="Search images from Unsplash">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-content pl-4 pr-4 float-left w-100 explore">
+                                    <h2 class="mt-4 mb-1 float-left w-100">Media From Unsplash</h2>
+                                    <p class="float-left w-100">Choose from 1000s of stunning images</p>
+                                    <div class="float-left w-100"> <span>Filter By:</span>
+                                        <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
 										</button>
 										<button type="button" class="btn btn-outline-primary mr-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
 										</button>
 										<button type="button" class="btn btn-outline-primary mr-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
 										</button>
-									</div>
-									<div class="row m-0 mt-4 float-left w-100 style-scroll" id="unsplashImgs"></div>
-									<div class="left-panel-footer w-100">
-										<div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
-									</div>
-								</div>
-							</div>
-            </div>
-            <div class="googlepoly col-sm-10 right-panel float-left p-0 h-100">
-                <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-                  <div class="panel-header float-left w-100">
-                    <div class="col-sm-12 mt-2 mb-2 float-left">
-                      <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects from Google Poly">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                    <h2 class="mt-4 mb-1 float-left w-100">Media From Google Poly</h2>
-                    <p class="float-left w-100">Choose from 1000s of stunning 3D objects</p>
-                    <div class="float-left w-100"> <span>Filter By:</span>
-                      <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="row m-0 mt-4 float-left w-100 style-scroll" id="unsplashImgs"></div>
+                                    <div class="left-panel-footer w-100">
+                                        <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="googlepoly col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control searchGooglePoly" placeholder="Search 3D objects from Google Poly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-content pl-4 pr-4 float-left w-100 explore">
+                                    <h2 class="mt-4 mb-1 float-left w-100">Media From Google Poly</h2>
+                                    <p class="float-left w-100">Choose from 1000s of 3D objects</p>
+                                    <div class="float-left w-100"> <span>Filter By:</span>
+                                        <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                       </button>
                       <button type="button" class="btn btn-outline-primary mr-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                       </button>
@@ -603,31 +606,31 @@
                         </button>
                         <button type="button" class="btn btn-outline-primary mr-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </button>
-                      </div>
-					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound"></div>
-					  <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound_srch">
+                                    </div>
+                                    <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound"></div>
+                                    <div class="row m-0 mt-4 float-left w-100 style-scroll free_sound_srch">
 
-					  </div>
-                      <div class="left-panel-footer w-100">
-                        <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="youtube_panel col-sm-10 right-panel float-left p-0 h-100">
-                    <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
-                      <div class="panel-header float-left w-100">
-                        <div class="col-sm-12 mt-2 mb-2 float-left">
-                          <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control searchYT" placeholder="Search videos from youtube">
-                          </div>
+                                    </div>
+                                    <div class="left-panel-footer w-100">
+                                        <div class="btn btn-addToPage btn-addMedToPage float-right mr-4">Add To Page</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="panel-content pl-4 pr-4 float-left w-100 explore">
-                        <h2 class="mt-4 mb-1 float-left w-100">Media From Youtube</h2>
-                        <p class="float-left w-100">Choose from 1000s of videos</p>
-                        <div class="float-left w-100"> <span>Filter By:</span>
-                          <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <div class="youtube_panel col-sm-10 right-panel float-left p-0 h-100">
+                            <div class="col-sm-12 p-0 right-panel-cover floal-left h-100">
+                                <div class="panel-header float-left w-100">
+                                    <div class="col-sm-5 mt-2 mb-2 float-left">
+                                        <div class="form-group has-search m-0"> <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control searchYT" placeholder="Search videos from Youtube">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-content pl-4 pr-4 float-left w-100 explore">
+                                    <h2 class="mt-4 mb-1 float-left w-100">Media From Youtube</h2>
+                                    <p class="float-left w-100">Choose from 1000s of videos</p>
+                                    <div class="float-left w-100"> <span>Filter By:</span>
+                                        <button type="button" class="btn btn-outline-primary mr-2 ml-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                           </button>
                           <button type="button" class="btn btn-outline-primary mr-2">Primary <i class="fa fa-angle-down" aria-hidden="true"></i>
                           </button>
@@ -1896,363 +1899,331 @@
 				<span>
             &times;
         </span>
-			</div>
-			<div class="bar-body ">
-				<div class="bar-item"> <span><small><i class="fa fa-clone" aria-hidden="true"></i> Copy</small></span>
-				</div>
-				<div class="bar-item" id='remove'> <span><small><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</small></span>
-				</div>
-			</div>
-			<div class="bar-head text-center"> <small>Size</small>
-			</div>
-			<div class="bar-body border-b pt-0">
-				<div class="bar-item">W:</div>
-				<div class="bar-item">
-					<input type="text" value="980">
-				</div>
-				<div class="bar-item">H:</div>
-				<div class="bar-item">
-					<input type="text" value="980">
-				</div>
-			</div>
-			<div class="bar-head text-center"> <small>Position</small>
-			</div>
-			<div class="bar-body border-b pt-0">
-				<div class="bar-item">X:</div>
-				<div class="bar-item">
-					<input type="text" value="980">
-				</div>
-				<div class="bar-item">Y:</div>
-				<div class="bar-item">
-					<input type="text" value="980">
-				</div>
-			</div>
-			<div class="bar-body text-center pb-3 pt-3"> <span class="badge badge-pill badge-light show-effects">Effects</span>
-			</div>
-		</div>
-	</section>
-	<script src="Crop/croppie.js"></script>
-	<script src="UI.js"></script>
-	<script src="Experience.js"></script>
+            </div>
+            <div class="bar-body ">
+                <div class="bar-item"> <span><small><i class="fa fa-clone" aria-hidden="true"></i> Copy</small></span>
+                </div>
+                <div class="bar-item" id='remove'> <span><small><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</small></span>
+                </div>
+            </div>
+            <div class="bar-head text-center"> <small>Size</small>
+            </div>
+            <div class="bar-body border-b pt-0">
+                <div class="bar-item">W:</div>
+                <div class="bar-item">
+                    <input type="text" value="980">
+                </div>
+                <div class="bar-item">H:</div>
+                <div class="bar-item">
+                    <input type="text" value="980">
+                </div>
+            </div>
+            <div class="bar-head text-center"> <small>Position</small>
+            </div>
+            <div class="bar-body border-b pt-0">
+                <div class="bar-item">X:</div>
+                <div class="bar-item">
+                    <input type="text" value="980">
+                </div>
+                <div class="bar-item">Y:</div>
+                <div class="bar-item">
+                    <input type="text" value="980">
+                </div>
+            </div>
+            <div class="bar-body text-center pb-3 pt-3"> <span class="badge badge-pill badge-light show-effects">Effects</span>
+            </div>
+        </div>
+    </section>
+    <script src="Crop/croppie.js"></script>
+    <script src="UI.js"></script>
+    <script src="Experience.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.1/cropper.js" integrity="sha256-bEvzqfDdDJeGI3K2IyVfr13BqY1yTVYu0AkmDKhfiLc=" crossorigin="anonymous"></script>
-	<script>
-		var developerKey = 'AIzaSyDQAHzETBqVoteIYO0O6eZq2yxTpkZJzqI';
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.1/cropper.js" integrity="sha256-bEvzqfDdDJeGI3K2IyVfr13BqY1yTVYu0AkmDKhfiLc=" crossorigin="anonymous"></script>
+    <script>
+        var developerKey = 'AIzaSyDQAHzETBqVoteIYO0O6eZq2yxTpkZJzqI';
 
-		    // The Client ID obtained from the Google API Console. Replace with your own Client ID.
-		    var clientId = '942791088244-a7mic0de50ft9iutuun1i2in7jtc09on.apps.googleusercontent.com';
+        // The Client ID obtained from the Google API Console. Replace with your own Client ID.
+        var clientId = '942791088244-a7mic0de50ft9iutuun1i2in7jtc09on.apps.googleusercontent.com';
 
-		    // Scope to use to access user's photos.
-		    var scope = 'https://www.googleapis.com/auth/photos';
+        // Scope to use to access user's photos.
+        var scope = 'https://www.googleapis.com/auth/photos';
 
-		    var pickerApiLoaded = false;
-		    var oauthToken;
+        var pickerApiLoaded = false;
+        var oauthToken;
 
-		    // Use the API Loader script to load google.picker and gapi.auth.
-		    function onApiLoad() {
-		      gapi.load('auth2', onAuthApiLoad);
-		      gapi.load('picker', onPickerApiLoad);
-		    }
+        // Use the API Loader script to load google.picker and gapi.auth.
+        function onApiLoad() {
+            gapi.load('auth2', onAuthApiLoad);
+            gapi.load('picker', onPickerApiLoad);
+        }
 
-		    function onAuthApiLoad() {
-		      var authBtn = document.getElementById('authg');
-		      authBtn.disabled = false;
-		      authBtn.addEventListener('click', function () {
-		        gapi.auth2.authorize({
-		          client_id: clientId,
-		          scope: scope
-		        }, handleAuthResult);
-		      });
-		    }
+        function onAuthApiLoad() {
+            var authBtn = document.getElementById('authg');
+            authBtn.disabled = false;
+            authBtn.addEventListener('click', function() {
+                gapi.auth2.authorize({
+                    client_id: clientId,
+                    scope: scope
+                }, handleAuthResult);
+            });
+        }
 
-		    function onPickerApiLoad() {
-		      pickerApiLoaded = true;
-		      createPicker();
-		    }
+        function onPickerApiLoad() {
+            pickerApiLoaded = true;
+            createPicker();
+        }
 
-		    function handleAuthResult(authResult) {
-		      if (authResult && !authResult.error) {
-		        oauthToken = authResult.access_token;
-		        createPicker();
-		      }
-		    }
+        function handleAuthResult(authResult) {
+            if (authResult && !authResult.error) {
+                oauthToken = authResult.access_token;
+                createPicker();
+            }
+        }
 
-		    // Create and render a Picker object for picking user Photos.
-		    function createPicker() {
-		      if (pickerApiLoaded && oauthToken) {
-		        var picker = new google.picker.PickerBuilder().
-		          addView(google.picker.ViewId.PHOTOS).
-		          setOAuthToken(oauthToken).
-		          setDeveloperKey(developerKey).
-		          setCallback(pickerCallback).
-		          build();
-				picker.setVisible(true);
-				console.log(picker, 'pickerrrrrrrrrrr')
-		      }
-		    }
+        // Create and render a Picker object for picking user Photos.
+        function createPicker() {
+            if (pickerApiLoaded && oauthToken) {
+                var picker = new google.picker.PickerBuilder().
+                addView(google.picker.ViewId.PHOTOS).
+                setOAuthToken(oauthToken).
+                setDeveloperKey(developerKey).
+                setCallback(pickerCallback).
+                build();
+                picker.setVisible(true);
+                console.log(picker, 'pickerrrrrrrrrrr')
+            }
+        }
 
-		    // A simple callback implementation.
-		    function pickerCallback(data) {
-		      var url = 'nothing';
-		      if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-		        var doc = data[google.picker.Response.DOCUMENTS][0];
-		        url = doc[google.picker.Document.URL];
-		      }
-			  var message = 'You picked: ' + url;
-			  let form = document.querySelector('#form');
-			  let formData = new FormData(form);
-			  formData.append('image', url);
-			  $.ajax({
-		method: 'POST',
-		url: 'https://pitchar.io/api/_create-assets.php',
-		data: formData,
-		processData: false,
-		contentType: false,
-		xhr: function () {
-			var xhr = new window.XMLHttpRequest();
+        // A simple callback implementation.
+        function pickerCallback(data) {
+            var url = 'nothing';
+            if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+                var doc = data[google.picker.Response.DOCUMENTS][0];
+                url = doc[google.picker.Document.URL];
+            }
+            var message = 'You picked: ' + url;
+            let form = document.querySelector('#form');
+            let formData = new FormData(form);
+            formData.append('image', url);
+            $.ajax({
+                method: 'POST',
+                url: 'https://pitchar.io/api/_create-assets.php',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
 
-			// Upload progress
-			xhr.upload.addEventListener(
-				'progress',
-				function (evt) {
-					if (evt.lengthComputable) {
-						var percentComplete = evt.loaded / evt.total;
-						//Do something with upload progress
-						uploadbar.style.width = percentComplete * 100 + '%';
-						if (percentComplete == 1) uploadbar.style.width = 0;
-					}
-				},
-				false
-			);
+                    // Upload progress
+                    xhr.upload.addEventListener(
+                        'progress',
+                        function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                //Do something with upload progress
+                                uploadbar.style.width = percentComplete * 100 + '%';
+                                if (percentComplete == 1) uploadbar.style.width = 0;
+                            }
+                        },
+                        false
+                    );
 
-			// Download progress
-			xhr.addEventListener(
-				'progress',
-				function (evt) {
-					if (evt.lengthComputable) {
-						var percentComplete = evt.loaded / evt.total;
-						// Do something with download progress
-						uploadbar.style.width = percentComplete * 100 + '%';
-						if (percentComplete == 1) uploadbar.style.width = 0;
-					}
-				},
-				false
-			);
+                    // Download progress
+                    xhr.addEventListener(
+                        'progress',
+                        function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                // Do something with download progress
+                                uploadbar.style.width = percentComplete * 100 + '%';
+                                if (percentComplete == 1) uploadbar.style.width = 0;
+                            }
+                        },
+                        false
+                    );
 
-			return xhr;
-		},
-		success(data) {
-			console.log(data);
-			$(".showImagesUploaded").click();
-		}
-	});
-			  console.log(message)
-			  document.getElementById('result').innerHTML = message;
-		    }
-
-
-		    function init() {
-		      gapi.client.setApiKey("AIzaSyACc5T8EmsRDs1nK_i8zqmcK8T9hVy-ljs");
-		      gapi.client.load("youtube", "v3", function () {
-		      });
-
-		    }
-
-		    var innerImageURL = null
-		    var fullMarkerURL = null
-
-		    innerImageURL = 'trainer/inner-images/inner-hiro.png'
-		    updateFullMarkerImage()
-
-		    document.querySelector('#buttonDownloadEncoded').addEventListener('click', function () {
-				debugger;
-		      if (innerImageURL === null) {
-		        alert('upload a file first')
-		        return false;
-		      }
-		      console.assert(innerImageURL)
-
-		      THREEx.ArPatternFile.encodeImageURL(innerImageURL, function onComplete(patternFileString) {
-		        THREEx.ArPatternFile.triggerDownload(patternFileString);
-		      })
-		    })
+                    return xhr;
+                },
+                success(data) {
+                    console.log(data);
+                    $(".showImagesUploaded").click();
+                }
+            });
+            console.log(message)
+            document.getElementById('result').innerHTML = message;
+        }
 
 
-		    document.querySelector('#buttonDownloadFullImage').addEventListener('click', function () {
-		      // debugger
-		      if (innerImageURL === null) {
-		        alert('upload a file first')
-		        return
-		      }
+        function init() {
+            gapi.client.setApiKey("AIzaSyACc5T8EmsRDs1nK_i8zqmcK8T9hVy-ljs");
+            gapi.client.load("youtube", "v3", function() {});
 
-		      // tech from https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
-		      var domElement = window.document.createElement('a');
-		      domElement.href = fullMarkerURL;
-		      domElement.download = 'marker.png';
-		      document.body.appendChild(domElement)
-		      domElement.click();
-		      document.body.removeChild(domElement)
-		    })
+        }
 
+        var innerImageURL = null
+        var fullMarkerURL = null
 
+        innerImageURL = 'trainer/inner-images/inner-hiro.png'
+        updateFullMarkerImage()
 
-		    document.querySelector('#patternRatioSlider').addEventListener('input', function () {
-		      // update the patternRatio number
-		      var patternRatio = document.querySelector('#patternRatioSlider').value / 100
-		      var domElement = document.querySelector('[for=patternRatioSlider] span')
-		      domElement.innerHTML = `Pattern Ratio ${patternRatio.toFixed(2)}`
+        document.querySelector('#buttonDownloadEncoded').addEventListener('click', function() {
+            debugger;
+            if (innerImageURL === null) {
+                alert('upload a file first')
+                return false;
+            }
+            console.assert(innerImageURL)
 
-		      // update fullMarkerImage
-		      updateFullMarkerImage()
-		    })
+            THREEx.ArPatternFile.encodeImageURL(innerImageURL, function onComplete(patternFileString) {
+                THREEx.ArPatternFile.triggerDownload(patternFileString);
+            })
+        })
 
 
-		    document.querySelector('#fileinput').addEventListener('change', function () {
-				//debugger;
-		      var file = this.files[0];
-		      // debugger
+        document.querySelector('#buttonDownloadFullImage').addEventListener('click', function() {
+            // debugger
+            if (innerImageURL === null) {
+                alert('upload a file first')
+                return
+            }
 
-		      var reader = new FileReader();
-		      reader.onload = function (event) {
-		        innerImageURL = event.target.result
-		        updateFullMarkerImage()
-		      };
-		      reader.readAsDataURL(file);
-		    })
-
-		    function updateFullMarkerImage() {
-		      // get patternRatio
-		      var patternRatio = document.querySelector('#patternRatioSlider').value / 100
-
-		      THREEx.ArPatternFile.buildFullMarker(innerImageURL, patternRatio, function onComplete(markerUrl) {
-		        fullMarkerURL = markerUrl
+            // tech from https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+            var domElement = window.document.createElement('a');
+            domElement.href = fullMarkerURL;
+            domElement.download = 'marker.png';
+            document.body.appendChild(domElement)
+            domElement.click();
+            document.body.removeChild(domElement)
+        })
 
 
-		        // put fullMarkerImage into #imageContainer
+
+        document.querySelector('#patternRatioSlider').addEventListener('input', function() {
+            // update the patternRatio number
+            var patternRatio = document.querySelector('#patternRatioSlider').value / 100
+            var domElement = document.querySelector('[for=patternRatioSlider] span')
+            domElement.innerHTML = `Pattern Ratio ${patternRatio.toFixed(2)}`
+
+            // update fullMarkerImage
+            updateFullMarkerImage()
+        })
 
 
-		      })
-		    }
-	</script>
-	<script>
-		$(document).ready(function(){
-			// $('.unsplash-loaded').each(function(){
-				
-			// 	// var img=$('.unsplash-loaded')[i];
+        document.querySelector('#fileinput').addEventListener('change', function() {
+            //debugger;
+            var file = this.files[0];
+            // debugger
 
-			// 	var real_width, real_height;
-			// 	// alert(img.width); 
-			// 	console.log(this.src);
-			// 	$('<img/>').attr('src',this.src)
-			// 	.load(function(){
-			// 		real_width=this.width;
-			// 		real_height=this.height;
-			// 		this.width=real_width/3;
-			// 		this.height=real_height/3;
-			// 	});
-			// });
-			// 	adjust size of unslpashimg
-			// $('#unslpashimg').ready(fumctiom(){
-			// 	var img = $(imgFull)[0]; // Get my img elem
-   //  			var real_width, real_height;
-   //  			$("<img/>").attr("src", $(imgFull).attr("src"))
-   //      		.load(function() {
-   //          	real_width = this.width;   // Note: $(this).width() will not
-   //          	real_height = this.height; // work for in memory images.
-   //      		});
-   // 				$('#unslpashImgs').ready(function(){
-   // 				var unimages=$('div #unsplashImgs : img');
-   // 				unimages.each(function(){
-   // 					var real_height,real_width;
-   // 					real_height=this.height;
-   // 					real_width=this.width;
-   // 					this.height=real_height/3;
-   // 					this.width=real_width/3;
-   // 				});
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                innerImageURL = event.target.result
+                updateFullMarkerImage()
+            };
+            reader.readAsDataURL(file);
+        })
 
-   				
-   					
-				//project name as title in publish modal
-				$('.btn-publish').on('click',function(){
-					var proname=document.getElementById("project-title").value;
-					document.getElementById('title').value=proname;
-				});
+        function updateFullMarkerImage() {
+            // get patternRatio
+            var patternRatio = document.querySelector('#patternRatioSlider').value / 100
 
-		        // main menu, fixed left baar
-		       $('.left-fixed-bar').on('click','.menu-left', function() {
-		         var panel = $(this).attr('panel-name');
-		         selectItem('vertical-bars', 'active', panel);
-		         selectItem('left-fixed-bar', 'selected', this);
-		       });
-		       // fixed left bar indicators
-		       $('.panel-indicators').on('click','.indicator', function() {
-		         var index = $(this).index();
-		         selectItem('panel-indicators', 'selected', this)
-		         $(".active .panel-content").animate({scrollTop: $(".active .panel-content .content").eq(index).position().top}, 600, 'swing');
-			  });
-			  $('#tab-3d-files a.nav-link').on('shown.bs.tab', function (e) {
-					$('#3d-type').val($(e.target).attr("value"));
-				});
-		        // open upload media modal
-		        $('.me-opt').click(function(){
-		          var tab = $(this).attr('tab')
-		          $('#modal-upload-media').modal('show');
-		          $(tab).click();
-				});
-				$('.upload-3d-media').click(function(){
-				  $('#modal-upload-media').modal('show');
-				  var tab = $(this).attr('tab');
-				  console.log(tab, 'tab')
-				  $(tab).click();
-            	});
-				// upload img
-				$('.me-opt-upld').click(function(){
-		          $('#image').click();
-				});
-				$('.me-opt-upload-aud').click(function(){
+            THREEx.ArPatternFile.buildFullMarker(innerImageURL, patternRatio, function onComplete(markerUrl) {
+                fullMarkerURL = markerUrl
 
-		          $('#audio').click();
-				});
-				$('.me-upload-vid').click(function(){
-					  $('#video').click();
-				});
 
-		        // show effects panel
-		        $('.show-effects').click(function(){
-		          $(".effect-options").toggleClass('slide');
-		          $('.effect-option').click(function(){
-		            $('.effect-option').removeClass('fill');
-		            $(this).addClass('fill');
-		          });
-		        });
-		        // image file info panel
-		        $('body').on('click','.img-panel', function(){
-		          $('.img-panel').removeClass('active');
-		          $(this).addClass('active');
-		        });
-		        $('.close-media-info').click(function(){
-		          $('.media-info').removeClass('show');
-		        });
-		        $('.btn-continue').click( function(e){
-		           e.preventDefault();
-				   $('.congo-screen').addClass('slide-on');
-				   sharelnk(this)
-		        });
-				$('.btn-change-detail').click( function(e){
-		           e.preventDefault();
-		           $('.congo-screen').removeClass('slide-on')
-		        });
-		        // upload media modal tabs
-		        $(".tabs").on('click', 'a', function(e){
-		           e.preventDefault();
-		           $('#tabs-container .entry-content').hide();
-		           $($(this).attr("href")).show();
-		           selectItem('tabs', 'active', this);
-		        });
+                // put fullMarkerImage into #imageContainer
 
-		        // upload media
-		        $('.btn-upload-media .btn-round-blue').click(function(){
-		          $('#fileid').click()
+
+            })
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('.btn-publish').on('click', function() {
+                var proname = document.getElementById("project-title").value;
+                $('.modal-content').ready(function() {
+                    document.getElementById('title').value = proname;
+                });
+            });
+
+
+            // main menu, fixed left baar
+            $('.left-fixed-bar').on('click', '.menu-left', function() {
+                var panel = $(this).attr('panel-name');
+                selectItem('vertical-bars', 'active', panel);
+                selectItem('left-fixed-bar', 'selected', this);
+            });
+            // fixed left bar indicators
+            $('.panel-indicators').on('click', '.indicator', function() {
+                var index = $(this).index();
+                selectItem('panel-indicators', 'selected', this)
+                $(".active .panel-content").animate({
+                    scrollTop: $(".active .panel-content .content").eq(index).position().top
+                }, 600, 'swing');
+            });
+            $('#tab-3d-files a.nav-link').on('shown.bs.tab', function(e) {
+                $('#3d-type').val($(e.target).attr("value"));
+            });
+            // open upload media modal
+            $('.me-opt').click(function() {
+                var tab = $(this).attr('tab')
+                $('#modal-upload-media').modal('show');
+                $(tab).click();
+            });
+            $('.upload-3d-media').click(function() {
+                $('#modal-upload-media').modal('show');
+                var tab = $(this).attr('tab');
+                console.log(tab, 'tab')
+                $(tab).click();
+            });
+            // upload img
+            $('.me-opt-upld').click(function() {
+                $('#image').click();
+            });
+            $('.me-opt-upload-aud').click(function() {
+
+                $('#audio').click();
+            });
+            $('.me-upload-vid').click(function() {
+                $('#video').click();
+            });
+
+            // show effects panel
+            $('.show-effects').click(function() {
+                $(".effect-options").toggleClass('slide');
+                $('.effect-option').click(function() {
+                    $('.effect-option').removeClass('fill');
+                    $(this).addClass('fill');
+                });
+            });
+            // image file info panel
+            $('body').on('click', '.img-panel', function() {
+                $('.img-panel').removeClass('active');
+                $(this).addClass('active');
+            });
+            $('.close-media-info').click(function() {
+                $('.media-info').removeClass('show');
+            });
+            $('.btn-continue').click(function(e) {
+                e.preventDefault();
+                $('.congo-screen').addClass('slide-on');
+                sharelnk(this)
+            });
+            $('.btn-change-detail').click(function(e) {
+                e.preventDefault();
+                $('.congo-screen').removeClass('slide-on')
+            });
+            // upload media modal tabs
+            $(".tabs").on('click', 'a', function(e) {
+                e.preventDefault();
+                $('#tabs-container .entry-content').hide();
+                $($(this).attr("href")).show();
+                selectItem('tabs', 'active', this);
+            });
+
+            // upload media
+            $('.btn-upload-media .btn-round-blue').click(function() {
+                $('#fileid').click()
             });
 
 
