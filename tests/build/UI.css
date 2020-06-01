@@ -1,15 +1,13 @@
 .hbox {
     position: relative;
     float: left;
-    width: 50%;
-    height: 120px;
 }
 
 .hbox:hover .options {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 90%;
+    width: 100%;
     background: #000000c7;
 }
 
