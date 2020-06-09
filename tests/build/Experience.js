@@ -72,7 +72,7 @@ function sharelnk(e) {
 		console.log(formData);
 		$.ajax({
 			method: 'POST',
-			url: 'https://pitchar.io/pitchar_api/_post_experience.php',
+			url: 'http://localhost/user/apis/_post_experience.php',
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -139,7 +139,7 @@ function gotolink() {
 function selectMarker(e) {
 	$.ajax({
 		method: 'POST',
-		url: 'https://pitchar.io/pitchar_api/_fetch_marker.php',
+		url: 'http://localhost/user/apis/_fetch_marker.php',
 		data: { authtoken: token, submit: 1, id: e.dataset.markerid },
 		success(data) {
 			console.log(data);
@@ -219,7 +219,7 @@ function markerless(e) {
 function fetchExperience() {
 	$.ajax({
 		method: 'POST',
-		url: 'https://pitchar.io/pitchar_api/_fetch_experience.php',
+		url: 'http://localhost/user/apis/_fetch_experience.php',
 		data: { authtoken: token, experienceid: expid, submit: 1 },
 		success(data) {
 			var dom = document.createElement('html');
@@ -242,7 +242,7 @@ function fetchExperience() {
 function editExperience(exptxt) {
 	$.ajax({
 		method: 'POST',
-		url: 'https://pitchar.io/pitchar_api/_edit_post_experience.php',
+		url: 'http://localhost/user/apis/_edit_post_experience.php',
 		data: { authtoken: token, id: expid, submit: 1, experience: exptxt},
 		success(data) {
 				console.log(data);

@@ -293,7 +293,7 @@ var c;
 function delimg(e) {
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_delete-assets.php',
+        url: 'http://localhost/user/apis/_delete_assets.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             $(e).closest('.img-panel').hide();
@@ -625,7 +625,7 @@ function uploadImg(event) {
     formData.append('image', imgfil, filename);
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_create-assets.php',
+        url: 'http://localhost/user/apis/_create_assets.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -707,7 +707,7 @@ function editNameAsset(e) {
     if (edittype == 'a') {
         $.ajax({
             method: 'POST',
-            url: 'https://pitchar.io/api/_update-assets.php',
+            url: 'http://localhost/user/apis/_update_assets.php',
             data: formData,
             processData: false,
             contentType: false,
@@ -751,7 +751,7 @@ function editNameAsset(e) {
     } else {
         $.ajax({
             method: 'POST',
-            url: 'https://pitchar.io/api/_update_media.php',
+            url: 'http://localhost/user/apis/_update_media.php',
             data: formData,
             processData: false,
             contentType: false,
@@ -829,7 +829,7 @@ $('#imagebut').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'https://pitchar.io/api/_fetch-assets.php',
+        url: 'http://localhost/user/apis/_fetch_assets.php',
         data: {
             submit: 1,
             authtoken: token
@@ -923,7 +923,7 @@ $('body').on('keyup', '.searchImg', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'https://pitchar.io/api/_search_assets.php',
+            url: 'http://localhost/user/apis/_search_assets.php',
             data: {
                 submit: true,
                 authtoken: token,
@@ -1121,7 +1121,7 @@ $('.3d_assets').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'https://pitchar.io/api/_fetch-assets.php',
+        url: 'localhost/user/apis/_fetch-assets.php',
         data: {
             submit: 1,
             authtoken: token
@@ -1196,7 +1196,7 @@ $('.3d_assets').click(function() {
 							<div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
 							</div>
 							`;
-                    // console.log(asset, 'asset')
+                    console.log(asset, 'asset')
                     if ((asset.Assetstype == 'gltf' && asset.gltf != '') || (asset.Assetstype == 'fbx' && asset.fbx != '') || (asset.Assetstype == 'obj' && asset.obj != '')) {
                         document.getElementById('galleryobjs').appendChild(div);
                         $(elem).appendTo('#galleryimgs');
@@ -1227,7 +1227,7 @@ $('body').on('keyup', '.searchObj', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'https://pitchar.io/api/_search_assets.php',
+            url: 'http://localhost/user/apis/_search_assets.php',
             data: {
                 submit: true,
                 authtoken: token,
@@ -1278,7 +1278,7 @@ $('body').on('keyup', '.searchObj', function(event) {
 function delobj(e) {
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_delete-assets.php',
+        url: 'http://localhost/user/apis/_delete-assets.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1292,7 +1292,7 @@ function uploadObj(event) {
 
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_create-assets.php',
+        url: 'http://localhost/user/apis/_create-assets.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1458,7 +1458,7 @@ $('.audio_assets').click(function() {
     //});
     $.ajax({
         method: 'post',
-        url: 'https://pitchar.io/api/_fetch-media.php',
+        url: 'http://localhost/user/apis/_fetch-media.php',
         data: {
             submit: 1,
             authtoken: token
@@ -1576,7 +1576,7 @@ $('body').on('keyup', '.searchAud', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'https://pitchar.io/api/_search_media.php',
+            url: 'http://localhost/user/apis/_search_media.php',
             data: {
                 submit: true,
                 authtoken: token,
@@ -1775,7 +1775,7 @@ $('body').on('keyup', '.searchFS', function(event) {
 function delaud(e) {
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_delete-media.php',
+        url: 'http://localhost/user/apis/_delete-media.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1789,7 +1789,7 @@ function uploadAud(event) {
     let formData = new FormData(form);
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_create-media.php',
+        url: 'http://localhost/user/apis/_create-media.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1857,7 +1857,7 @@ function uploadVid(event) {
     // event.closest('.modal-body').append(div);
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_create-media.php',
+        url: 'http://localhost/user/apis/_create-media.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1925,7 +1925,7 @@ function uploadVid(event) {
 function delvid(e) {
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/api/_delete-media.php',
+        url: 'http://localhost/user/apis/_delete-media.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1991,7 +1991,7 @@ $('.video_assets').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'https://pitchar.io/api/_fetch-media.php',
+        url: 'http://localhost/user/apis/_fetch-media.php',
         data: {
             submit: 1,
             authtoken: token
@@ -2092,7 +2092,7 @@ $('body').on('keyup', '.searchVid', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'https://pitchar.io/api/_search_media.php',
+            url: 'http://localhost/user/apis/_search_media.php',
             data: {
                 submit: true,
                 authtoken: token,
@@ -2306,7 +2306,7 @@ document.getElementById('choosemarkerbut').addEventListener('click', function(e)
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
     $.ajax({
         method: 'POST',
-        url: 'https://pitchar.io/pitchar_api/_fetch_markers.php',
+        url: 'http://localhost/user/apis/_fetch_markers.php',
         data: { authtoken: token, submit: 1 },
         success(data) {
             var markers = data.Data;
@@ -2351,7 +2351,7 @@ $(document).ready(function() {
     }
     $.ajax({
         method: 'post',
-        url: 'https://pitchar.io/api/_fetch-assets.php',
+        url: 'http://localhost/user/apis/_fetch_assets.php',
         data: {
             submit: 1,
             authtoken: token
@@ -2367,7 +2367,7 @@ $(document).ready(function() {
 
                 if (asset.Assetstype == 'image' && asset.Projectimage != '') {
                     if (count_ast < 6) {
-                        var imag = `<img onclick="pushImg(this);" src="${src}" alt="">`;
+                        var imag = `<img src="${src}" onclick="pushImg(this);"  alt="">`;
                         $(imag).appendTo('.galleryimgs');
                     }
                     count_ast++;
