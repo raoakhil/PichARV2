@@ -1121,7 +1121,7 @@ $('.3d_assets').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'localhost/user/apis/_fetch-assets.php',
+        url: 'http://localhost/user/apis/_fetch_assets.php',
         data: {
             submit: 1,
             authtoken: token
@@ -1278,7 +1278,7 @@ $('body').on('keyup', '.searchObj', function(event) {
 function delobj(e) {
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_delete-assets.php',
+        url: 'http://localhost/user/apis/_delete_assets.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1292,7 +1292,7 @@ function uploadObj(event) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create-assets.php',
+        url: 'http://localhost/user/apis/_create_assets.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1458,7 +1458,7 @@ $('.audio_assets').click(function() {
     //});
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch-media.php',
+        url: 'http://localhost/user/apis/_fetch_media.php',
         data: {
             submit: 1,
             authtoken: token
@@ -1775,7 +1775,7 @@ $('body').on('keyup', '.searchFS', function(event) {
 function delaud(e) {
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_delete-media.php',
+        url: 'http://localhost/user/apis/_delete_media.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1789,7 +1789,7 @@ function uploadAud(event) {
     let formData = new FormData(form);
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create-media.php',
+        url: 'http://localhost/user/apis/_create_media.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1857,7 +1857,7 @@ function uploadVid(event) {
     // event.closest('.modal-body').append(div);
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create-media.php',
+        url: 'http://localhost/user/apis/_create_media.php',
         data: formData,
         processData: false,
         contentType: false,
@@ -1925,7 +1925,7 @@ function uploadVid(event) {
 function delvid(e) {
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_delete-media.php',
+        url: 'http://localhost/user/apis/_delete_media.php',
         data: { authtoken: token, product_id: e.dataset.pid },
         success(data) {
             e.parentNode.parentNode.style.display = 'none';
@@ -1991,7 +1991,7 @@ $('.video_assets').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch-media.php',
+        url: 'http://localhost/user/apis/_fetch_media.php',
         data: {
             submit: 1,
             authtoken: token

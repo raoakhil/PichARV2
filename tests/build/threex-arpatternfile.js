@@ -163,7 +163,7 @@ function uploadMarker() {
 	dataimg.append('marker', Blobimg, 'marker.png');
 	$.ajax({
 		method: 'POST',
-		url: 'https://pitchar.io/pitchar_api/_post_marker.php',
+		url: 'http://localhost/user/apis/_post_marker.php',
 		data: dataimg,
 		enctype: 'multipart/form-data',
 		contentType: false,
@@ -178,7 +178,7 @@ function uploadMarker() {
 			datapatt.append('patt', Blobpatt, 'marker.patt');
 			$.ajax({
 				method: 'POST',
-				url: 'https://pitchar.io/pitchar_api/_post_patt.php',
+				url: 'http://localhost/user/apis/_post_patt.php',
 				data: datapatt,
 				enctype: 'multipart/form-data',
 				contentType: false,
