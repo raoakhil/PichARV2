@@ -214,7 +214,7 @@
     <div id="result"></div>
     <!-- modals -->
     <div class="modal fade modal-custom" id="modal-publish" aria-modal="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content" id='publish'>
                 <!-- Modal Header -->
                 <div class="modal-header bg-blue text-white text-center">
@@ -609,22 +609,24 @@
 
                                     <div id="gallerymarkers"
                                         class="row m-0 mt-4 float-left w-100 style-scroll albums-media"
-                                        style="height: 420px"></div>
-                                    <div class="left-panel-footer w-100">
-                                        <button id='buttonDownloadFullImage'
-                                            class='btn btn-addToPage float-left pull-left'>Download Image</button>
-                                        <div id="buttonDownloadEncoded"
-                                            class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes
-                                        </div>
-                                        <div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go
-                                            MarkerLess</div>
-
-                                        <label id='buttonUpload' for='fileinput'
-                                            class="btn btn-addToPage float-right mt-4 mr-4">
-                                            <input type='file' id='fileinput' style='display: none'
-                                                accept='image/*'>Upload New Marker</label>
+                                        style="height: 420px">
                                     </div>
                                 </div>
+                                <div class="left-panel-footer w-100">
+                                    <button id='buttonDownloadFullImage'
+                                        class='btn btn-addToPage float-left pull-left'>Download Image</button>
+                                    <div id="buttonDownloadEncoded"
+                                        class="btn btn-addToPage btn-addMedToPage float-right mr-4">Save Changes
+                                    </div>
+                                    <div class="btn btn-addToPage float-right mr-4" onclick="markerless(this)">Go
+                                        MarkerLess</div>
+
+                                    <label id='buttonUpload' for='fileinput'
+                                        class="btn btn-addToPage float-right mt-4 mr-4">
+                                        <input type='file' id='fileinput' style='display: none'
+                                            accept='image/*'>Upload New Marker</label>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="unsplash col-sm-10 right-panel float-left p-0 h-100">
@@ -864,7 +866,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header bg-blue text-white">
                     <h5 class="modal-title">Choose Media Files</h5>
-                    <div class="btn-close m-0" data-dismiss="modal">×</div>
+                    <div class="btn-close upload-media-close m-0" data-dismiss="modal">×</div>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body p-0">
@@ -960,6 +962,8 @@
                                 </div>
                             </div>
                             <form id="form2" enctype="multipart/form-data" method="post">
+                                <input type="file" id="img" name="thumbnail" accept="image/*">
+
                                 <div style="display: none">
                                     <input id='auth3' name="authtoken" type="hidden" value="">
                                     <input type="hidden" name="create" value="1">
@@ -1064,7 +1068,7 @@
                                                 <div
                                                     class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area">
                                                     <h1>FBX</h1>
-                                                    <input class="obj-file gltf" type="file" name="fbx"
+                                                    <input class="obj-file fbx" type="file" name="fbx"
                                                         required="required" />
                                                     <div class="b-dahsed-blue file-dummy">
                                                         <div class="success">Great, your files are selected. Keep on.
@@ -1535,7 +1539,7 @@
             <div class="left-bar-item audio_assets" panel-name=".audio-panel"> <i class="fa fa-volume-up"
                     aria-hidden="true"></i>
             </div>
-            <div class="left-bar-item menu-left" panel-name=".image-panel"> <i class="fa fa-picture-o"
+            <div class="left-bar-item menu-left image_assets" panel-name=".image-panel"> <i class="fa fa-picture-o"
                     aria-hidden="true"></i>
             </div>
             <div class="left-bar-item menu-left" panel-name=".text-panel"> <i class="fa fa-text-width"
@@ -1621,7 +1625,7 @@
                             <div class="content-title">Gallery</div>
                             <div class="images-options 3d-gallery-thumb"></div>
                             <div class="bar-body text-center"> <span id=""
-                                    class="badge badge-pill badge-light btn-showmore g_poly asset_3d btn-showmore-3d"
+                                    class="badge badge-pill badge-light btn-showmore g_poly asset_3d btn-showmore-3d showObjUploaded"
                                     show_srch=".searchObj" show-panel=".gallery_media">show more</span>
                             </div>
                         </div>
@@ -1634,7 +1638,7 @@
                             </div>
                         </div>
                         <div class="panel-footer text-center">
-                            <button class="btn btn-primary btn-upload-media btn-round-blue">Upload Media</button>
+                            <button class="btn btn-primary btn-upload-media upload-3d-media btn-round-blue">Upload Media</button>
                         </div>
                     </div>
                 </div>
@@ -1683,25 +1687,7 @@
                         <div class="content mb-3">
                             <div class="content-title">Upload Your media</div>
                             <div class="media-options">
-                                <form id="form6" enctype="multipart/form-data" method="post" style="display: none">
-                                    <input id='auth5' name="authtoken" type="hidden" value="">
-                                    <!-- <label>Name :</label>
-										<br>
-										<input id="videoname" name="name">
-										<br>
-										<label>Video :</label> -->
-                                    <input id="video" name="video" type="file">
-                                    <!-- <label>Thumbnail :</label>
-										<input id="videothumb" name="thumbnail" type="file"> -->
-                                    <input type="hidden" name="create" value="1">
-                                    <!-- <label>Is this a 360 video? :</label>
-										<input type='hidden' id='vidtype' name='type' value="2D">
-										<input type='checkbox' onclick="chgvidtype(this);"> -->
-                                    <!-- <br>
-										<br> -->
-                                    <!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
-                                </form>
-
+                                
                                 <div class="m-option me-upload-vid bg-blue" tab=".upload-pc" data-container="body"
                                     data-toggle="popover" data-placement="top" data-content="Upload Media">
                                     <svg width="19" height="19" viewBox="0 0 19 19" class="symbol symbol-upload-btn">
@@ -1732,8 +1718,8 @@
                         <div class="content mb-3">
                             <div class="content-title">Gallery</div>
                             <div class="images-options video_gallery"></div>
-                            <div class="bar-body text-center"> <span class="badge badge-pill badge-light btn-showmore "
-                                    show_srch=".searchVid" show_modal=".gallery_media">show more</span>
+                            <div class="bar-body text-center"> <span class="badge badge-pill badge-light btn-showmore showVideosUploaded"
+                                    show_srch=".searchVid" show-panel=".gallery_media">show more</span>
                             </div>
                         </div>
                         <div class="content mb-3">
@@ -1744,13 +1730,55 @@
                             </div>
                         </div>
                         <div class="panel-footer text-center">
-                            <button class="btn btn-primary btn-upload-media btn-round-blue me-upload-vid">Upload
+                            <button class="btn btn-primary btn-upload-media btn-round-blue me-upload-vid" data-toggle="modal" data-target="#video-upload-modal">Upload
                                 Media</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="video-upload-modal" tabindex="-1" role="dialog" aria-labelledby="video-upload-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" id = "upload-video-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form6" enctype="multipart/form-data" method="post" >
+                        <input id='auth5' name="authtoken" type="hidden" value="">
+                        <!-- <label>Name :</label>
+                            <br>
+                            <input id="videoname" name="name">
+                            <br>
+                            <label>Video :</label> -->
+                        <label for="thumbnail">Thumbnail</label>
+                        <input id="thumbnail" name="thumbnail" type="file" accept="image/*"><br>
+                        <label for="video">Video</label>
+                        <input id="video" name="video" type="file" accept="video/*"><br>
+                        
+                        <!-- <label>Thumbnail :</label>
+                            <input id="videothumb" name="thumbnail" type="file"> -->
+                            <input type="hidden" name="create" value="1">
+                            <input type="hidden" name="type" value="2D">
+                            <!-- <label>Is this a 360 video? :</label>
+                            <input type='hidden' id='vidtype' name='type' value="2D">
+                            <input type='checkbox' onclick="chgvidtype(this);"> -->
+                        <!-- <br>
+                            <br> -->
+                        <!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
+                    </form>
+
+                </div>
+            </div>
+            </div>
+        </div>
+
+
         <div class="left-bar-panel audio-panel">
             <div class="panel-indicators">
                 <div class="indicator selected">
@@ -1841,7 +1869,7 @@
                             <div class="content-title">Gallery</div>
                             <div class="images-options gallery_audio"></div>
                             <div class="bar-body text-center"> <span class="badge badge-pill badge-light btn-showmore"
-                                    show_srch=".searchAud" show_modal=".gallery_media">show more</span>
+                                    show_srch=".searchAud" show-panel=".gallery_media">show more</span>
                             </div>
                         </div>
                         <div class="content mb-3">
@@ -2499,7 +2527,7 @@
                 $('#audio').click();
             });
             $('.me-upload-vid').click(function () {
-                $('#video').click();
+                $("#video-upload-modal").modal('show');
             });
 
             // show effects panel

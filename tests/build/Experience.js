@@ -72,7 +72,7 @@ function sharelnk(e) {
 		console.log(formData);
 		$.ajax({
 			method: 'POST',
-			url: 'http://localhost/user/apis/_post_experience.php',
+			url: 'http://127.0.0.1:8000/api/_post_experience',
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -139,7 +139,7 @@ function gotolink() {
 function selectMarker(e) {
 	$.ajax({
 		method: 'POST',
-		url: 'http://localhost/user/apis/_fetch_marker.php',
+		url: 'http://127.0.0.1:8000/api/_fetch_marker',
 		data: { authtoken: token, submit: 1, id: e.dataset.markerid },
 		success(data) {
 			console.log(data);

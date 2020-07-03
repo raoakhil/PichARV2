@@ -8,7 +8,7 @@ var n = 0;
 var u = 0;
 var cnt = 0;
 var uploadbar = document.getElementById('uploadbar');
-var imgfil = '';
+var imgfil =new Blob();
 var filename = '';
 var bool = 0;
 var object;
@@ -606,26 +606,36 @@ $('#image').change(function() {
 $('#audio').change(function() {
     uploadAud();
 });
-$('#vedio').change(function() {
+$('#video').change(function() {
     uploadVid();
 });
 $('.obj-file').change(function() {
-    if ($('#3d-type').val() == 'obj' && $('.obj-file.obj').val() && $('.obj-file.mtl').val()) {
+    console.log("$('#3d-type').val()",$('#3d-type').val());
+    if ($('#3d-type').val() == 'obj' && ($('.obj-file.obj').val() || $('.obj-file.mtl').val())) {
         uploadObj();
     }
     if ($('#3d-type').val() == 'gltf' && $('.obj-file.gltf').val()) {
+        uploadObj();
+    }
+    if ($('#3d-type').val() == 'fbx' && $('.obj-file.fbx').val()) {
         uploadObj();
     }
 
 });
 
 function uploadImg(event) {
+    console.log('uploadImg');
     let form = document.querySelector('#form');
     let formData = new FormData(form);
-    formData.append('image', imgfil, filename);
+    // formData.append('image', imgfil, filename);
+    // Log the key/value pairs
+    console.log('working fine');
+    for (var pair of formData.entries()) {
+        console.log(pair[0]+ ' - ' + pair[1]); 
+    }
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create_assets.php',
+        url: 'http://127.0.0.1:8000/api/_create_assets',
         data: formData,
         processData: false,
         contentType: false,
@@ -662,30 +672,67 @@ function uploadImg(event) {
 
             return xhr;
         },
-        success(data) {
-            console.log(data)
-                // var div = document.createElement('div');
-                // div.setAttribute('class', 'hbox');
-                // var node = document.createElement('img');
-                // node.src = data.data.image;
-                // node.width = 125;
-                // node.height = 125;
-                // node.id = 'img' + perm;
-                // node.style = 'margin:4px;';
-                // node.setAttribute('onclick', 'pushImg(this);');
-                // div.appendChild(node);
-                // var overlay = document.createElement('div');
-                // overlay.setAttribute('class', 'options');
-                // var del = document.createElement('button');
-                // del.setAttribute('onclick', 'delimg()');
-                // del.setAttribute('data-pid', data.data.id);
-                // overlay.appendChild(del);
-                // div.appendChild(node);
-                // if (data.data.image != '') document.getElementById('galleryimgs').appendChild(div);
-                // else uploadImg(event);
-                // uploadbar.style.width = 0;
+        success(data){
+            var result = data.data;
+            var imgid = 'img'+perm;
+            var name = result.name ? result.name : 'None';
+            var show_none = result.image ? '' : 'd-none';
+            var child = document.createElement('div');
+            child.setAttribute('class','col-sm-2 float-left img-panel');
+            child.id = imgid;
+            var elem = `
+				<div class="overlay">
+				<div class="icons float-right mt-3 mr-2">
+				<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+				<span class="tooltiptext">
+				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+
+				<div class="w-100 float-left">Crop</div>
+				<div data-typ="a" class="w-100 float-left edit_info" data-name="${name}" data-tags="${result.tags}" data-pid='${imgid}' onclick='editAssetId(this)'>Edit</div>
+				<h5 onclick='delimg(this)' data-pid='${imgid}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+				</span>
+				</i>
+				</div>
+				</div>
+				<div class="w-100 float-left col-sm-12 p-0">
+
+					  <img onclick="pushImg(this);" class="w-100 pt-4 pb-4 ${show_none}" src="${result.image}" id="${imgid}" alt="Chania" style="height: 150px">
+					  </div>
+					<div class="mt-1 float-left w-100" id="name_${imgid}"><small>${name}</small></div>`;
+            child.innerHTML=elem;
+            var galleryimgs = document.getElementById('galleryimgs');
+            galleryimgs.insertBefore(child,galleryimgs.childNodes[0]);
+            uploadbar.style.width = 0;
+            
             $(".showImagesUploaded").click();
+            $('.btn-close-panel').click();
         }
+        // success(data) {
+        //     console.log(data)
+        //         var div = document.createElement('div');
+        //         div.setAttribute('class', 'hbox');
+        //         var node = document.createElement('img');
+        //         node.src = data.data.image;
+        //         node.width = 125;
+        //         node.height = 125;
+        //         node.id = 'img' + perm;
+        //         node.style = 'margin:4px;';
+        //         node.setAttribute('onclick', 'pushImg(this);');
+        //         div.appendChild(node);
+        //         var overlay = document.createElement('div');
+        //         overlay.setAttribute('class', 'options');
+        //         var del = document.createElement('button');
+        //         del.setAttribute('onclick', 'delimg()');
+        //         del.setAttribute('data-pid', data.data.id);
+        //         overlay.appendChild(del);
+        //         div.appendChild(node);
+        //         if (data.data.image != '') document.getElementById('galleryimgs').appendChild(div);
+        //         else uploadImg(event);
+        //         uploadbar.style.width = 0;
+        //     $(".showImagesUploaded").click();
+        //     $('.btn-close-panel').click();
+        // }
     });
 }
 
@@ -808,7 +855,9 @@ $('body').on('click', '.btn-showmore', function() {
     $(show_srch).css('display', 'block');
     $(pane).click();
 })
-$('#imagebut').click(function() {
+$('.image_assets').click(function() {
+    $('#galleryimgs').show();
+    $('#galleryimgsrch').hide();
     document.getElementById('galleryimgs').innerHTML = '';
     document.getElementById('image').value = '';
     document.getElementById('my-image').src = '#';
@@ -829,7 +878,7 @@ $('#imagebut').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch_assets.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_assets',
         data: {
             submit: 1,
             authtoken: token
@@ -923,7 +972,7 @@ $('body').on('keyup', '.searchImg', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'http://localhost/user/apis/_search_assets.php',
+            url: 'http://127.0.0.1:8000/api/_search_assets',
             data: {
                 submit: true,
                 authtoken: token,
@@ -969,6 +1018,8 @@ $('body').on('keyup', '.searchImg', function(event) {
             }
         });
     }
+    $('#galleryimgs').hide();
+    $('#galleryimgsrch').show();
 });
 
 $('body').on('keyup', '.searchYT', function(event) {
@@ -1013,6 +1064,8 @@ $('#ytmodal').on('hidden.bs.modal', function() {
 
 let asset = document.getElementById('asset');
 $('.3d_assets').click(function() {
+    $('#galleryimgs').show();
+    $('#galleryimgsrch').hide();
     var panel = $(this).attr('panel-name');
     selectItem('vertical-bars', 'active', panel);
     selectItem('left-fixed-bar', 'selected', this);
@@ -1121,7 +1174,8 @@ $('.3d_assets').click(function() {
 
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch_assets.php',
+        // url: 'http://localhost/user/apis/_fetch_assets.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_assets',
         data: {
             submit: 1,
             authtoken: token
@@ -1149,6 +1203,7 @@ $('.3d_assets').click(function() {
                     node.setAttribute('data-type', asset.Assetstype);
                     node.setAttribute('data-objfile', asset.obj);
                     node.setAttribute('data-gltffile', asset.gltf);
+                    node.setAttribute('data-fbxfile',asset.Assetstype);
                     if (asset.Assetstype == 'obj') node.setAttribute('data-mtlfile', asset.mtl);
                     node.style = 'margin:4px;';
                     node.setAttribute('onclick', 'pushObj(this);');
@@ -1191,12 +1246,11 @@ $('.3d_assets').click(function() {
 							</div>
 							</div>
 							<div class="w-100 float-left col-sm-12 p-0">
-							<img class="w-100 pt-4 pb-4 " style="height: 150px" src="${th_nail}" id="${imgid}" data-type="${asset.Assetstype}" data-objfile="${asset.obj}" data-gltffile="${asset.gltf}" onclick="pushObj(this)">;
+							<img class="w-100 pt-4 pb-4 " style="height: 150px" src="${th_nail}" id="${imgid}" data-type="${asset.Assetstype}" data-objfile="${asset.obj}" data-gltffile="${asset.gltf}" data-fbxfile="${assets.fbx}" onclick="pushObj(this)">;
 							</div>
 							<div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
 							</div>
 							`;
-                    console.log(asset, 'asset')
                     if ((asset.Assetstype == 'gltf' && asset.gltf != '') || (asset.Assetstype == 'fbx' && asset.fbx != '') || (asset.Assetstype == 'obj' && asset.obj != '')) {
                         document.getElementById('galleryobjs').appendChild(div);
                         $(elem).appendTo('#galleryimgs');
@@ -1227,7 +1281,7 @@ $('body').on('keyup', '.searchObj', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'http://localhost/user/apis/_search_assets.php',
+            url: 'http://127.0.0.1:8000/api/_search_assets',
             data: {
                 submit: true,
                 authtoken: token,
@@ -1273,6 +1327,8 @@ $('body').on('keyup', '.searchObj', function(event) {
             }
         });
     }
+    $('#galleryimgs').hide();
+    $('#galleryimgsrch').show();
 });
 
 function delobj(e) {
@@ -1292,7 +1348,7 @@ function uploadObj(event) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create_assets.php',
+        url: 'http://127.0.0.1:8000/api/_create_assets',
         data: formData,
         processData: false,
         contentType: false,
@@ -1330,13 +1386,15 @@ function uploadObj(event) {
             return xhr;
         },
         success(data) {
+            var asset = data.data;
             var node = document.createElement('img');
-            node.src = data.data.objthumbnail;
+            node.src = asset.objthumbnail;
             node.width = 125;
             node.setAttribute('data-type', asset.type);
             node.setAttribute('data-objfile', asset.obj);
             node.setAttribute('data-gltffile', asset.gltf);
-            if (asset.Assetstype == 'obj') node.setAttribute('data-mtlfile', asset.mtl);
+            node.setAttribute('data-fbxfile',asset.fbx);
+            if (asset.type == 'obj') node.setAttribute('data-mtlfile', asset.mtl);
             node.style = 'margin:4px;';
             node.setAttribute('onclick', 'pushObj(this);');
             var div = document.createElement('div');
@@ -1351,11 +1409,43 @@ function uploadObj(event) {
             overlay.appendChild(del);
             div.appendChild(node);
             div.appendChild(overlay);
-            document.getElementById('galleryobjs').appendChild(div);
+            var imgid = 'img'+perm ;
+            var p_name = asset.name? asset.name : 'None';
+            var th_nail = asset.objthumbnail ? asset.objthumbnail : 'https://fsb.zobj.net/crop.php?r=qEpBmAgJQlOtYSK5lOz77XR83AiINmYurl-s0CZwBULw_FGcrpnc5QbuIqlr1lb5ZiuFD-2EpgERJdGYdjngJAESNHLBXa_L3TAH10rcQW-xXSuvqxbQuRyaFwjzVjW3G7HNq0zV71ptdlKF';
+            var child = document.createElement('div');
+            child.setAttribute('class','col-sm-2 float-left img-panel');
+            child.id=imgid;
+            var elem = `
+                    <div class="overlay">
+                    <div class="icons float-right mt-3 mr-2">
+                    <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+                    <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+                    <span class="tooltiptext">
+                    <h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+
+                    <div class="w-100 float-left">Crop</div>
+                    <div class="w-100 float-left edit_info" data-typ="a" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+                    <h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+                    </span>
+                    </i>
+                    </div>
+                    </div>
+                    <div class="w-100 float-left col-sm-12 p-0">
+                    <img class="w-100 pt-4 pb-4 " style="height: 150px" src="${th_nail}" id="${imgid}" data-type="${asset.type}" data-objfile="${asset.obj}" data-fbxfile="${asset.fbx}" data-gltffile="${asset.gltf}" onclick="pushObj(this)">;
+                    </div>
+                    <div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
+                    `;
+            child.innerHTML=elem;
+            var galleryimgs = document.getElementById('galleryimgs');
+            galleryimgs.insertBefore(child,galleryimgs.childNodes[0]);
             uploadbar.style.width = 0;
-            $('#modal-upload-media').modal('hide');
-            $('#modal-show-more').modal('show');
-            $('.3D-modal-panel .btn-showmore-3d').click()
+            document.getElementById('galleryobjs').appendChild(div);
+            document.getElementById("form2").reset();
+            $('.upload-media-close').click();
+            $(".showObjUploaded").click();
+            
+            $('.modal-upload-media').click();
+            $('.btn-close-panel').click();
         }
     });
 }
@@ -1363,6 +1453,8 @@ function uploadObj(event) {
 k = 0;
 let music = document.getElementById('musicbut');
 $('.audio_assets').click(function() {
+    $('#galleryimgs').show();
+    $('#galleryimgsrch').hide();
     var panel = $(this).attr('panel-name');
     selectItem('vertical-bars', 'active', panel);
     selectItem('left-fixed-bar', 'selected', this);
@@ -1458,20 +1550,22 @@ $('.audio_assets').click(function() {
     //});
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch_media.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_media',
         data: {
             submit: 1,
             authtoken: token
         },
         dataType: 'json',
         success(result) {
+            $('#galleryimgs').html('');
             var medias = result.media;
             $('.gallery_audio').html('');
             var count_aud = 0;
             for (var i = 0; i < medias.length; i++) {
                 media = medias[i];
                 var node = document.createElement('img');
-                node.src = media.thumbnail;
+                // node.src = media.thumbnail;
+                node.src = 'https://i.pinimg.com/564x/9c/02/99/9c0299159f127212cb8c37531b99bd2a.jpg';
                 node.width = 125;
                 node.height = 125;
                 node.id = 'img' + i;
@@ -1500,6 +1594,7 @@ $('.audio_assets').click(function() {
                 edit.setAttribute('data-typ', 'm');
                 edit.innerHTML = "<i class='fa fa-edit'></i>";
                 overlay.appendChild(edit);
+                var thumbnail=media.thumbnail?media.thumbnail:'https://i.pinimg.com/564x/9c/02/99/9c0299159f127212cb8c37531b99bd2a.jpg';
                 var elem = `
 				<div class="col-sm-2 float-left img-panel" id="media_${media.id}">
 				<div class="overlay">
@@ -1517,7 +1612,7 @@ $('.audio_assets').click(function() {
 				</div>
 				</div>
 				<div class="w-100 float-left col-sm-12 p-0">
-				<img class="w-100 pt-4 pb-4 " src="${media.thumbnail}" id="img${i}" data-source="${media.audio}" alt="Chania" style="height: 150px">
+				<img class="w-100 pt-4 pb-4 " src="${thumbnail}" id="img${i}" data-source="${media.audio}" alt="Chania" style="height: 150px">
 				</div>
 				</div>
 				`;
@@ -1576,7 +1671,7 @@ $('body').on('keyup', '.searchAud', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'http://localhost/user/apis/_search_media.php',
+            url: 'http://127.0.0.1:8000/api/_search_media',
             data: {
                 submit: true,
                 authtoken: token,
@@ -1678,6 +1773,9 @@ $('body').on('keyup', '.searchAud', function(event) {
             }
         });
     }
+    $('#galleryimgs').hide();
+    $('#galleryimgsrch').show();
+
 });
 
 
@@ -1789,7 +1887,7 @@ function uploadAud(event) {
     let formData = new FormData(form);
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create_media.php',
+        url: 'http://127.0.0.1:8000/api/_create_media',
         data: formData,
         processData: false,
         contentType: false,
@@ -1857,7 +1955,7 @@ function uploadVid(event) {
     // event.closest('.modal-body').append(div);
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_create_media.php',
+        url: 'http://127.0.0.1:8000/api/_create_media',
         data: formData,
         processData: false,
         contentType: false,
@@ -1894,10 +1992,11 @@ function uploadVid(event) {
 
             return xhr;
         },
-        success(data) {
+        success(data) { 
+            var media = data.data;
             uploadbar.style.width = 0;
             var node = document.createElement('img');
-            node.src = data.data.thumbnail;
+            node.src = data.data.thumbnail?data.data.thumbnail:'https://image.flaticon.com/icons/svg/860/860780.svg';
             node.width = 125;
             node.height = 125;
             node.id = 'img' + perm;
@@ -1915,9 +2014,40 @@ function uploadVid(event) {
             overlay.appendChild(del);
             div.appendChild(node);
             div.appendChild(overlay);
-
+            var name = media.name ? media.name : 'None';
+            var thumbnail = media.thumbnail ? media.thumbnail : 'https://image.flaticon.com/icons/svg/860/860780.svg';
+            var child = document.createElement('div');
+            child.setAttribute('class','col-sm-2 float-left img-panel');
+            child.id="media_"+media.id;
+            var elem = `
+				
+				    <div class="overlay">
+				        <div class="icons float-right mt-3 mr-2">
+				            <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+				            <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+				                <span class="tooltiptext">
+				                    <h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+                                    <div class="w-100 float-left">Crop</div>
+				                    <div data-typ="m" class="w-100 float-left edit_info" data-name="${name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+				                    <h5 onclick='delaud(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+				                </span>
+				            </i>
+				        </div>
+				    </div>
+				    <div class="w-100 float-left col-sm-12 p-0">
+				        <img class="w-100 pt-4 pb-4 " src="${thumbnail}" id="img${media.id}" data-source="${media.video}" alt="Chania" style="height: 150px">
+				    </div>
+                    <div class="mt-1 float-left w-100" id="name_${media.id}"><small>${name}</small></div>
+				`;
+            child.innerHTML=elem;
+            var galleryimgs = document.getElementById('galleryimgs');
+            galleryimgs.insertBefore(child,galleryimgs.childNodes[0]);
+            uploadbar.style.width = 0;
             document.getElementById('galleryvids').appendChild(div);
-            $('.vedio-panel .btn-showmore').click()
+            document.getElementById('form6').reset();
+            $('#upload-video-modal').click();
+            $('.showVideosUploaded').click();
+            $('.btn-close-panel').click();
         }
     });
 }
@@ -1936,6 +2066,8 @@ function delvid(e) {
 // to fetch videos
 let video = document.getElementById('videobut');
 $('.video_assets').click(function() {
+    $('#galleryimgs').show();
+    $('#galleryimgsrch').hide();
     var panel = $(this).attr('panel-name');
     selectItem('vertical-bars', 'active', panel);
     selectItem('left-fixed-bar', 'selected', this);
@@ -1948,56 +2080,59 @@ $('.video_assets').click(function() {
     //     event.preventDefault();
     // if (event.keyCode === 13) {
     var q = searchYT[0].value;
-    var request = gapi.client.youtube.search.list({
-        q: q,
-        maxResults: 12,
-        type: 'video',
-        part: 'snippet',
-        videoEmbeddable: 'true',
-        videoSyndicated: 'true'
-    });
+    // *********************************COMMENT SECTION START*********************************
+    // var request = gapi.client.youtube.search.list({
+    //     q: q,
+    //     maxResults: 12,
+    //     type: 'video',
+    //     part: 'snippet',
+    //     videoEmbeddable: 'true',
+    //     videoSyndicated: 'true'
+    // });
 
-    request.execute(function(response) {
-        document.getElementById('ytImgs').innerHTML = '';
-        var assets = response.items;
-        $('.vid_youtube').html('');
-        for (var i = 0; i < 6; i++) {
-            let asset = assets[i];
-            var src = asset.snippet.thumbnails.high.url;
-            var id = 'ytimg' + i;
-            var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
-            $(ele).appendTo('.vid_youtube');
-        }
-        $('.you_tube').html('');
-        console.log("Hi there!!!");
-        console.log(assets);
-        for (var i = 0; i < assets.length; i++) {
-            asset = assets[i];
-            var node = document.createElement('img');
+    // request.execute(function(response) {
+    //     document.getElementById('ytImgs').innerHTML = '';
+    //     var assets = response.items;
+    //     $('.vid_youtube').html('');
+    //     for (var i = 0; i < 6; i++) {
+    //         let asset = assets[i];
+    //         var src = asset.snippet.thumbnails.high.url;
+    //         var id = 'ytimg' + i;
+    //         var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
+    //         $(ele).appendTo('.vid_youtube');
+    //     }
+    //     $('.you_tube').html('');
+    //     console.log("Hi there!!!");
+    //     console.log(assets);
+    //     for (var i = 0; i < assets.length; i++) {
+    //         asset = assets[i];
+    //         var node = document.createElement('img');
 
-            node.src = asset.snippet.thumbnails.high.url;
-            // node.width = 125;
-            node.id = 'ytimg' + i;
-            node.style = 'max-width:50%';
-            node.setAttribute('onclick', 'pushYT(this);');
-            node.setAttribute('data-source', asset.id.videoId);
-            document.getElementById('ytImgs').appendChild(node);
-            $(node).appendTo('.you_tube');
-            perm = i;
-        }
-    });
+    //         node.src = asset.snippet.thumbnails.high.url;
+    //         // node.width = 125;
+    //         node.id = 'ytimg' + i;
+    //         node.style = 'max-width:50%';
+    //         node.setAttribute('onclick', 'pushYT(this);');
+    //         node.setAttribute('data-source', asset.id.videoId);
+    //         document.getElementById('ytImgs').appendChild(node);
+    //         $(node).appendTo('.you_tube');
+    //         perm = i;
+    //     }
+    // });
+    // *********************************COMMENTED SECTION END*********************************
     // }
     // });
 
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch_media.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_media',
         data: {
             submit: 1,
             authtoken: token
         },
         dataType: 'json',
         success(result) {
+            $('#galleryimgs').html('');
 
             var medias = result.media;
             if (medias.length > 0) {
@@ -2006,7 +2141,7 @@ $('.video_assets').click(function() {
                 for (var i = 0; i < medias.length; i++) {
                     media = medias[i];
                     var node = document.createElement('img');
-                    node.src = media.thumbnail;
+                    node.src = media.thumbnail ? media.thumbnail :'https://image.flaticon.com/icons/svg/860/860780.svg';
                     node.width = 125;
                     node.height = 125;
                     node.id = 'img' + i;
@@ -2037,7 +2172,8 @@ $('.video_assets').click(function() {
                     videotype.innerHTML = "<b style='position:absolute;left:2px;top:2px;'>" + media.type + "</b>";
                     overlay.appendChild(videotype);
                     div.appendChild(overlay);
-
+                    var mname = media.name!=''? media.name:'None';
+                    var thumbnail=media.thumbnail?media.thumbnail:'https://image.flaticon.com/icons/svg/860/860780.svg';
                     var elem = `
 					<div class="col-sm-2 float-left img-panel" id="media_${media.id}">
 					<div class="overlay">
@@ -2048,15 +2184,16 @@ $('.video_assets').click(function() {
 								<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
 
 								<div class="w-100 float-left">Crop</div>
-								<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+								<div data-typ="m" class="w-100 float-left edit_info" data-name="${mname}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 								<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
 							  </span>
 						  </i>
 						</div>
 					  </div>
 					<div class="w-100 float-left col-sm-12 p-0">
-					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
+					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
 					</div>
+                    <div class="mt-1 float-left w-100" id="name_${media.id}"><small>${mname}</small></div>
 
 				  </div>
 					`
@@ -2065,7 +2202,7 @@ $('.video_assets').click(function() {
                         document.getElementById('galleryvids').appendChild(div);
                         var id = 'img' + i;
                         if (count_vid < 6) {
-                            var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${media.thumbnail}" id="${id}" data-source="${media.video}" onclick="pushVid(this);" alt="">`;
+                            var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${thumbnail}" id="${id}" data-source="${media.video}" onclick="pushVid(this);" alt="">`;
                             $(ele).appendTo('.video_gallery');
                             count_vid++;
                         }
@@ -2092,7 +2229,7 @@ $('body').on('keyup', '.searchVid', function(event) {
     if (event.keyCode === 13) {
         $.ajax({
             method: 'post',
-            url: 'http://localhost/user/apis/_search_media.php',
+            url: 'http://127.0.0.1:8000/api/_search_media',
             data: {
                 submit: true,
                 authtoken: token,
@@ -2100,11 +2237,13 @@ $('body').on('keyup', '.searchVid', function(event) {
             },
             success(result) {
                 $('#galleryimgs').hide()
-                document.getElementById('galleryvids').innerHTML = '';
+                document.getElementById('galleryimgsrch').innerHTML = '';
                 var medias = result.media;
 
                 for (var i = 0; i < medias.length; i++) {
                     media = medias[i];
+                    var mname = media.name?media.name:'None';
+                    var thumbnail=media.thumbnail?media.thumbnail:'https://image.flaticon.com/icons/svg/860/860780.svg';
                     var elem = `
 					<div class="col-sm-2 float-left img-panel" id="media_${media.id}">
 					<div class="overlay">
@@ -2115,16 +2254,16 @@ $('body').on('keyup', '.searchVid', function(event) {
 								<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
 
 								<div class="w-100 float-left">Crop</div>
-								<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+								<div data-typ="m" class="w-100 float-left edit_info" data-name="${mname}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
 								<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
 							  </span>
 						  </i>
 						</div>
 					  </div>
 					<div class="w-100 float-left col-sm-12 p-0">
-					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
+					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${thumbnail}" id="img${media.id}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
 					</div>
-
+                    <div class="mt-1 float-left w-100" id="name_${media.id}"><small>${mname}</small></div>
 				  </div>
 					`
                     if ((media.type == '2D' || media.type == '360') && media.video) {
@@ -2143,6 +2282,8 @@ $('body').on('keyup', '.searchVid', function(event) {
             }
         });
     }
+    $('#galleryimgs').hide();
+    $('#galleryimgsrch').show();
 });
 
 
@@ -2306,9 +2447,11 @@ document.getElementById('choosemarkerbut').addEventListener('click', function(e)
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/user/apis/_fetch_markers.php',
+        // url: 'http://localhost/user/apis/_fetch_markers.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_markers',
         data: { authtoken: token, submit: 1 },
         success(data) {
+            $('#gallerymarkers').html('');
             var markers = data.Data;
             for (var i = 0; i < markers.length; i++) {
                 marker = markers[i];
@@ -2340,7 +2483,10 @@ document.getElementById('choosemarkerbut').addEventListener('click', function(e)
     });
 });
 
-$(document).ready(function() {
+$('.image_assets').click(function() {
+// $(document).ready(function(){
+    $('#galleryimgs').show();
+    $('#galleryimgsrch').hide();
     $('#unsplash_thumb').html('');
     for (var i = 0; i < 6; i++) {
         var node = document.createElement('img');
@@ -2351,7 +2497,7 @@ $(document).ready(function() {
     }
     $.ajax({
         method: 'post',
-        url: 'http://localhost/user/apis/_fetch_assets.php',
+        url: 'http://127.0.0.1:8000/api/_fetch_assets',
         data: {
             submit: 1,
             authtoken: token
@@ -2359,6 +2505,7 @@ $(document).ready(function() {
         dataType: 'json',
         success(result) {
             var assets = result.assets;
+            // $('#galleryimgs').html('');
             $('.galleryimgs').html('');
             var count_ast = 0;
             for (var i = 0; i < assets.length; i++) {

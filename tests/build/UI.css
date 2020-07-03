@@ -162,6 +162,7 @@ iframe {
     height: 64px;
     box-shadow: 0 0 15px 0 rgba(22, 45, 61, 0.5);
     padding-right: 0;
+    background-color:#fff;
 }
 
 #header nav a {
@@ -974,6 +975,9 @@ opacity: 1!important;
     right: 15%;
 }
 
+#modal-show-more .modal-dialog .modal-content .modal-body{
+    height: 500px !important;
+} 
 
 /*.modal-header{
   height: 15%;
@@ -1087,11 +1091,16 @@ opacity: 1!important;
     color: #3899ec;
 }
 
+.left-panel-footer {
+    position: absolute;
+    bottom: 0px;
+}
+
 .panel-content.manage {
-    height: -webkit-calc(100% - 190px);
-    height: -moz-calc(100% - 190px);
-    height: -o-calc(100% - 190px);
-    height: calc(100% - 190px);
+    height: -webkit-calc(100% - 140px);
+    height: -moz-calc(100% - 140px);
+    height: -o-calc(100% - 140px);
+    height: calc(100% - 140px);
     overflow-x: hidden!important;
     overflow-y: auto;
 }

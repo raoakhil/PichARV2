@@ -120,7 +120,6 @@ THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onCom
 		canvas.height * (1 - 2 * innerMargin)
 	);
 
-
 	// display innerImage in the middle
 	var innerImage = document.createElement('img')
 	innerImage.addEventListener('load', function () {
