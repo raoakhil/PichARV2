@@ -20,7 +20,7 @@ function auto() {
     document.getElementById('auth2').value = token;
     document.getElementById('auth3').value = token;
     document.getElementById('auth4').value = token;
-    document.getElementById('auth5').value = token;
+    // document.getElementById('auth5').value = token;
     var sceneEl = document.querySelector('a-scene');
     sceneEl.addEventListener('loaded', function() {});
 }
@@ -810,7 +810,7 @@ $('body').on('click', '.btn-showmore', function() {
     $(pane).click();
 })
 $('#imagebut').click(function() {
-    console.log('Im here fucker')
+    console.log('Im here')
     document.getElementById('galleryimgs').innerHTML = '';
     document.getElementById('image').value = '';
     document.getElementById('my-image').src = '#';
