@@ -72,7 +72,7 @@ function sharelnk(e) {
 		console.log(formData);
 		$.ajax({
 			method: 'POST',
-			url: 'http://localhost/user/apis/_post_experience.php',
+			url: 'http://pitchar.io/api/v1/_post_experience',
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -139,7 +139,7 @@ function gotolink() {
 function selectMarker(e) {
 	$.ajax({
 		method: 'POST',
-		url: 'http://localhost/user/apis/_fetch_marker.php',
+		url: 'http://pitchar.op/api/v1/_fetch_marker',
 		data: { authtoken: token, submit: 1, id: e.dataset.markerid },
 		success(data) {
 			console.log(data);
@@ -219,9 +219,10 @@ function markerless(e) {
 function fetchExperience() {
 	$.ajax({
 		method: 'POST',
-		url: 'http://localhost/user/apis/_fetch_experience.php',
+		url: 'http://pitchar.io/api/v1/_fetch_experience',
 		data: { authtoken: token, experienceid: expid, submit: 1 },
 		success(data) {
+			if (!data.data) return
 			var dom = document.createElement('html');
 			var scene = document.getElementById('perswin');
 			dom.innerHTML = data.Data[0].experience;

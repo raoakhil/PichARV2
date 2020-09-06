@@ -1796,7 +1796,7 @@ input[type=range]:focus::-ms-fill-upper {
 .loader {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;
-  margin: 125px auto;
+  margin: 100px auto;
   border-radius: 50%;
   width: 60;
   height: 60;
@@ -1806,4 +1806,11 @@ input[type=range]:focus::-ms-fill-upper {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.cr-boundary {
+  width: 96%;
+    height: 213px;
+    margin-right: 10px;
+    margin-top: 10;
 }

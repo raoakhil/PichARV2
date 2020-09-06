@@ -145,10 +145,6 @@
         font-weight: normal;
         font-style: normal;
       }
-
-      .cr-boundary {
-        display: none !important;
-      }
     </style>
     <link rel="stylesheet" href="UI.css" />
     <title>PitchAR AR Creator</title>
@@ -1653,26 +1649,26 @@
                     </div>
                   </div>
                 </div>
-                <form id="form2" enctype="multipart/form-data" method="post">
+                <!-- <form id="form2" enctype="multipart/form-data" method="post">
                   <div style="display: none;">
                     <input id="auth3" name="authtoken" type="hidden" value="" />
                     <input type="hidden" name="create" value="1" />
-                    <!-- <label>Name :</label>
-					<input name="name"> -->
-                    <!-- <br> -->
-                    <!-- <label>Thumbnail :</label>
-					<input type="file" name="thumbnail" placeholder="thumbnail"> -->
-                    <!-- <label class="obj">Object File :</label>
+                    <label>Name :</label>
+					<input name="name">
+                    <br>
+                    <label>Thumbnail :</label>
+					<input type="file" name="thumbnail" placeholder="thumbnail">
+                    <label class="obj">Object File :</label>
 					<input class="obj" type="file" name="obj" placeholder="object file">
 					<label class="mtl">Material file :</label>
-					<input type="file" name="mtl" class="mtl" placeholder="material file"> -->
-                    <!-- <select id="3d-type" name="type" class="type">
+					<input type="file" name="mtl" class="mtl" placeholder="material file">
+                    <select id="3d-type" name="type" class="type">
                       <option value="obj">Obj</option>
                       <option value="gltf">gltf</option>
                       <option value="fbx">fbx</option>
                       <option value="zip">zip</option>
-                    </select> -->
-                    <!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
+                    </select>
+                    <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" />
                   </div>
                   <div
                     class="panel entry-content tab-pane pb4 text-center"
@@ -1736,13 +1732,13 @@
                         aria-expanded="true"
                       >
                         <div class="col-sm-12 float-left h-100">
-                          <!-- <div class="b-dahsed-blue panel-content  mt-3 p-4 mb-4 float-left w-100 text-center">
+                          <div class="b-dahsed-blue panel-content  mt-3 p-4 mb-4 float-left w-100 text-center">
                                 <h1>ZIP</h1>
                                 <input id="fileid" type="file" hidden="">
                                 <p>Drag &amp; Drop File</p>
                                 <p>Or</p>
                                 <button class="btn btn-primary btn-upload-media btn-round-blue mb-4">Upload from Computer</button>
-							  </div> -->
+							  </div>
                           <div
                             class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area"
                           >
@@ -1777,12 +1773,12 @@
                               class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area"
                             >
                               <h1>OBJ</h1>
-                              <!-- <input
+                              <input
                                 class="obj-file obj"
                                 type="file"
                                 name="obj"
                                 required="required"
-                              /> -->
+                              />
                               <div class="b-dahsed-blue file-dummy">
                                 <div class="success">
                                   Great, your files are selected. Keep on.
@@ -1798,12 +1794,12 @@
                               class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area"
                             >
                               <h1>MTL</h1>
-                              <!-- <input
+                              <input
                                 class="obj-file mtl"
                                 type="file"
                                 name="mtl"
                                 required="required"
-                              /> -->
+                              />
                               <div class="b-dahsed-blue file-dummy">
                                 <div class="success">
                                   Great, your files are selected. Keep on.
@@ -1826,12 +1822,12 @@
                             class="form-group panel-content offset-sm-2 col-sm-8 mt-5 mb-4 float-left w-100 text-center file-area"
                           >
                             <h1>FBX</h1>
-                            <!-- <input
+                            <input
                               class="obj-file gltf"
                               type="file"
                               name="fbx"
                               required="required"
-                            /> -->
+                            />
                             <div class="b-dahsed-blue file-dummy">
                               <div class="success">
                                 Great, your files are selected. Keep on.
@@ -1872,7 +1868,7 @@
                       </div>
                     </div>
                   </div>
-                </form>
+                </form> -->
               </div>
             </div>
           </div>
@@ -2215,13 +2211,11 @@
                   autocomplete="on"
                   onsubmit="searchImg(this)"
                 />
-                <form id="form4" enctype="multipart/form-data" method="post">
+                <!-- <form id="form4" enctype="multipart/form-data" method="post">
                   <input id="auth4" name="authtoken" type="hidden" value="" />
                   <label>Name :</label>
                   <input id="audioname" name="audio" type="text" />
                   <br />
-                  <label>Audio :</label>
-                  <input id="audio" name="audio" type="file" />
                   <label>Thumbnail :</label>
                   <input id="audiothumb" name="thumbnail" type="file" />
                   <input type="hidden" name="create" value="1" />
@@ -2236,7 +2230,7 @@
                     placeholder="tags"
                     data-role="tagsinput"
                   />
-                </form>
+                </form> -->
                 <button type="button" onclick="uploadAud()" class="uploadbut">
                   Upload Audio
                 </button>
@@ -3431,14 +3425,14 @@
               <div class="content mb-3 d-none">
                 <div class="content-title">Upload Your media</div>
                 <div class="media-options">
-                  <button
+                  <!-- <button
                     id="use"
                     type="button"
                     type="submit"
                     style="display: none;"
                   >
                     Upload images
-                  </button>
+                  </button> -->
                 </div>
               </div>
               <div class="content mb-3">
@@ -3621,14 +3615,14 @@
                     <div class="form-group has-search m-0">
                       <!-- <span style="margin-top: 61px;" class="fa fa-external-link form-control-feedback"></span> -->
                       <!-- <input type="text" class="form-control" placeholder="Input URL"> -->
-                      <input
+                      <!-- <input
                         style="background: #f4f6fc; border: 0;"
                         id="butlink"
                         class="form-control pl-3"
                         type="text"
                         placeholder="Insert URL"
                         onchange="chglnk(this)"
-                      />
+                      /> -->
                     </div>
                     <div class="select-color selectColor">
                       <div
@@ -3791,21 +3785,37 @@
                 style="justify-content: space-between; align-items: center;"
               >
                 <div class="col-md-3 px-0">
-                  <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld">
+                  <!-- <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld">
                     <input id="image" class="d-none" type="file" name="Image"/>
                     Image
-                  </label>
+                  </label> -->
+                  <form class="mb-0" id="form" enctype="multipart/form-data" method="post">
+                    <input id='auth2' name="authtoken" type="hidden" value="">
+                    <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld m-0">
+                      <input id="image" class="d-none" type="file" accept='image/*'/>
+                      Image
+                    </label>
+                    <input type="hidden" name="create" value="1">
+                    <input type="hidden" name="type" value="image">
+                  </form>
+
+                  
                 </div>
                 <div class="col-md-3 px-0">
-                  <button
-                    class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid"
-                  >
-                    Video
-                  </button>
+                  <form class="mb-0" id="form6" enctype="multipart/form-data" method="post">
+                    <input id='auth5' name="authtoken" type="hidden" value="">
+                    <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid m-0">
+                      <input id="video" class="d-none" type="file" />
+                      Video
+                    </label>
+                    <input type="hidden" name="create" value="1">
+                    <input type='hidden' id='vidtype' name='type' value="2D">
+                  </form>
+                  
                 </div>
                 <div class="col-md-3 px-0">
                   <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid">
-                    <input id="video" class="d-none" type="file" name="video"/>
+                    <input id="360video" class="d-none " type="file" name="video"/>
                     360 Video
                   </label>
                 </div>
@@ -3818,6 +3828,13 @@
                 class="row px-0 mx-0  d-none"
                 style="justify-content: space-between; align-items: center; margin-top:28px "
               >
+
+              <form id="form2" enctype="multipart/form-data" method="post">
+                <input id='auth3' name="authtoken" type="hidden" value="">
+                <input type="hidden" name="create" value="1">
+              </form>
+                
+                
               <div class="col-md-3 px-0">
                 <label id="obj" class="btn py-3 btn-block btn-primary ml-0 obj-file obj">
                   <input  class="d-none " type="file" name="obj"/>
@@ -3841,7 +3858,6 @@
           </div>
           <div class="search-block border-b">
             <div class="padding-panel">
-              <!-- <p>What are you looking for?</p> -->
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control" placeholder="Search" />
@@ -3853,53 +3869,6 @@
               <div class="content mb-3 d-none">
                 <div class="content-title">Upload Your media</div>
                 <div class="media-options">
-                  <button
-                    id="use"
-                    type="button"
-                    type="submit"
-                    style="display: none;"
-                  >
-                    Upload images
-                  </button>
-                  <form
-                    id="form"
-                    enctype="multipart/form-data"
-                    method="post"
-                    style="position: absolute;"
-                  >
-                    <input id="auth2" name="authtoken" type="hidden" value="" />
-                    <!-- <input id="image" type="file" accept="image/*" /> -->
-                    <input type="hidden" name="create" value="1" />
-                    <input type="hidden" name="type" value="image" />
-                    
-                    <input
-                      type="textarea"
-                      name="tags"
-                      rows="4"
-                      col="4"
-                      value=""
-                      placeholder="tags"
-                      data-role="tagsinput"
-                    />
-                    <!-- <input
-                      style="display: none;"
-                      type="file"
-                      name="image"
-                      id="image"
-                      required="required"
-                      multiple="multiple"
-                      accept="image/*"
-                    /> -->
-                  </form>
-                  <button
-                    style="display: none;"
-                    id="use"
-                    type="button"
-                    class="btn btn-primary btn-upload-media btn-round-blue mb-4"
-                    type="submit"
-                  >
-                    Upload images
-                  </button>
                   <div
                     class="m-option me-opt-upld bg-blue"
                     data-container="body"
@@ -3965,23 +3934,12 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="content mb-3">
-                            <div class="content-title">Gallery</div>
-                            <div class="images-options galleryimgs"></div>
-                            <div class="bar-body text-center"> <span class="badge badge-pill badge-light btn-showmore imagebut showImagesUploaded" show_srch=".searchImg" show-panel="gallery_media">show more</span>
-                            </div>
-                        </div> -->
+
               <div class="content mb-3">
+                <img id="my-image" src="#" class="d-none"/>
+                <button id="use" type="button" class="uploadbut d-none">Upload Image</button>
                 <div class="content-title">MY FILES</div>
                 <div class="images-options" id="unsplash_thumb_upload"></div>
-                <img style="display: none;" id="my-image" src="#" />
-                <!-- <div class="bar-body text-center">
-                  <span
-                    class="badge badge-pill badge-light btn-showmore imagebut"
-                    show-panel=".unsplash_media"
-                    >show more</span
-                  >
-                </div> -->
               </div>
               <!-- <div class="panel-footer text-center">
                             <button class="btn btn-primary btn-upload-media btn-round-blue me-opt-upld">Upload Media</button>
@@ -4249,7 +4207,7 @@
         formData.append("image", url);
         $.ajax({
           method: "POST",
-          url: "http://localhost/user/apis/_create_assets.php",
+          url: "http://pitchar.io/api/v1/_create_assets",
           data: formData,
           processData: false,
           contentType: false,
@@ -4717,7 +4675,7 @@
       }
     </script>
 
-    <script src="https://apis.google.com/js/client ?onload=init"></script>
+    <!-- <script src="https://apis.google.com/js/client ?onload=init"></script> -->
     <script
       type="text/javascript"
       src="https://apis.google.com/js/api.js?onload=onApiLoad"
