@@ -88,6 +88,7 @@ THREEx.ArPatternFile.triggerDownload = function (patternFileString) {
 }
 
 THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onComplete) {
+	console.log('im here')
 	var whiteMargin = 0.1
 	var blackMargin = (1 - 2 * whiteMargin) * ((1 - pattRatio) / 2)
 	// var blackMargin = 0.2
@@ -155,15 +156,20 @@ THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onCom
 }
 
 
-function uploadMarker() {
+THREEx.ArPatternFile.uploadMarker = function ()  {
 	var m_id;
 	var dataimg = new FormData();
+	console.log(Blobimg, token)
 	dataimg.append('submit', 1);
 	dataimg.append('authtoken', token);
 	dataimg.append('marker', Blobimg, 'marker.png');
+	
+	console.log(dataimg.get('submit'))
+	console.log(dataimg.get('authtoken'))
+	console.log(dataimg.get('marker'))
 	$.ajax({
 		method: 'POST',
-		url: 'https://pitchar.io/pitchar_api/_post_marker.php',
+		url: 'http://pitchar.io/api/v1/_post_marker',
 		data: dataimg,
 		enctype: 'multipart/form-data',
 		contentType: false,
@@ -178,7 +184,7 @@ function uploadMarker() {
 			datapatt.append('patt', Blobpatt, 'marker.patt');
 			$.ajax({
 				method: 'POST',
-				url: 'https://pitchar.io/pitchar_api/_post_patt.php',
+				url: 'http://pitchar.io/api/v1/_post_pattern',
 				data: datapatt,
 				enctype: 'multipart/form-data',
 				contentType: false,
