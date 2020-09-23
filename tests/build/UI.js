@@ -2538,6 +2538,7 @@ async function objectloaded(id) {
         }, 3000);
     }
 }
+
 document.getElementById('choosemarkerbut').addEventListener('click', function(e) {
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
     $.ajax({
@@ -2547,8 +2548,9 @@ document.getElementById('choosemarkerbut').addEventListener('click', function(e)
             'Accept' : 'application/json',
             'Authorization' : 'Bearer '+ accessToken,
         },
-        success(data) {
-            var markers = data.Data;
+        success({ data: { data }}) {
+            if (!data.length) return; 
+            var markers = data;
             console.log(data)
             for (var i = 0; i < markers.length; i++) {
                 marker = markers[i];
@@ -2602,29 +2604,27 @@ $(document).ready(function() {
     //     document.getElementById('unsplash_thumb_upload').appendChild(node);
     // }
     $.ajax({
-        method: 'post',
-        url: 'http://pitchar.io/api/v1/_fetch_assets',
-        data: {
-            submit: 1,
-            authtoken: token
+        method: 'GET',
+        url: 'https://pitchar.io/api/v1/assets',
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
         },
-        dataType: 'json',
-        success(result) {
-            console.log(result)
-            var assets = result.assets;
-            $('.galleryimgs').html('');
-            var count_ast = 0;
+        success({ data: { data } }) {
+            var assets = data;
+            // var count_ast = 0;
             for (var i = 0; i < assets.length; i++) {
                 var asset = assets[i];
-                var src = asset.Projectimage;
+                var src = asset.image;
 
-                if (asset.Assetstype == 'image' && asset.Projectimage != '') {
-                    if (count_ast < 6) {
-                        var imag = `<img src="${src}" onclick="pushImg(this);"  alt="">`;
-                        $(imag).appendTo('.galleryimgs');
-                        $(imag).appendTo('#unsplash_thumb_upload');
-                    }
-                    count_ast++;
+                if (asset.type === 'image' && asset.image !== '') {
+                    // if (count_ast < 6) {
+                    //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+                    //     $(imag).appendTo('#unsplash_thumb_upload');
+                    // }
+                    // count_ast++;
+                    var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+                    $(imag).appendTo('#unsplash_thumb_upload');
                 }
 
             }
