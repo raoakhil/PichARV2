@@ -1792,7 +1792,6 @@ input[type=range]:focus::-ms-fill-upper {
   background: #2E5BFF;
 }
 
-
 .loader {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;
@@ -1808,9 +1807,3 @@ input[type=range]:focus::-ms-fill-upper {
   100% { transform: rotate(360deg); }
 }
 
-.cr-boundary {
-  width: 96%;
-    height: 213px;
-    margin-right: 10px;
-    margin-top: 10;
-}
