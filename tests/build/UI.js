@@ -14,18 +14,19 @@ var bool = 0;
 var object;
 var edittype;
 var linkid;
+const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWE0ZTNhMzlhMTkxNDQ2YmRkNzQ2MzBlMGJkNGYyN2NiNTkzOGFjZGE2MDNkM2ZiZGZlMzQwNTA2M2EzZDMyZTgxZWY1OTU2N2IzZDM4NjUiLCJpYXQiOjE2MDA2OTA3NzQsIm5iZiI6MTYwMDY5MDc3NCwiZXhwIjoxNjMyMjI2Nzc0LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.hZwmynYSNzctxn6cdy_9Gtffd5Yeu-cJF50xK_eUInXLLhe9kjRz5XZiLMGeF1eTyLPCWYt3sOm5z5sZfS965H_RPecdk39qjM0dF4gzmM3FqaUINFAaQcgORtLBNa3-dnv7sKxe48sovQfQj4hzXBe-0U5IyhBBNESwCwrebRG9pMJEMYrsJUBL34A2HQHyzTniMPA7rpn6VZd4DvCJRlwlA1DvekjS4YryJ2QswZHKPewLw7EcedcoBhWE4mmnow6KhZ-F5YRJkvPg4azSdwzO6bO-Ep9YVsHUlG4Uz_K2IXJSMRcLU-9SW3CISWGNUKH_BLADnWYoi7txEARGo6KUtlMAVyu8qF2p3GjktMNXGrS0Aokctqi3fUy-1mM0zKLHH_bJdGwLSkOcmhXhWNU4xjW3taf-gXqzJk62C2xKTCQj6rEWqg5AddYpU6692pFyJcHkysgaM6kFLUk-GT2vGAqQ8_QKsqqJqyehmow6rXD26a0HhTABuZ0EitNm3-dFFWFVueZSXi4IulVf3mJlPH_fXBQ6yoHVl47Lexr_-6JdrL0rXYP2I7PjXGi_8eafB2xTgOBomiMX-drtVPAjJjx-GK2PsLgl821VK-Fo_UX_viaUypkk3B6SuWevu8jHpiyMbl-KU4BjGGAwJ6yB4JaqqySTZrs1n-XaGj0'
 
-function auto() {
-    document.getElementById('auth').value = token;
-    document.getElementById('auth2').value = token;
-    document.getElementById('auth3').value = token;
-    document.getElementById('auth4').value = token;
+// function auto() {
+//     document.getElementById('auth').value = token;
+//     document.getElementById('auth2').value = token;
+//     document.getElementById('auth3').value = token;
+//     document.getElementById('auth4').value = token;
     
-    document.getElementById('auth5').value = token;
-    var sceneEl = document.querySelector('a-scene');
-    sceneEl.addEventListener('loaded', function() {});
-}
-auto();
+//     document.getElementById('auth5').value = token;
+//     var sceneEl = document.querySelector('a-scene');
+//     sceneEl.addEventListener('loaded', function() {});
+// }
+// auto();
 
 function editAssetId(e) {
     $('.media-info').addClass('show');
@@ -309,12 +310,14 @@ function editimg(e) {
 }
 
 function pushImg(e) {
+    console.log(e);
     console.log(e.src);
     var node = document.createElement('a-image');
     node.setAttribute('src', e.src);
     node.id = e.id;
     var img = new Image();
     img.src = e.src;
+    img.crossOrigin = "undefined";
     node.setAttribute('height', img.height / 500);
     node.setAttribute('width', img.width / 500);
     node.object3D.position.set(0, 0.5, 0);
@@ -569,22 +572,42 @@ function ytUnpushedVideo(e) {
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
+        
 		reader.onload = function (e) {
-			$('#my-image').attr('src', e.target.result);
-			filename = input.files[0].name;
+            $('#my-image').attr('src', e.target.result);
+            $('#unsplash_thumb_upload').addClass('d-none');
+            filename = input.files[0].name;
 			var resize = new Croppie($('#my-image')[0], {
 				viewport: { width: 100, height: 100 },
 				boundary: { width: 300, height: 300 },
 				showZoomer: true,
 				enableResize: true,
 				enableOrientation: true
-			});
+            });
+            let html = `
+                <button
+                    id="use"
+                    type="button"
+                    class="uploadbut btn btn-primary" 
+                    style="
+                        margin: 8 0;
+                        padding: 10 80px;
+                        width: 100%;
+                        border: none;
+                        
+                    "
+                >Save</button>
+            `
+            $('.croppie-container').append(html)
+            
 			$('#use').on('click', function () {
 				resize.result('blob').then(function (dataImg) {
 					// use ajax to send data to php
 					imgfil = dataImg;
 					console.log(e);
-					console.log(imgfil + ' ' + filename);
+                    console.log(imgfil + ' ' + filename);
+                    $('#unsplash_thumb_upload').removeClass('d-none');
+                    $('.croppie-container').addClass('d-none')
 					uploadImg();
 				});
 			});
@@ -593,8 +616,9 @@ function readURL(input) {
 	}
 }
 $('#image').change(function () {
-	readURL(this);
-	console.log('changed');
+    console.log($('#image'))
+    readURL(this);
+    console.log('changed');
 	var index = bool - 1;
 	if (bool) {
 		$('.cr-boundary').eq(index).css('display', 'none');
@@ -611,34 +635,40 @@ $('#video').change(function() {
     uploadVid();
 });
 $('#360video').change(function() {
-    console.log('Ok')
+    console.log('Ok 360')
     uploadVid();
 });
 $('.obj-file').change(function() {
-    console.log($('.obj-file'))
-    uploadObj();
-    // if ($('#3d-type').val() == 'OBJ' && $('.obj-file.obj').val() && $('.obj-file.mtl').val()) {
-    // }
-    // if ($('#3d-type').val() == 'GLTF' && $('.obj-file.gltf').val()) {
-    //     uploadObj();
-    // }
-
+    console.log($('.obj-file.obj').val())
+    console.log($('.obj-file.mtl').val())
+    if ($('.obj-file.obj').val() !== '' && $('.obj-file.mtl').val() !== '') {
+        return uploadObj();
+    }
 });
+$('.obj-gltf-file').change(() => {
+    console.log($('.obj-gltf-file.gltf').val())
+    if ($('.obj-gltf-file.gltf').val() !== '') {
+        uploadObj();
+    }
+})
 
 function uploadImg(event) {
     let form = document.querySelector('#form');
     let formData = new FormData(form);
-    // console.log(imgfil, filename)
+    formData.append('name', $('#image').val().slice(12, -4));
     formData.append('image', imgfil, filename);
     $.ajax({
         method: 'POST',
-        url: 'http://pitchar.io/api/v1/_create_assets',
+        url: 'https://pitchar.io/api/v1/assets',
         data: formData,
         processData: false,
         contentType: false,
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
+        },
         xhr: function() {
             var xhr = new window.XMLHttpRequest();
-
             // Upload progress
             xhr.upload.addEventListener(
                 'progress',
@@ -652,7 +682,6 @@ function uploadImg(event) {
                 },
                 false
             );
-
             // Download progress
             xhr.addEventListener(
                 'progress',
@@ -671,6 +700,7 @@ function uploadImg(event) {
         },
         success(data) {
             console.log(data)
+            console.log($('#image'))
             // var div = document.createElement('div');
             // div.setAttribute('class', 'hbox');
             // var node = document.createElement('img');
@@ -691,7 +721,7 @@ function uploadImg(event) {
             // if (data.data.image != '') document.getElementById('galleryimgs').appendChild(div);
             // else uploadImg(event);
             // uploadbar.style.width = 0;
-            $(".showImagesUploaded").click();
+            // $(".showImagesUploaded").click();
         }
     });
 }
@@ -814,7 +844,12 @@ $('body').on('click', '.btn-showmore', function() {
     $('.search_input').css('display', 'none');
     $(show_srch).css('display', 'block');
     $(pane).click();
-})
+});
+
+
+function clickImg(elem) {
+    $(`#${elem.id}`).click()
+}
 $('#imagebut').click(function() {
     // console.log('Im here')
     document.getElementById('galleryimgs').innerHTML = '';
@@ -835,78 +870,102 @@ $('#imagebut').click(function() {
     // }
 
     $.ajax({
-        method: 'post',
-        url: 'http://pitchar.io/api/v1/_fetch_assets',
-        data: {
-            submit: 1,
-            authtoken: token
+        method: 'GET',
+        url: 'https://pitchar.io/api/v1/assets',
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
         },
-        dataType: 'json',
-        success(result) {
-            console.log(result)
-            var assets = result.assets;
-            for (var i = 0; i < assets.length; i++) {
-                var asset = assets[i];
+        success({ data: { data } }) {
+            console.log(data)
+            // var assets = result.assets;
+            for (var i = 0; i < data.length; i++) {
+                var asset = data[i];
                 var imgid = 'img' + i;
-                var p_name = asset.Projectname ? asset.Projectname : 'None';
-                var show_none = asset.Projectimage ? '' : 'd-none';
+                var p_name = asset.name ? asset.name : 'None';
+                var show_none = asset.image ? '' : 'd-none';
+                // var elem = `
+				// <div class="col-sm-2 float-left img-panel" id="media_${asset.id}">
+				//     <div class="overlay">
+				//         <div class="icons float-right mt-3 mr-2">
+				//             <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+				//             <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+                //                 <span class="tooltiptext">
+                //                     <h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+                //                     <div class="w-100 float-left">Crop</div>
+                //                     <div data-typ="a" class="w-100 float-left edit_info" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)'>Edit</div>
+                //                     <h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+                //                 </span>
+				//             </i>
+				//         </div>
+				//     </div>
+				//     <div class="w-100 float-left col-sm-12 p-0">
+				// 	  <img onclick="pushImg(this);" class="w-100 pt-4 pb-4 ${show_none}" src="https://pitchar.io/storage/${asset.image}" id="${imgid}" alt="Chania" style="height: 150px">
+				// 	</div>
+                //     <div class="mt-1 float-left w-100" id="name_${asset.id}">
+                //         <small>${p_name}</small>
+                //     </div>
+                // </div>`;
+
+                // var elem = `
+                // <div
+                //     class="img__wrap"
+                //     onclick="clickImg(${imgid})"
+                // >
+                //     <img
+                //         src="https://pitchar.io/storage/${asset.image}"
+                //         id="${imgid}"
+                //         onclick="pushImg(this);"
+                //     />
+                //     <p class="img__description">${asset.name}</p>
+                // </div>`
+                
                 var elem = `
-				<div class="col-sm-2 float-left img-panel" id="media_${asset.id}">
-				<div class="overlay">
-				<div class="icons float-right mt-3 mr-2">
-				<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-				<span class="tooltiptext">
-				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
-
-				<div class="w-100 float-left">Crop</div>
-				<div data-typ="a" class="w-100 float-left edit_info" data-name="${p_name}" data-tags="${asset.tags}" data-pid='${asset.id}' onclick='editAssetId(this)'>Edit</div>
-				<h5 onclick='delimg(this)' data-pid='${asset.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
-				</span>
-				</i>
-				</div>
-				</div>
-				<div class="w-100 float-left col-sm-12 p-0">
-
-					  <img onclick="pushImg(this);" class="w-100 pt-4 pb-4 ${show_none}" src="${asset.Projectimage}" id="${imgid}" alt="Chania" style="height: 150px">
-					  </div>
-					<div class="mt-1 float-left w-100" id="name_${asset.id}"><small>${p_name}</small></div>
-					</div>`;
-
+                <img
+                    src="https://pitchar.io/storage/${asset.image}"
+                    id="${imgid}"
+                    onclick="pushImg(this);"
+                />`
                 var node = document.createElement('img');
-                node.src = asset.Projectimage;
-                node.id = 'img' + i;
-                node.style = 'margin:4px;width:125px;height:125;';
+                node.src = `https://pitchar.io/storage/${asset.image}`
+                node.id = imgid;
                 node.setAttribute('onclick', 'pushImg(this);');
-                node.setAttribute('class', 'image w-100 pt-4 pb-4');
-                var div = document.createElement('div');
-                div.setAttribute('class', 'hbox col-sm-2 float-left img-panel');
-                div.appendChild(node);
-                var overlay = document.createElement('div');
-                overlay.setAttribute('class', 'options');
+                // node.setAttribute('crossorigin', 'anonymous');
+                document.getElementById('unsplashImgs').appendChild(node);
 
-                var del = document.createElement('button');
-                del.setAttribute('onclick', 'delimg(this)');
-                del.setAttribute('data-pid', asset.id);
-                del.innerHTML = "<i class='fa fa-trash'></i>";
-                overlay.appendChild(del);
-                div.appendChild(node);
-                div.appendChild(overlay);
-                var edit = document.createElement('button');
-                edit.setAttribute('onclick', 'editAssetId(this)');
-                edit.setAttribute('data-toggle', "modal");
-                edit.setAttribute('data-target', "#editmodal");
-                edit.setAttribute('data-pid', asset.id);
-                edit.setAttribute('data-typ', 'a');
-                edit.innerHTML = "<i class='fa fa-edit'></i>";
-                overlay.appendChild(edit);
-                div.appendChild(node);
-                div.appendChild(overlay);
+                // var node = document.createElement('img');
+                // node.src = 'https://pitchar.io/storage/' + asset.image;
+                // node.id = 'img' + i;
+                // node.style = 'margin:4px;width:125px;height:125;';
+                // node.setAttribute('onclick', 'pushImg(this);');
+                // node.setAttribute('class', 'image w-100 pt-4 pb-4');
+                // var div = document.createElement('div');
+                // div.setAttribute('class', 'hbox col-sm-2 float-left img-panel');
+                // div.appendChild(node);
+                // var overlay = document.createElement('div');
+                // overlay.setAttribute('class', 'options');
 
-                if (asset.Assetstype == 'image' && asset.Projectimage != '') {
-                    // document.getElementById('galleryimgs').appendChild(div);
-                    $(elem).appendTo('#galleryimgs');
-                }
+                // var del = document.createElement('button');
+                // del.setAttribute('onclick', 'delimg(this)');
+                // del.setAttribute('data-pid', asset.id);
+                // del.innerHTML = "<i class='fa fa-trash'></i>";
+                // overlay.appendChild(del);
+                // div.appendChild(node);
+                // div.appendChild(overlay);
+                // var edit = document.createElement('button');
+                // edit.setAttribute('onclick', 'editAssetId(this)');
+                // edit.setAttribute('data-toggle', "modal");
+                // edit.setAttribute('data-target', "#editmodal");
+                // edit.setAttribute('data-pid', asset.id);
+                // edit.setAttribute('data-typ', 'a');
+                // edit.innerHTML = "<i class='fa fa-edit'></i>";
+                // overlay.appendChild(edit);
+                // div.appendChild(node);
+                // div.appendChild(overlay);
+
+                // if (asset.type == 'image' && asset.image != '') {
+                //     $(elem).appendTo('#unsplashImgs');
+                // }
                 perm = i;
             }
         }
@@ -1313,16 +1372,27 @@ function delobj(e) {
 }
 
 function uploadObj(event) {
-    // console.log('im here')
+    console.log('im here')
     let form = document.querySelector('#form2');
     let formData = new FormData(form);
+    if ($('#gltf').val()) {
+        formData.append('name', $('#gltf').val().slice(12, -5));
+        formData.append('type', $('#gltf').val().slice(-4));
+    } else {
+        formData.append('name', $('#obj').val().slice(12, -3));
+        formData.append('type', $('#obj').val().slice(-3));
+    }
 
     $.ajax({
         method: 'POST',
-        url: 'http://pitchar.io/api/v1/_create_assets',
+        url: 'https://pitchar.io/api/v1/assets',
         data: formData,
         processData: false,
         contentType: false,
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
+        },
         xhr: function() {
             var xhr = new window.XMLHttpRequest();
 
@@ -2007,18 +2077,30 @@ function chgcheck(e) {
 
 // upload video
 function uploadVid(event) {
-    // console.log('Ok again')
+    console.log('Ok again')
     let form = document.querySelector('#form6');
     let formData = new FormData(form);
-    var div = document.createElement('div');
-    div.id = 'upbar';
+    if ($('#video').val()) {
+        formData.append('name', $('#video').val().slice(12, -3));
+        formData.append('type', $('#video').val().slice(-3));
+    } else if ($('#360video').val()) {
+        formData.append('name', $('#360video').val().slice(12, -3));
+        formData.append('type', $('#360video').val().slice(-3));
+    }
+
+    // var div = document.createElement('div');
+    // div.id = 'upbar';
     // event.closest('.modal-body').append(div);
     $.ajax({
         method: 'POST',
-        url: 'http://pitchar.io/api/v1/_create_media',
+        url: 'https://pitchar.io/api/v1/medias',
         data: formData,
         processData: false,
         contentType: false,
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
+        },
         xhr: function() {
             var xhr = new window.XMLHttpRequest();
 
@@ -2053,7 +2135,7 @@ function uploadVid(event) {
             return xhr;
         },
         success(data) {
-            // console.log(data)
+            console.log(data)
             uploadbar.style.width = 0;
             var node = document.createElement('img');
             node.src = data.data.thumbnail;
@@ -2108,43 +2190,43 @@ $('.video_assets').click(function() {
     //     event.preventDefault();
     // if (event.keyCode === 13) {
     var q = searchYT[0].value;
-    var request = gapi.client.youtube.search.list({
-        q: q,
-        maxResults: 12,
-        type: 'video',
-        part: 'snippet',
-        videoEmbeddable: 'true',
-        videoSyndicated: 'true'
-    });
+    // var request = gapi.client.youtube.search.list({
+    //     q: q,
+    //     maxResults: 12,
+    //     type: 'video',
+    //     part: 'snippet',
+    //     videoEmbeddable: 'true',
+    //     videoSyndicated: 'true'
+    // });
 
-    request.execute(function(response) {
-        document.getElementById('ytImgs').innerHTML = '';
-        var assets = response.items;
-        $('.vid_youtube').html('');
-        for (var i = 0; i < 6; i++) {
-            let asset = assets[i];
-            var src = asset.snippet.thumbnails.high.url;
-            var id = 'ytimg' + i;
-            var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
-            $(ele).appendTo('.vid_youtube');
-        }
-        $('.you_tube').html('');
-        // console.log("Hi there!!!");
-        // console.log(assets);
-        for (var i = 0; i < assets.length; i++) {
-            asset = assets[i];
-            var node = document.createElement('img');
-            node.src = asset.snippet.thumbnails.high.url;
-            // node.width = 125;
-            node.id = 'ytimg' + i;
-            node.style = 'max-width:50%';
-            node.setAttribute('onclick', 'pushYT(this);');
-            node.setAttribute('data-source', asset.id.videoId);
-            document.getElementById('ytImgs').appendChild(node);
-            $(node).appendTo('.you_tube');
-            perm = i;
-        }
-    });
+    // request.execute(function(response) {
+    //     document.getElementById('ytImgs').innerHTML = '';
+    //     var assets = response.items;
+    //     $('.vid_youtube').html('');
+    //     for (var i = 0; i < 6; i++) {
+    //         let asset = assets[i];
+    //         var src = asset.snippet.thumbnails.high.url;
+    //         var id = 'ytimg' + i;
+    //         var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
+    //         $(ele).appendTo('.vid_youtube');
+    //     }
+    //     $('.you_tube').html('');
+    //     // console.log("Hi there!!!");
+    //     // console.log(assets);
+    //     for (var i = 0; i < assets.length; i++) {
+    //         asset = assets[i];
+    //         var node = document.createElement('img');
+    //         node.src = asset.snippet.thumbnails.high.url;
+    //         // node.width = 125;
+    //         node.id = 'ytimg' + i;
+    //         node.style = 'max-width:50%';
+    //         node.setAttribute('onclick', 'pushYT(this);');
+    //         node.setAttribute('data-source', asset.id.videoId);
+    //         document.getElementById('ytImgs').appendChild(node);
+    //         $(node).appendTo('.you_tube');
+    //         perm = i;
+    //     }
+    // });
     // }
     // });
 
@@ -2157,7 +2239,7 @@ $('.video_assets').click(function() {
         },
         dataType: 'json',
         success(result) {
-            // console.log(result)
+            console.log(result)
             var medias = result.media;
             if (medias.length > 0) {
                 $('.video_gallery').html('');
@@ -2459,12 +2541,15 @@ async function objectloaded(id) {
 document.getElementById('choosemarkerbut').addEventListener('click', function(e) {
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
     $.ajax({
-        method: 'POST',
-        url: 'http://pitchar.io/api/v1/_fetch_markers',
-        data: { authtoken: token, submit: 1 },
+        method: 'GET',
+        url: 'https://pitchar.io/api/v1/markers',
+        headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
+        },
         success(data) {
             var markers = data.Data;
-            // console.log(data)
+            console.log(data)
             for (var i = 0; i < markers.length; i++) {
                 marker = markers[i];
                 // var node = document.createElement('img');
@@ -2554,6 +2639,7 @@ $.ajax({
     url: 'http://pitchar.io/api/v1/_fetch_markers',
     data: { authtoken: token, submit: 1 },
     success(data) {
+        console.log(data)
         if (!data.data) return
         var markers = data.Data;
         for (var i = 0; i < markers.length; i++) {
