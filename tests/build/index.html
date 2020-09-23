@@ -145,6 +145,17 @@
         font-weight: normal;
         font-style: normal;
       }
+
+      .cr-boundary {
+        width: 100% !important;
+        height: 172px !important;
+        margin-right: 22px !important;
+        margin-top: 10 !important;
+      }
+
+      .cr-slider-wrap {
+        display: none;
+      }
     </style>
     <link rel="stylesheet" href="UI.css" />
     <title>PitchAR AR Creator</title>
@@ -1121,7 +1132,7 @@
                         Go MarkerLess
                       </div>
 
-                      <label
+                      <!-- <label
                         id="buttonUpload"
                         for="fileinput"
                         class="btn btn-addToPage float-right mt-4 mr-4"
@@ -1132,7 +1143,7 @@
                           style="display: none;"
                           accept="image/*"
                         />Upload New Marker</label
-                      >
+                      > -->
                     </div>
                   </div>
                 </div>
@@ -1363,12 +1374,12 @@
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                       </button>
                     </div>
-                    <div
+                    <!-- <div
                       class="row m-0 mt-4 float-left w-100 style-scroll you_tube"
                     ></div>
                     <div
                       class="row m-0 mt-4 float-left w-100 hidden style-scroll you_tube_srch"
-                    ></div>
+                    ></div> -->
                     <div class="left-panel-footer w-100">
                       <div
                         class="btn btn-addToPage btn-addMedToPage float-right mr-4"
@@ -3615,14 +3626,14 @@
                     <div class="form-group has-search m-0">
                       <!-- <span style="margin-top: 61px;" class="fa fa-external-link form-control-feedback"></span> -->
                       <!-- <input type="text" class="form-control" placeholder="Input URL"> -->
-                      <!-- <input
+                      <input
                         style="background: #f4f6fc; border: 0;"
                         id="butlink"
                         class="form-control pl-3"
                         type="text"
                         placeholder="Insert URL"
                         onchange="chglnk(this)"
-                      /> -->
+                      />
                     </div>
                     <div class="select-color selectColor">
                       <div
@@ -3785,42 +3796,51 @@
                 style="justify-content: space-between; align-items: center;"
               >
                 <div class="col-md-3 px-0">
-                  <!-- <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld">
-                    <input id="image" class="d-none" type="file" name="Image"/>
-                    Image
-                  </label> -->
                   <form class="mb-0" id="form" enctype="multipart/form-data" method="post">
-                    <input id='auth2' name="authtoken" type="hidden" value="">
+                    <!-- <input id='auth2' name="authtoken" type="hidden" value=""> -->
                     <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld m-0">
                       <input id="image" class="d-none" type="file" accept='image/*'/>
                       Image
                     </label>
-                    <input type="hidden" name="create" value="1">
+                    <!-- <input type="hidden" name="create" value="1"> -->
                     <input type="hidden" name="type" value="image">
                   </form>
-
-                  
                 </div>
                 <div class="col-md-3 px-0">
-                  <form class="mb-0" id="form6" enctype="multipart/form-data" method="post">
+                  <!-- <form class="mb-0" id="form6" enctype="multipart/form-data" method="post">
                     <input id='auth5' name="authtoken" type="hidden" value="">
                     <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid m-0">
-                      <input id="video" class="d-none" type="file" />
+                      <input id="video" class="" type="file" />
                       Video
                     </label>
                     <input type="hidden" name="create" value="1">
                     <input type='hidden' id='vidtype' name='type' value="2D">
+                  </form> -->
+                  <form class="mb-0" id="form6" enctype="multipart/form-data" method="post">
+                    <!-- <input id='auth5' name="authtoken" type="hidden" value=""> -->
+                    <!-- <label>Name :</label><br><input id="videoname" name="name"><br> -->
+                    <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid m-0">
+                      <input id="video" name="video" class="d-none" type="file" />
+                      Video
+                    </label>
+                    <!-- <label>Thumbnail :</label><input id="videothumb" name="thumbnail" type="file"> -->
+                    <input type="hidden" name="create" value="1">
+                    <!-- <label>Is this a 360 video? :</label> -->
+                    <!-- <input type='hidden' id='vidtype' name='type' value="2D"> -->
+                    <!-- <input type='checkbox' onclick="chgvidtype(this);"> -->
+                    <!-- <br> <br> -->
+                    <!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
                   </form>
                   
                 </div>
                 <div class="col-md-3 px-0">
-                  <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid">
+                  <label  class="btn m-0 btn-block btn-primary btn-upload-media me-upload-vid">
                     <input id="360video" class="d-none " type="file" name="video"/>
                     360 Video
                   </label>
                 </div>
               </div>
-              <button id="upload__3d_btn" class="btn btn-success btn-upload-media btn-block py-2 mt-4">
+              <button id="upload__3d_btn" class="btn btn-success btn-upload-media btn-block py-2 mt-2">
                 Uploads 3D Model
               </button>
               <div
@@ -3829,35 +3849,43 @@
                 style="justify-content: space-between; align-items: center; margin-top:28px "
               >
 
-              <form id="form2" enctype="multipart/form-data" method="post">
-                <input id='auth3' name="authtoken" type="hidden" value="">
-                <input type="hidden" name="create" value="1">
+              <form id="form2" enctype="multipart/form-data" method="post"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: 100%;
+                  margin-bottom: 0;
+                "
+              >
+                <!-- <input id='auth3' name="authtoken" type="hidden" value=""> -->
+                <!-- <input type="hidden" name="create" value="1"> -->
+                <div class="col-md-3 px-0">
+                  <label class="mb-0 btn py-3 btn-block btn-primary ml-0  obj">
+                    <input id="obj"  class="d-none obj-file obj" type="file" name="obj"/>
+                    OBJ
+                  </label>
+                </div>
+                <div class="col-md-3 px-0">
+                  <label class="mb-0 btn py-3 btn-block btn-primary ml-0  mtl">
+                    <input id="mtl" class="d-none obj-file mtl" type="file" name="mtl"/>
+                    MTL
+                  </label>
+                </div>
+                <div class="col-md-3 px-0">
+                  <label class="mb-0 btn py-3 btn-block btn-primary ml-0  gltf">
+                    <input id="gltf"  class="d-none obj-gltf-file gltf" type="file" name="gltf"/>
+                    GLTF
+                  </label>
+                </div>
               </form>
                 
                 
-              <div class="col-md-3 px-0">
-                <label id="obj" class="btn py-3 btn-block btn-primary ml-0 obj-file obj">
-                  <input  class="d-none " type="file" name="obj"/>
-                  OBJ
-                </label>
-              </div>
-              <div class="col-md-3 px-0">
-                <label id="mtl"  class="btn py-3 btn-block btn-primary ml-0 obj-file mtl">
-                  <input class="d-none" type="file" name="mtl"/>
-                  MTL
-                </label>
-              </div>
-              <div class="col-md-3 px-0">
-                <label id="gltf" class="btn py-3 btn-block btn-primary ml-0 obj-file gltf">
-                  <input  class="d-none " type="file" name="gltf"/>
-                  GLTF
-                </label>
-              </div>
             </div>
             </div>
           </div>
           <div class="search-block border-b">
-            <div class="padding-panel">
+            <div class="padding-panel pt-4">
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control" placeholder="Search" />
@@ -3937,9 +3965,9 @@
 
               <div class="content mb-3">
                 <img id="my-image" src="#" class="d-none"/>
-                <button id="use" type="button" class="uploadbut d-none">Upload Image</button>
                 <div class="content-title">MY FILES</div>
                 <div class="images-options" id="unsplash_thumb_upload"></div>
+                <!-- <button id="use" type="button" class="uploadbut d-none">Upload Image</button> -->
               </div>
               <!-- <div class="panel-footer text-center">
                             <button class="btn btn-primary btn-upload-media btn-round-blue me-opt-upld">Upload Media</button>
@@ -3968,7 +3996,7 @@
           <div class="search-block marker_btns border-b">
             <div class="padding-panel">
               <label
-              style="padding: 11px 10px; margin: 10px 0; cursor: pointer;"
+                style="padding: 11px 10px; margin: 10px 0; cursor: pointer;"
                 id="buttonUpload"
                 for="fileinput"
                 class="btn btn-success btn-block rounded-0 border-0 mb-0"
@@ -3980,13 +4008,13 @@
                   accept="image/*"
                 />Upload New Marker</label
               >
-              <button  onclick="markerless(this)" style="padding: 11px 10px;" class="btn btn-primary btn-upload-media btn-block mt-0">
+              <button  onclick="markerless(this)" style="padding: 7px 10px;" class="btn btn-primary btn-upload-media btn-block mt-0">
                 Go Markerless
               </button>
             </div>
           </div>
           <div class="search-block border-b">
-            <div class="padding-panel">
+            <div class="padding-panel pt-1">
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control" placeholder="Search" />
@@ -4321,6 +4349,7 @@
           //debugger;
           var file = this.files[0];
           // debugger
+          console.log(file)
 
           var reader = new FileReader();
           reader.onload = function (event) {
@@ -4328,14 +4357,16 @@
             updateFullMarkerImage();
           };
           reader.readAsDataURL(file);
+          THREEx.ArPatternFile.uploadMarker()
         });
 
       function updateFullMarkerImage() {
         // get patternRatio
         var patternRatio =
           document.querySelector("#patternRatioSlider").value / 100;
+        console.log(patternRatio)
 
-        THREEx.ArPatternFile.buildFullMarker(
+          THREEx.ArPatternFile.buildFullMarker(
           innerImageURL,
           patternRatio,
           function onComplete(markerUrl) {
@@ -4344,7 +4375,9 @@
             // put fullMarkerImage into #imageContainer
           }
         );
+        console.log('here;')
       }
+
     </script>
 
     <script>
@@ -4392,15 +4425,15 @@
           $(tab).click();
         });
         // upload img
-        $(".me-opt-upld").click(function () {
-          $("#image").click();
-        });
-        $(".me-opt-upload-aud").click(function () {
-          $("#audio").click();
-        });
-        $(".me-upload-vid").click(function () {
-          $("#video").click();
-        });
+        // $(".me-opt-upld").click(function () {
+        //   $("#image").click();
+        // });
+        // $(".me-opt-upload-aud").click(function () {
+        //   $("#audio").click();
+        // });
+        // $(".me-upload-vid").click(function () {
+        //   $("#video").click();
+        // });
 
         // show effects panel
         $(".show-effects").click(function () {
@@ -4555,6 +4588,12 @@
           element.classList.remove("active");
         }
 
+        $("#upload__media_btn").removeClass("d-none");
+        $("#upload__media_btns").addClass("d-none");
+    
+        $("#upload__3d_btn").removeClass("d-none");
+        $("#upload__3d_btns").addClass("d-none");
+
         document.getElementById('file__input').readOnly = true;
       });
 
@@ -4607,6 +4646,7 @@
         $("#upload__media_btn").addClass("d-none");
         $("#upload__media_btns").removeClass("d-none");
       });
+      
       $("#upload__3d_btn").on("click", () => {
         $("#upload__3d_btn").addClass("d-none");
         $("#upload__3d_btns").removeClass("d-none");
