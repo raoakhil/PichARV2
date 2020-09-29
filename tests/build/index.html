@@ -8,6 +8,7 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -772,7 +773,7 @@
                     class="panel-content w-100 pl-4 pr-0 float-left w-100 text-center manage active pt-0"
                     style="border: none;"
                   >
-                    <div class="col-container h-100">
+                    <!-- <div class="col-container h-100">
                       <div
                         id="galleryimgs"
                         class="col"
@@ -787,7 +788,7 @@
                         <div class="close-media-info text-white">
                           <b>&times</b>
                         </div>
-                        <!-- <img src="images/4220.jpg" alt="" width="260" height="100"> -->
+                        <img src="images/4220.jpg" alt="" width="260" height="100">
                         <div class="col-sm-12 float-left">
                           <div class="pt-2 pb-2">
                             <small>
@@ -904,7 +905,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="left-panel-footer w-100">
                     <div
@@ -2702,7 +2703,7 @@
         >
           <i
             style="color: #bfc5d2; margin-top: -5px; font-size: 18px;"
-            class="fa fa-picture-o"
+            class="fas fa-image"
             aria-hidden="true"
           ></i>
           <small
@@ -2745,7 +2746,7 @@
         >
           <i
             style="color: #bfc5d2; margin-top: -5px; font-size: 18px;"
-            class="fa fa-video-camera"
+            class="fa fa-video"
             aria-hidden="true"
           ></i>
           <small
@@ -3389,34 +3390,11 @@
           </div>
         </div>
       </div>
-      <div id="image_panel" class="left-bar-panel image-panel">
-        <!-- <div class="panel-indicators">
-                <div class="indicator selected">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext"><b>Upload Your Media</b><br><br>Add any media you want from your computer or social accounts. </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Images</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Videos</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Images </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Videos</span>
-                    </div>
-                </div>
-            </div> -->
+      <div id="image_panel" class="left-bar-panel image-panel">        
         <div class="bar-cover">
           <div class="left-bar-header">
             <div class="title border-b padding-l-24">
               Image
-              
             </div>
           </div>
           <div class="search-block border-b">
@@ -3892,7 +3870,10 @@
               </div>
             </div>
           </div>
-          <div class="panel-content padding-panel style-scroll">
+          <div 
+            class="panel-content padding-panel style-scroll"
+            style="height: calc(100vh - 240px - 91px);"
+          >
             <div class="content-container">
               <div class="content mb-3 d-none">
                 <div class="content-title">Upload Your media</div>
@@ -4600,6 +4581,9 @@
       
 
       $("#modal-publish").on("click", (event) => {
+        event.stopPropagation();
+      });
+      $(".img__actions").on("click", (event) => {
         event.stopPropagation();
       });
       $(".left-fixed-bar").on("click", (event) => {
