@@ -323,9 +323,7 @@ function pushImg(e) {
   node.setAttribute("visible", "true");
   node.setAttribute("click-drag", "");
   node.classList.add("exp");
-  var ssss = document.createElement('div');
-  ssss.append(node)
-  document.getElementById("perswin").appendChild(ssss);
+  document.getElementById("perswin").appendChild(node);
   $("#images .close").click();
   $(".modal-backdrop").remove();
 }
@@ -724,23 +722,24 @@ function uploadImg(event) {
 }
 
 //for edit name
-function editNameAsset(e) {
+function editNameAsset(id, e2) {
+  console.log(id, e2.value)
   let formData = new FormData();
-  // formData.append("update-assets", "true");
+  formData.append("update-assets", "true");
   // formData.append("update-media", "true");
   // formData.append("authtoken", token);
-  var newName = document.getElementById("newname").value;
-  var newTags = document.getElementById("newtags").value;
-  var pid = document.getElementById("elementid").value;
+  // var newName = document.getElementById("newname").value;
+  // var newTags = document.getElementById("newtags").value;
+  // var pid = document.getElementById("elementid").value;
 
-  formData.append("name", newName);
-  formData.append("project_id", pid);
-  formData.append("tags", newTags);
+  formData.append("name", e2.value);
+  formData.append("id", id);
+  // formData.append("tags", newTags);
 
-  if (edittype == "a") {
+  // if (edittype == "a") {
     $.ajax({
-      method: "POST",
-      url: "http://pitchar.io/user/apis/_update_assets.php",
+      method: "PUT",
+      url: "https://pitchar.io/api/v1/assets",
       data: formData,
       processData: false,
       contentType: false,
@@ -778,54 +777,56 @@ function editNameAsset(e) {
         return xhr;
       },
       success(data) {
-        $("#name_" + data.data.id).text(data.data.name);
+        console.log(data)
+        // $("#name_" + data.data.id).text(data.data.name);
       },
     });
-  } else {
-    $.ajax({
-      method: "POST",
-      url: "http://pitchar.io/user/apis/_update_media.php",
-      data: formData,
-      processData: false,
-      contentType: false,
-      xhr: function () {
-        var xhr = new window.XMLHttpRequest();
+  // } 
+  // else {
+  //   $.ajax({
+  //     method: "POST",
+  //     url: "http://pitchar.io/user/apis/_update_media.php",
+  //     data: formData,
+  //     processData: false,
+  //     contentType: false,
+  //     xhr: function () {
+  //       var xhr = new window.XMLHttpRequest();
 
-        // Upload progress
-        xhr.upload.addEventListener(
-          "progress",
-          function (evt) {
-            if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
-              //Do something with upload progress
-              uploadbar.style.width = percentComplete * 100 + "%";
-              if (percentComplete == 1) uploadbar.style.width = 0;
-            }
-          },
-          false
-        );
+  //       // Upload progress
+  //       xhr.upload.addEventListener(
+  //         "progress",
+  //         function (evt) {
+  //           if (evt.lengthComputable) {
+  //             var percentComplete = evt.loaded / evt.total;
+  //             //Do something with upload progress
+  //             uploadbar.style.width = percentComplete * 100 + "%";
+  //             if (percentComplete == 1) uploadbar.style.width = 0;
+  //           }
+  //         },
+  //         false
+  //       );
 
-        // Download progress
-        xhr.addEventListener(
-          "progress",
-          function (evt) {
-            if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
-              // Do something with download progress
-              uploadbar.style.width = percentComplete * 100 + "%";
-              if (percentComplete == 1) uploadbar.style.width = 0;
-            }
-          },
-          false
-        );
+  //       // Download progress
+  //       xhr.addEventListener(
+  //         "progress",
+  //         function (evt) {
+  //           if (evt.lengthComputable) {
+  //             var percentComplete = evt.loaded / evt.total;
+  //             // Do something with download progress
+  //             uploadbar.style.width = percentComplete * 100 + "%";
+  //             if (percentComplete == 1) uploadbar.style.width = 0;
+  //           }
+  //         },
+  //         false
+  //       );
 
-        return xhr;
-      },
-      success(data) {
-        $("#name_" + data.id).text(data.name);
-      },
-    });
-  }
+  //       return xhr;
+  //     },
+  //     success(data) {
+  //       $("#name_" + data.id).text(data.name);
+  //     },
+  //   });
+  // }
 }
 
 //for image fetch
@@ -2659,6 +2660,8 @@ $('#uploads_panel_btn').click(function () {
         var src = asset.image;
         var imgid = `uploadsImg${i}`
         var dropdownId = `myDropdown${i}`;
+        var inputId = `input${i}`;
+        var checkId = `rename__check${i}`;
         asset.name = asset.name.toUpperCase()
         let format = src ? src.slice(-3).toUpperCase() : 'N/A'
 
@@ -2670,21 +2673,22 @@ $('#uploads_panel_btn').click(function () {
           // count_ast++;
           
           var elem = `
-              <div>
+              <div class="upload__wrap">
                 <div class="dropdown">
-                  <button onclick="myFunction(${dropdownId})" class="dropbtn">
+                  <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
                     <i style="color: black" class="fa fa-ellipsis-v"></i>
                   </button>
                   <div id="${dropdownId}" class="dropdown-content">
-                    <b style="padding: 0 7px;">${asset.name}</b> <br>
-                    <small style="color: gray; padding: 0 7px;">FILE TYPE: ${format}</small> <br>
+                    <div class="d-flex align-items-center">
+                      <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                    </div>
+                    <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
                     <hr style="margin: .5em 0;">
-                    <a><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                    <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
                     <a><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
                   </div>
                 </div>
                 <div
-                  class="img__wrap"
                   onclick="clickImg(${imgid})"
                 >
                   <img
@@ -2703,6 +2707,11 @@ $('#uploads_panel_btn').click(function () {
     },
   });
 });
+
+function renameAsset(input, check) {
+  document.getElementById(input.id).readOnly = false;
+  document.getElementById(check.id).style.opacity = 1;
+}
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */

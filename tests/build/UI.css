@@ -1703,6 +1703,35 @@ form .form-container .form-control {
   opacity: 1;
 }
 
+
+.upload__wrap {
+  position: relative;
+  height: 120px;
+  width: 139px;
+}
+
+.upload__description {
+  position: absolute;
+  cursor: pointer;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #00000060;
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s, visibility .2s;
+  -webkit-transition-: opacity .2s, visibility .2s;
+  -webkit-transition-: opacity .2s, visibility .2s;
+  -moz-transition-: opacity .2s, visibility .2s;
+  -o-transition-: opacity .2s, visibility .2s;
+}
+
+.upload__wrap:hover .upload__description {
+  visibility: visible;
+  opacity: 1;
+}
+
 input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
@@ -1813,14 +1842,11 @@ input[type=range]:focus::-ms-fill-upper {
 .dropbtn {
   background-color: #fff;
   color: white;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 50%;
   font-size: 14px;
   border: none;
   cursor: pointer;
-  /* position: relative;
-  top: 40;
-  left: 100; */
   z-index: 2;
 }
 
@@ -1834,22 +1860,21 @@ input[type=range]:focus::-ms-fill-upper {
 .dropdown {
   position: relative;
   display: inline-block;
-  /* position: relative; */
   z-index: 2;
-
-  top: 40;
-  left: 100;
+  top: 34px;
+  left: 103px;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
-  right: 0;
+  left: -106px;
+  top: 1px;
   padding: 10px 0;
   background-color: #fff;
   border-radius: 4px;
-  min-width: 123px;
+  min-width: 140px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 3;
 }
@@ -1857,7 +1882,7 @@ input[type=range]:focus::-ms-fill-upper {
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
-  padding: 7px 7px;
+  padding: 7px 9px;
   font-size: 12px;
   text-decoration: none;
   display: block;
@@ -1869,3 +1894,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+.rename__input:focus {
+  outline: none;
+}
