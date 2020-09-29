@@ -1574,6 +1574,8 @@ form .form-container .form-control {
 }
 
 #unsplashImgs img,
+#unsplash_thumb_upload img,
+#unsplash_thumb_marker img,
 .googlepoly_srch img,
 .googlepolyImgs img,
 .you_tube img,
@@ -1686,7 +1688,7 @@ form .form-container .form-control {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #00000050;
+  background: #00000060;
   color: #fff;
   visibility: hidden;
   opacity: 0;
@@ -1807,3 +1809,63 @@ input[type=range]:focus::-ms-fill-upper {
   100% { transform: rotate(360deg); }
 }
 
+/* Dropdown Button */
+.dropbtn {
+  background-color: #fff;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 50%;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  /* position: relative;
+  top: 40;
+  left: 100; */
+  z-index: 2;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  outline: none !important;
+  background-color: rgb(240, 240, 240);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  /* position: relative; */
+  z-index: 2;
+
+  top: 40;
+  left: 100;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding: 10px 0;
+  background-color: #fff;
+  border-radius: 4px;
+  min-width: 123px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 7px 7px;
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd; cursor: pointer;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
