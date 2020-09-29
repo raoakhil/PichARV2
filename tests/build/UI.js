@@ -2716,7 +2716,15 @@ function renameAsset(input, check) {
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction(e) {
-  console.log(e)
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  for (i = 0; i < dropdowns.length; i++) {
+    var openDropdown = dropdowns[i];
+    console.log(openDropdown.id)
+    console.log(e.id)
+    if (openDropdown.classList.contains('show') && openDropdown.id !== e.id) {
+      openDropdown.classList.remove('show');
+    }
+  }
   document.getElementById(e.id).classList.toggle("show");
 }
 
