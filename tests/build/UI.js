@@ -638,10 +638,17 @@ $("#360video").change(function () {
   uploadVid();
 });
 $(".obj-file").change(function () {
-  console.log($(".obj-file.obj").val());
-  console.log($(".obj-file.mtl").val());
+  if ($(".obj-file.obj").val()) {
+    console.log('true')
+    $("#obj_label").addClass('uploaded')
+    // $("#obj_label").text('DONE');
+  }
+  if ($(".obj-file.mtl").val()) {
+    $("#mtl_label").addClass('uploaded')
+    // $("#mtl_label").text('DONE');
+  }
   if ($(".obj-file.obj").val() !== "" && $(".obj-file.mtl").val() !== "") {
-    return uploadObj();
+    uploadObj();
   }
 });
 $(".obj-gltf-file").change(() => {
@@ -887,6 +894,10 @@ $("#imagebut").click(function () {
     // node.setAttribute('crossorigin', 'anonymous');
     // document.getElementById('unsplashImgs').appendChild(node);
   }
+  setTimeout(() => {
+    $('#img_loader').addClass('d-none')
+    $('#unsplashImgs').removeClass('d-none')
+  }, 2000);
 
   // $.ajax({
   //     method: 'GET',
@@ -1451,6 +1462,8 @@ function uploadObj(event) {
       return xhr;
     },
     success(data) {
+      $("#obj_label").removeClass('uploaded');
+      $("#mtl_label").removeClass('uploaded');
       console.log(data);
       // var node = document.createElement('img');
       // node.src = data.data.objthumbnail;
@@ -2430,10 +2443,12 @@ scene.add(container);
 const API_KEY = "AIzaSyANZMpdihFsQgcJkFIEjasfiLgX6Nyb8SE";
 $("body").on("keyup", ".searchGooglePoly", function (event) {
   event.preventDefault();
+  
+  
   var que = $(this).val();
   console.log(que)
   if (que !== "") {
-    if (event.keyCode === 13) {
+    // if (event.keyCode === 13) {
       //alert("searchGooglePoly");
 
       var settings = {
@@ -2443,58 +2458,68 @@ $("body").on("keyup", ".searchGooglePoly", function (event) {
         method: "GET",
       };
 
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-        $(".googlepoly_srch").html("");
-        $(".googlepolyImgs").hide();
-        document.getElementById("googlePolyImgs").innerHTML = "";
+      $.ajax(settings)
+        .done(function (response) {
+          console.log(response);
+          $(".googlepoly_srch").html("");
+          $('#loader').removeClass('d-none')
+          $(".googlepoly_srch").addClass('d-none')
+          $(".googlepolyImgs").addClass('d-none');
+          // document.getElementById("googlePolyImgs").innerHTML = "";
 
-        var modResults = response.assets;
-        // console.log(modResults, 'test');
-        console.log(modResults);
-        for (var i = 0; i < modResults.length; i++) {
-          var src = modResults[i].thumbnail.url;
-          var format = modResults[i].formats.find((format) => {
-            return format.formatType === "OBJ";
-          });
-          var obj = format.root;
-          var mtl = format.resources.find((resource) => {
-            return resource.url.endsWith("mtl");
-          });
-          var imgid = "img" + i;
-          var elem = `
-                <div
-                    class="img__wrap"
-                    data-source="${modResults[i].name}"
-                    id="${imgid}"
-                    data-obj="${obj.url}"
-                    data-mtl="${mtl.url}"
-                    onclick="pushPolyModel(this);"
-                >
-                    <img
-                        src="${src}"    
-                    />
-                    <p class="img__description">${modResults[i].displayName}</p>
-                </div>
-            `;
+          var modResults = response.assets;
+          // console.log(modResults, 'test');
+          console.log(modResults);
+          for (var i = 0; i < 10; i++) {
+            var src = modResults[i].thumbnail.url;
+            var format = modResults[i].formats.find((format) => {
+              return format.formatType === "OBJ";
+            });
+            var obj = format.root;
+            var mtl = format.resources.find((resource) => {
+              return resource.url.endsWith("mtl");
+            });
+            var imgid = "img" + i;
+            var elem = `
+                  <div
+                      class="img__wrap"
+                      data-source="${modResults[i].name}"
+                      id="${imgid}"
+                      data-obj="${obj.url}"
+                      data-mtl="${mtl.url}"
+                      onclick="pushPolyModel(this);"
+                  >
+                      <img
+                          src="${src}"    
+                      />
+                      <p class="img__description">${modResults[i].displayName}</p>
+                  </div>
+              `;
 
-          // var del = document.createElement('button');
-          // del.setAttribute('onclick', 'delaud(this)');
-          // del.innerHTML = "<i class='fa fa-trash'></i>";
-          // overlay.appendChild(del);
-          // div.appendChild(elem);
-          // document.getElementById('googlePolyImgs').appendChild(elem);
+            // var del = document.createElement('button');
+            // del.setAttribute('onclick', 'delaud(this)');
+            // del.innerHTML = "<i class='fa fa-trash'></i>";
+            // overlay.appendChild(del);
+            // div.appendChild(elem);
+            // document.getElementById('googlePolyImgs').appendChild(elem);
 
+            $(elem).appendTo(".googlepoly_srch");
+            // div.appendChild(elem);
+          }
           $(".googlepoly_srch").removeClass('d-none')
-          $(elem).appendTo(".googlepoly_srch");
-          // div.appendChild(elem);
-        }
-      });
-    }
+          $('#loader').addClass('d-none')
+        })
+    // }
   } else {
+    $('#loader').addClass('d-none')
     $(".googlepoly_srch").addClass("d-none");
-    $(".googlepolyImgs").show();
+    $(".googlepolyImgs").removeClass('d-none');
+
+    // $(".googlepolyImgs").show();
+    
+
   }
+  
 });
 
 function pushPolyModel(e) {
@@ -2560,7 +2585,7 @@ async function objectloaded(id) {
   } catch (err) {
     setTimeout(function () {
       objectloaded(id);
-    }, 3000);
+    }, 2000);
   }
 }
 
@@ -2568,6 +2593,10 @@ document
   .getElementById("choosemarkerbut")
   .addEventListener("click", function (e) {
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
+    $('#unsplash_thumb_marker').html('')
+    $('#marker_loader').removeClass('d-none')
+    $('#unsplash_thumb_marker').addClass('d-none')
+
     $.ajax({
       method: "GET",
       url: "https://pitchar.io/api/v1/markers",
@@ -2636,6 +2665,10 @@ document
           $("#unsplash_thumb_marker").append(elem);
           // $('#unsplash_thumb_marker').append(elem)
         }
+        setTimeout(() => {
+          $('#marker_loader').addClass('d-none')
+          $('#unsplash_thumb_marker').removeClass('d-none')
+        }, 2000);
       },
     });
   });
@@ -2648,7 +2681,10 @@ function clickMarker(e) {
 }
 
 $('#uploads_panel_btn').click(function () {
-  $("#unsplash_thumb").html("");
+  $('#unsplash_thumb_upload').html('')
+  $('#upload_loader').removeClass('d-none')
+  $('#unsplash_thumb_upload').addClass('d-none')
+  
   // $('#unsplash_thumb_upload').html('')
   // for (var i = 0; i < 20; i++) {
   //     var node = document.createElement('img');
@@ -2727,6 +2763,10 @@ $('#uploads_panel_btn').click(function () {
           $(elem).appendTo("#unsplash_thumb_upload");
         }
       }
+      setTimeout(() => {
+        $('#upload_loader').addClass('d-none')
+        $('#unsplash_thumb_upload').removeClass('d-none')
+      }, 2000);
     },
   });
 });

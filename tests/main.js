@@ -71,15 +71,18 @@ unsplash.photos
 window.onload = function () {
   $("body").on("keyup", ".unsplash_srch_new", function (event) {
     event.preventDefault();
+    if (event.keyCode === 13) return;
+    $('#img_loader').removeClass('d-none')
+    $('#unsplashImgs').addClass('d-none')
     document.getElementById("unsplashImgs").innerHTML = "";
-    if (event.keyCode === 13) {
+    // if (event.keyCode === 13) {
       console.log(String(event.target.value));
       unsplash.search
         .photos(String(event.target.value), 1)
         .then(toJson)
         .then((json) => {
           console.log(json);
-          for (var i = 0; i < json.results.length; i++) {
+          for (var i = 0; i < 10; i++) {
             let imgid = `srch_unsplash${i}`;
             var elem = `
                 <div
@@ -105,8 +108,10 @@ window.onload = function () {
             $(elem).appendTo("#unsplashImgs");
             // document.getElementById("unsplashImgs").append(node);
           }
+          $('#img_loader').addClass('d-none')
+          $('#unsplashImgs').removeClass('d-none')
         });
-    }
+    // }
   });
 };
 module.exports = {

@@ -2917,38 +2917,14 @@
       </div>
 
       <div id="3d_modal" class="left-bar-panel 3D-modal-panel">
-        <!-- <div class="panel-indicators">
-                <div class="indicator selected">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext"><b>Upload Your Media</b><br><br>Add any media you want from your computer or social accounts. </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Images</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Videos</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Images </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Videos</span>
-                    </div>
-                </div>
-            </div> -->
         <div class="bar-cover">
           <div class="left-bar-header">
             <div class="title border-b padding-l-24">
               3D Modal
-              <!-- <div class="btn-close btn-close-panel">&times;</div> -->
             </div>
           </div>
           <div class="search-block border-b">
             <div class="padding-panel">
-              <!-- <p>What are you looking for?</p> -->
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control searchGooglePoly" placeholder="Search" />
@@ -3390,7 +3366,7 @@
           </div>
         </div>
       </div>
-      <div id="image_panel" class="left-bar-panel image-panel">        
+      <div id="image_panel" class="left-bar-panel image-panel">
         <div class="bar-cover">
           <div class="left-bar-header">
             <div class="title border-b padding-l-24">
@@ -3426,7 +3402,8 @@
               </div>
               <div class="content mb-3">
                 <div class="content-title">UNSPLASH</div>
-                <div class="images-options" id="unsplashImgs"></div>
+                <div id="img_loader" class="loader"></div>
+                <div class="images-options d-none" id="unsplashImgs"></div>
                 
               </div>
               <!-- <div class="panel-footer text-center">
@@ -3839,13 +3816,13 @@
                 <!-- <input id='auth3' name="authtoken" type="hidden" value=""> -->
                 <!-- <input type="hidden" name="create" value="1"> -->
                 <div class="col-md-3 px-0">
-                  <label class="mb-0 btn py-3 btn-block btn-primary ml-0  obj">
+                  <label id="obj_label" class="mb-0 btn py-3 btn-block btn-primary ml-0  obj">
                     <input id="obj"  class="d-none obj-file obj" type="file" name="obj"/>
                     OBJ
                   </label>
                 </div>
                 <div class="col-md-3 px-0">
-                  <label class="mb-0 btn py-3 btn-block btn-primary ml-0  mtl">
+                  <label id="mtl_label" class="mb-0 btn py-3 btn-block btn-primary ml-0  mtl">
                     <input id="mtl" class="d-none obj-file mtl" type="file" name="mtl"/>
                     MTL
                   </label>
@@ -3947,7 +3924,8 @@
               <div class="content mb-3">
                 <img id="my-image" src="#" class="d-none"/>
                 <div class="content-title">MY FILES</div>
-                <div class="images-options" id="unsplash_thumb_upload"></div>
+                <div id="upload_loader" class="loader"></div>
+                <div class="images-options d-none" id="unsplash_thumb_upload"></div>
                 <!-- <button id="use" type="button" class="uploadbut d-none">Upload Image</button> -->
               </div>
               <!-- <div class="panel-footer text-center">
@@ -4002,11 +3980,12 @@
               </div>
             </div>
           </div>
-          <div class="panel-content padding-panel style-scroll">
+          <div class="panel-content padding-panel style-scroll" style="height: calc(100vh - 240px - 91px);">
             <div class="content-container">
               <div class="content mb-3">
                 <div class="content-title">MY MARKER</div>
-                <div class="images-options" id="unsplash_thumb_marker"></div>
+                <div id="marker_loader" class="loader"></div>
+                <div class="images-options d-none" id="unsplash_thumb_marker"></div>
               </div>
               <!-- <div class="panel-footer text-center">
                             <button class="btn btn-primary btn-upload-media btn-round-blue me-opt-upld">Upload Media</button>
