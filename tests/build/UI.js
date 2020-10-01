@@ -284,13 +284,17 @@ function add(event) {
 }
 var c;
 
-function delimg(e) {
+function delimg(id) {
   $.ajax({
-    method: "POST",
-    url: "http://pitchar.io/user/apis/_delete_assets.php",
-    data: { authtoken: token, product_id: e.dataset.pid },
+    method: "DELETE",
+    url: `https://pitchar.io/api/v1/assets/${id}`,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
     success(data) {
-      $(e).closest(".img-panel").hide();
+      console.log(data);
+      // $(e).closest(".img-panel").hide();
       // e.parentNode.parentNode.style.display = 'none';
     },
   });
@@ -723,29 +727,24 @@ function uploadImg(event) {
 
 //for edit name
 function editNameAsset(id, e2) {
-  console.log(id, e2.value)
-  let formData = new FormData();
-  formData.append("update-assets", "true");
-  // formData.append("update-media", "true");
-  // formData.append("authtoken", token);
-  // var newName = document.getElementById("newname").value;
-  // var newTags = document.getElementById("newtags").value;
-  // var pid = document.getElementById("elementid").value;
-
-  formData.append("name", e2.value);
-  formData.append("id", id);
-  // formData.append("tags", newTags);
-
+  const assetData = {
+    name: e2.value,
+    type: 'image'
+  }
   // if (edittype == "a") {
     $.ajax({
       method: "PUT",
-      url: "https://pitchar.io/api/v1/assets",
-      data: formData,
+      url: `https://pitchar.io/api/v1/assets/${id}`,
+      data: JSON.stringify(assetData),
       processData: false,
       contentType: false,
+      headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer " + accessToken,
+        "Content-Type": "application/json"
+      },
       xhr: function () {
         var xhr = new window.XMLHttpRequest();
-
         // Upload progress
         xhr.upload.addEventListener(
           "progress",
@@ -2653,6 +2652,7 @@ $('#uploads_panel_btn').click(function () {
       Authorization: "Bearer " + accessToken,
     },
     success({ data: { data } }) {
+      console.log(data)
       var assets = data;
       // var count_ast = 0;
       for (var i = 0; i < assets.length; i++) {
@@ -2663,7 +2663,7 @@ $('#uploads_panel_btn').click(function () {
         var inputId = `input${i}`;
         var checkId = `rename__check${i}`;
         asset.name = asset.name.toUpperCase()
-        let format = src ? src.slice(-3).toUpperCase() : 'N/A'
+        var format = src ? src.slice(-3).toUpperCase() : 'N/A'
 
         if (asset.type === "image" && asset.image !== "") {
           // if (count_ast < 6) {
@@ -2685,7 +2685,7 @@ $('#uploads_panel_btn').click(function () {
                     <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
                     <hr style="margin: .5em 0;">
                     <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-                    <a><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+                    <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
                   </div>
                 </div>
                 <div
@@ -2719,8 +2719,6 @@ function myFunction(e) {
   var dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {
     var openDropdown = dropdowns[i];
-    console.log(openDropdown.id)
-    console.log(e.id)
     if (openDropdown.classList.contains('show') && openDropdown.id !== e.id) {
       openDropdown.classList.remove('show');
     }
