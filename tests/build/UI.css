@@ -1824,13 +1824,13 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .loader {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
-  margin: 100px auto;
+  border: 0px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  margin: 90px auto;
   border-radius: 50%;
-  width: 60;
-  height: 60;
-  animation: spin 2s linear infinite;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -1897,4 +1897,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .rename__input:focus {
   outline: none;
+}
+
+.uploaded {
+  background-color: #2E384D;
 }
