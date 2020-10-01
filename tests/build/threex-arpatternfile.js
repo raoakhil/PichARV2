@@ -159,43 +159,53 @@ THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onCom
 THREEx.ArPatternFile.uploadMarker = function ()  {
 	var m_id;
 	var dataimg = new FormData();
-	console.log(Blobimg, token)
-	dataimg.append('submit', 1);
-	dataimg.append('authtoken', token);
-	dataimg.append('marker', Blobimg, 'marker.png');
-	
-	console.log(dataimg.get('submit'))
-	console.log(dataimg.get('authtoken'))
+
+	console.log(Blobimg)
+	console.log($('#fileinput').val().slice(7, -4))
+
+	dataimg.append('marker', Blobimg);
+	dataimg.append('name', $('#fileinput').val().slice(7, -4));
+
 	console.log(dataimg.get('marker'))
+
+	console.log(expid)
 	$.ajax({
 		method: 'POST',
-		url: 'http://pitchar.io/api/v1/_post_marker',
+		url: 'https://pitchar.io/api/v1/markers',
 		data: dataimg,
 		enctype: 'multipart/form-data',
 		contentType: false,
 		processData: false,
+		headers: {
+            'Accept' : 'application/json',
+            'Authorization' : 'Bearer '+ accessToken,
+        },
 		success: function (data) {
 			console.log(data);
-			m_id = data.Data.id;
-			var datapatt = new FormData();
-			datapatt.append('submit', 1);
-			datapatt.append('authtoken', token);
-			datapatt.append('marker_id', m_id)
-			datapatt.append('patt', Blobpatt, 'marker.patt');
-			$.ajax({
-				method: 'POST',
-				url: 'http://pitchar.io/api/v1/_post_pattern',
-				data: datapatt,
-				enctype: 'multipart/form-data',
-				contentType: false,
-				processData: false,
-				success: function (data) {
-					console.log(data);
-				},
-				error: function (res) {
-					console.log(res);
-				}
-			});
+			// m_id = data.Data.id;
+			// var datapatt = new FormData();
+			// datapatt.append('submit', 1);
+			// datapatt.append('authtoken', token);
+			// datapatt.append('marker_id', m_id)
+			// datapatt.append('patt', Blobpatt, 'marker.patt');
+			// $.ajax({
+			// 	method: 'POST',
+			// 	url: 'http://pitchar.io/api/v1/_post_pattern',
+			// 	data: datapatt,
+			// 	enctype: 'multipart/form-data',
+			// 	contentType: false,
+			// 	processData: false,
+			// 	headers: {
+			// 		'Accept' : 'application/json',
+			// 		'Authorization' : 'Bearer '+ accessToken,
+			// 	},
+			// 	success: function (data) {
+			// 		console.log(data);
+			// 	},
+			// 	error: function (res) {
+			// 		console.log(res);
+			// 	}
+			// });
 
 		},
 		error: function (res) {

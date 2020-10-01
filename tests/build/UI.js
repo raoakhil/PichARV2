@@ -2581,7 +2581,7 @@ document
         console.log(data);
         for (var i = 0; i < markers.length; i++) {
           marker = markers[i];
-          let markerId = `markerimg+${i}`
+          let markerId = `markerimg${i}`
           // var node = document.createElement('img');
           // // node.src = marker.linkmarker;
           // node.id = 'markerimg' + i;
@@ -2592,19 +2592,35 @@ document
           var elem = `
               <div
                 class="img__wrap"
-                onclick="clickImg(${markerId})"
+                onclick="clickMarker(${markerId})"
               >
                 <img
                   src="https://pitchar.io/storage/${marker.marker}"
                   data-markerid="${marker.id}"
                   id="${markerId}"
-                  onclick="selectMarker(this);"
+                  onclick="selectMarker(this)"
                   alt="Chania"
                   crossorigin="anonymous"
                 />
                 <p class="img__description">${marker.name}</p>
               </div>
           `;
+          // var elem = `
+          //     <div
+          //       class="img__wrap"
+          //       onclick="clickImg(${markerId})"
+          //     >
+          //       <img
+          //         src="https://pitchar.io/storage/${marker.marker}"
+          //         data-markerid="${marker.id}"
+          //         id="${markerId}"
+          //         onclick="selectMarker(this)"
+          //         alt="Chania"
+          //         crossorigin="anonymous"
+          //       />
+          //       <p class="img__description">${marker.name}</p>
+          //     </div>
+          // `;
           // var elem = `
           //   <div class="img-panel" id="media_">
           //     <div class="overlay">
@@ -2623,6 +2639,13 @@ document
       },
     });
   });
+
+function clickMarker(e) {
+  $(`#${e.id}`).on("click", function(e) {
+    e.stopPropagation();
+  });
+  $(`#${e.id}`).click();
+}
 
 $('#uploads_panel_btn').click(function () {
   $("#unsplash_thumb").html("");
@@ -2740,40 +2763,40 @@ window.onclick = function(event) {
   }
 }
 
-$.ajax({
-  method: "POST",
-  url: "http://pitchar.io/api/v1/_fetch_markers",
-  data: { authtoken: token, submit: 1 },
-  success(data) {
-    console.log(data);
-    if (!data.data) return;
-    var markers = data.Data;
-    for (var i = 0; i < markers.length; i++) {
-      marker = markers[i];
-      // var node = document.createElement('img');
-      // // node.src = marker.linkmarker;
-      // node.id = 'markerimg' + i;
-      // node.style = 'padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:150px;';
-      // node.setAttribute('onclick', 'selectMarker(this);');
-      // node.setAttribute('data-markerid', marker.id);
-      // document.getElementById('gallerymarkers').appendChild(node);
-      var elem = `
-            <div class="col-sm-2 float-left img-panel" id="media_">
-            <div class="overlay">
-                    <div class="icons float-right mt-3 mr-2">
-                      <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+// $.ajax({
+//   method: "POST",
+//   url: "http://pitchar.io/api/v1/_fetch_markers",
+//   data: { authtoken: token, submit: 1 },
+//   success(data) {
+//     console.log(data);
+//     if (!data.data) return;
+//     var markers = data.Data;
+//     for (var i = 0; i < markers.length; i++) {
+//       marker = markers[i];
+//       // var node = document.createElement('img');
+//       // // node.src = marker.linkmarker;
+//       // node.id = 'markerimg' + i;
+//       // node.style = 'padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:150px;';
+//       // node.setAttribute('onclick', 'selectMarker(this);');
+//       // node.setAttribute('data-markerid', marker.id);
+//       // document.getElementById('gallerymarkers').appendChild(node);
+//       var elem = `
+//             <div class="col-sm-2 float-left img-panel" id="media_">
+//             <div class="overlay">
+//                     <div class="icons float-right mt-3 mr-2">
+//                       <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
 
-                      </i>
-                    </div>
-                  </div>
-            <div class="w-100 float-left col-sm-12 p-0">
+//                       </i>
+//                     </div>
+//                   </div>
+//             <div class="w-100 float-left col-sm-12 p-0">
 
-              <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="${marker.linkmarker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" style="height: 150px">
-            </div>
-            <div class="mt-1 float-left w-100" id="name_"><small></small></div>
-          </div>`;
-      // $('#gallerymarkers').append(elem);
-      $("#unsplash_thumb_marker").append(elem);
-    }
-  },
-});
+//               <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="${marker.linkmarker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" style="height: 150px">
+//             </div>
+//             <div class="mt-1 float-left w-100" id="name_"><small></small></div>
+//           </div>`;
+//       // $('#gallerymarkers').append(elem);
+//       $("#unsplash_thumb_marker").append(elem);
+//     }
+//   },
+// });
