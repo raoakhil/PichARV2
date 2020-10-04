@@ -17,6 +17,7 @@ var linkid;
 const accessToken =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWE0ZTNhMzlhMTkxNDQ2YmRkNzQ2MzBlMGJkNGYyN2NiNTkzOGFjZGE2MDNkM2ZiZGZlMzQwNTA2M2EzZDMyZTgxZWY1OTU2N2IzZDM4NjUiLCJpYXQiOjE2MDA2OTA3NzQsIm5iZiI6MTYwMDY5MDc3NCwiZXhwIjoxNjMyMjI2Nzc0LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.hZwmynYSNzctxn6cdy_9Gtffd5Yeu-cJF50xK_eUInXLLhe9kjRz5XZiLMGeF1eTyLPCWYt3sOm5z5sZfS965H_RPecdk39qjM0dF4gzmM3FqaUINFAaQcgORtLBNa3-dnv7sKxe48sovQfQj4hzXBe-0U5IyhBBNESwCwrebRG9pMJEMYrsJUBL34A2HQHyzTniMPA7rpn6VZd4DvCJRlwlA1DvekjS4YryJ2QswZHKPewLw7EcedcoBhWE4mmnow6KhZ-F5YRJkvPg4azSdwzO6bO-Ep9YVsHUlG4Uz_K2IXJSMRcLU-9SW3CISWGNUKH_BLADnWYoi7txEARGo6KUtlMAVyu8qF2p3GjktMNXGrS0Aokctqi3fUy-1mM0zKLHH_bJdGwLSkOcmhXhWNU4xjW3taf-gXqzJk62C2xKTCQj6rEWqg5AddYpU6692pFyJcHkysgaM6kFLUk-GT2vGAqQ8_QKsqqJqyehmow6rXD26a0HhTABuZ0EitNm3-dFFWFVueZSXi4IulVf3mJlPH_fXBQ6yoHVl47Lexr_-6JdrL0rXYP2I7PjXGi_8eafB2xTgOBomiMX-drtVPAjJjx-GK2PsLgl821VK-Fo_UX_viaUypkk3B6SuWevu8jHpiyMbl-KU4BjGGAwJ6yB4JaqqySTZrs1n-XaGj0";
 
+
 // function auto() {
 //     document.getElementById('auth').value = token;
 //     document.getElementById('auth2').value = token;
@@ -294,6 +295,11 @@ function delimg(id) {
     },
     success(data) {
       console.log(data);
+      $('#delete_alert').show()
+      setTimeout(() => {
+        $('#delete_alert').hide()
+      }, 4000);
+      fetchUplodsPics()
       // $(e).closest(".img-panel").hide();
       // e.parentNode.parentNode.style.display = 'none';
     },
@@ -606,7 +612,9 @@ function readURL(input) {
           console.log(e);
           console.log(imgfil + " " + filename);
           $("#unsplash_thumb_upload").removeClass("d-none");
-          $(".croppie-container").addClass("d-none");
+          $(".croppie-container").remove();
+          let template = `<img id="my-image" src="#" class="d-none"/>`;
+          $('#upload__content').prepend(template)
           uploadImg();
         });
       });
@@ -614,29 +622,29 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
-$("#image").change(function () {
-  console.log($("#image"));
-  readURL(this);
-  console.log("changed");
-  var index = bool - 1;
-  if (bool) {
-    $(".cr-boundary").eq(index).css("display", "none");
-    $(".cr-slider-wrap").eq(index).css("display", "none");
-  }
-  bool++;
-});
+// $("#image").change(function () {
+//   console.log($("#image"));
+//   readURL(this);
+//   console.log("changed");
+//   var index = bool - 1;
+//   if (bool) {
+//     $(".cr-boundary").eq(index).css("display", "none");
+//     $(".cr-slider-wrap").eq(index).css("display", "none");
+//   }
+//   bool++;
+// });
 
 $("#audio").change(function () {
   uploadAud();
 });
-$("#video").change(function () {
-  console.log("Ok");
-  uploadVid();
-});
-$("#360video").change(function () {
-  console.log("Ok 360");
-  uploadVid();
-});
+// $("#video").change(function () {
+//   console.log("Ok");
+//   uploadVid();
+// });
+// $("#360video").change(function () {
+//   console.log("Ok 360");
+//   uploadVid();
+// });
 $(".obj-file").change(function () {
   if ($(".obj-file.obj").val()) {
     console.log('true')
@@ -706,7 +714,11 @@ function uploadImg(event) {
     },
     success(data) {
       console.log(data);
-      console.log($("#image"));
+      $('#assets_alert').show();
+      setTimeout(() => {
+        $('#assets_alert').hide();
+      }, 4000);
+      fetchUplodsPics()
       // var div = document.createElement('div');
       // div.setAttribute('class', 'hbox');
       // var node = document.createElement('img');
@@ -733,7 +745,7 @@ function uploadImg(event) {
 }
 
 //for edit name
-function editNameAsset(id, e2) {
+function editNameAsset(id, e2, icon) {
   const assetData = {
     name: e2.value,
     type: 'image'
@@ -784,6 +796,11 @@ function editNameAsset(id, e2) {
       },
       success(data) {
         console.log(data)
+        document.getElementById(icon.id).style.opacity = 0;
+        $('#rename_alert').show()
+        setTimeout(() => {
+          $('#rename_alert').hide()
+        }, 4000);
         // $("#name_" + data.data.id).text(data.data.name);
       },
     });
@@ -1464,6 +1481,10 @@ function uploadObj(event) {
     success(data) {
       $("#obj_label").removeClass('uploaded');
       $("#mtl_label").removeClass('uploaded');
+      $('#assets_alert').show();
+      setTimeout(() => {
+        $('#assets_alert').hide();
+      }, 4000);
       console.log(data);
       // var node = document.createElement('img');
       // node.src = data.data.objthumbnail;
@@ -2114,16 +2135,22 @@ function chgcheck(e) {
 }
 
 // upload video
-function uploadVid(event) {
+function uploadVid(files) {
   console.log("Ok again");
   let form = document.querySelector("#form6");
   let formData = new FormData(form);
+  let input = document.getElementById('video');
+  let input360 = document.getElementById('360video');
   if ($("#video").val()) {
+    console.log('video')
     formData.append("name", $("#video").val().slice(12, -3));
-    formData.append("type", $("#video").val().slice(-3));
+    formData.append('video', input.files[0]);
   } else if ($("#360video").val()) {
+    console.log('360video')
     formData.append("name", $("#360video").val().slice(12, -3));
-    formData.append("type", $("#360video").val().slice(-3));
+    formData.append("type", 'video');
+    formData.append('video', input360.files[0]);
+
   }
 
   // var div = document.createElement('div');
@@ -2174,6 +2201,12 @@ function uploadVid(event) {
     },
     success(data) {
       console.log(data);
+      $('#assets_alert').show();
+      setTimeout(() => {
+        $('#assets_alert').hide();
+      }, 4000);
+      $("#video").val('');
+      $("#360video").val('');
       uploadbar.style.width = 0;
       var node = document.createElement("img");
       node.src = data.data.thumbnail;
@@ -2593,7 +2626,183 @@ document
   .getElementById("choosemarkerbut")
   .addEventListener("click", function (e) {
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
-    $('#unsplash_thumb_marker').html('')
+    fetchMarkers()
+  });
+
+function clickMarker(e) {
+  $(`#${e.id}`).on("click", function(e) {
+    e.stopPropagation();
+  });
+  $(`#${e.id}`).click();
+}
+
+$('#uploads_panel_btn').click(function () {
+  fetchUplodsPics()
+});
+
+function renameAsset(input, check) {
+  document.getElementById(input.id).readOnly = false;
+  document.getElementById(check.id).style.opacity = 1;
+}
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction(e) {
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  for (i = 0; i < dropdowns.length; i++) {
+    var openDropdown = dropdowns[i];
+    if (openDropdown.classList.contains('show') && openDropdown.id !== e.id) {
+      openDropdown.classList.remove('show');
+    }
+  }
+  document.getElementById(e.id).classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+// $.ajax({
+//   method: "POST",
+//   url: "http://pitchar.io/api/v1/_fetch_markers",
+//   data: { authtoken: token, submit: 1 },
+//   success(data) {
+//     console.log(data);
+//     if (!data.data) return;
+//     var markers = data.Data;
+//     for (var i = 0; i < markers.length; i++) {
+//       marker = markers[i];
+//       // var node = document.createElement('img');
+//       // // node.src = marker.linkmarker;
+//       // node.id = 'markerimg' + i;
+//       // node.style = 'padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:150px;';
+//       // node.setAttribute('onclick', 'selectMarker(this);');
+//       // node.setAttribute('data-markerid', marker.id);
+//       // document.getElementById('gallerymarkers').appendChild(node);
+//       var elem = `
+//             <div class="col-sm-2 float-left img-panel" id="media_">
+//             <div class="overlay">
+//                     <div class="icons float-right mt-3 mr-2">
+//                       <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+
+//                       </i>
+//                     </div>
+//                   </div>
+//             <div class="w-100 float-left col-sm-12 p-0">
+
+//               <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="${marker.linkmarker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" style="height: 150px">
+//             </div>
+//             <div class="mt-1 float-left w-100" id="name_"><small></small></div>
+//           </div>`;
+//       // $('#gallerymarkers').append(elem);
+//       $("#unsplash_thumb_marker").append(elem);
+//     }
+//   },
+// });
+
+function fetchUplodsPics() {
+  $('#unsplash_thumb_upload').html('')
+  $('#upload_loader').removeClass('d-none')
+  $('#unsplash_thumb_upload').addClass('d-none')
+  
+  // $('#unsplash_thumb_upload').html('')
+  // for (var i = 0; i < 20; i++) {
+  //     var node = document.createElement('img');
+  //     node.src = unpic[i].urls.small;
+  //     node.setAttribute('onclick', 'pushImg(this);');
+  //     node.setAttribute('crossorigin', 'anonymous');
+  //     node.classList.add('img__hover')
+
+  //     document.getElementById('unsplash_thumb').appendChild(node);
+  //     document.getElementById('unsplash_thumb').appendChild(secNode);
+  // }
+  // for (var i = 0; i < 20; i++) {
+  //     var node = document.createElement('img');
+  //     node.src = unpic[i].urls.small;
+  //     node.setAttribute('onclick', 'pushImg(this);');
+  //     node.setAttribute('crossorigin', 'anonymous');
+  //     document.getElementById('unsplash_thumb_upload').appendChild(node);
+  // }
+  $.ajax({
+    method: "GET",
+    url: "https://pitchar.io/api/v1/assets",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    success({ data: { data } }) {
+      console.log(data)
+      var assets = data;
+      // var count_ast = 0;
+      for (var i = 0; i < assets.length; i++) {
+        var asset = assets[i];
+        var src = asset.image;
+        var imgid = `uploadsImg${i}`
+        var dropdownId = `myDropdown${i}`;
+        var inputId = `input${i}`;
+        var checkId = `rename__check${i}`;
+        asset.name = asset.name.toUpperCase()
+        var format = src ? src.slice(-3).toUpperCase() : 'N/A'
+
+        if (asset.type === "image" && asset.image !== "") {
+          // if (count_ast < 6) {
+          //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+          //     $(imag).appendTo('#unsplash_thumb_upload');
+          // }
+          // count_ast++;
+          
+          var elem = `
+              <div class="upload__wrap">
+                <div class="dropdown">
+                  <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                    <i style="color: black" class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <div id="${dropdownId}" class="dropdown-content">
+                    <div class="d-flex align-items-center">
+                      <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                    </div>
+                    <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                    <hr style="margin: .5em 0;">
+                    <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                    <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+                  </div>
+                </div>
+                <div
+                  onclick="clickImg(${imgid})"
+                >
+                  <img
+                    src="https://pitchar.io/storage/${src}"
+                    id="${imgid}"
+                    onclick="pushImg(this);"
+                    crossorigin="anonymous"
+                    alt="${imgid}"
+                  />
+                </div>
+              </div>`;
+
+          $(elem).appendTo("#unsplash_thumb_upload");
+        }
+      }
+      setTimeout(() => {
+        $('#upload_loader').addClass('d-none')
+        $('#unsplash_thumb_upload').removeClass('d-none')
+      }, 1000);
+    },
+  });
+}
+
+function fetchMarkers() {
+  $('#unsplash_thumb_marker').html('')
     $('#marker_loader').removeClass('d-none')
     $('#unsplash_thumb_marker').addClass('d-none')
 
@@ -2668,175 +2877,7 @@ document
         setTimeout(() => {
           $('#marker_loader').addClass('d-none')
           $('#unsplash_thumb_marker').removeClass('d-none')
-        }, 2000);
+        }, 1000);
       },
     });
-  });
-
-function clickMarker(e) {
-  $(`#${e.id}`).on("click", function(e) {
-    e.stopPropagation();
-  });
-  $(`#${e.id}`).click();
 }
-
-$('#uploads_panel_btn').click(function () {
-  $('#unsplash_thumb_upload').html('')
-  $('#upload_loader').removeClass('d-none')
-  $('#unsplash_thumb_upload').addClass('d-none')
-  
-  // $('#unsplash_thumb_upload').html('')
-  // for (var i = 0; i < 20; i++) {
-  //     var node = document.createElement('img');
-  //     node.src = unpic[i].urls.small;
-  //     node.setAttribute('onclick', 'pushImg(this);');
-  //     node.setAttribute('crossorigin', 'anonymous');
-  //     node.classList.add('img__hover')
-
-  //     document.getElementById('unsplash_thumb').appendChild(node);
-  //     document.getElementById('unsplash_thumb').appendChild(secNode);
-  // }
-  // for (var i = 0; i < 20; i++) {
-  //     var node = document.createElement('img');
-  //     node.src = unpic[i].urls.small;
-  //     node.setAttribute('onclick', 'pushImg(this);');
-  //     node.setAttribute('crossorigin', 'anonymous');
-  //     document.getElementById('unsplash_thumb_upload').appendChild(node);
-  // }
-  $.ajax({
-    method: "GET",
-    url: "https://pitchar.io/api/v1/assets",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    success({ data: { data } }) {
-      console.log(data)
-      var assets = data;
-      // var count_ast = 0;
-      for (var i = 0; i < assets.length; i++) {
-        var asset = assets[i];
-        var src = asset.image;
-        var imgid = `uploadsImg${i}`
-        var dropdownId = `myDropdown${i}`;
-        var inputId = `input${i}`;
-        var checkId = `rename__check${i}`;
-        asset.name = asset.name.toUpperCase()
-        var format = src ? src.slice(-3).toUpperCase() : 'N/A'
-
-        if (asset.type === "image" && asset.image !== "") {
-          // if (count_ast < 6) {
-          //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
-          //     $(imag).appendTo('#unsplash_thumb_upload');
-          // }
-          // count_ast++;
-          
-          var elem = `
-              <div class="upload__wrap">
-                <div class="dropdown">
-                  <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
-                    <i style="color: black" class="fa fa-ellipsis-v"></i>
-                  </button>
-                  <div id="${dropdownId}" class="dropdown-content">
-                    <div class="d-flex align-items-center">
-                      <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
-                    </div>
-                    <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
-                    <hr style="margin: .5em 0;">
-                    <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-                    <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
-                  </div>
-                </div>
-                <div
-                  onclick="clickImg(${imgid})"
-                >
-                  <img
-                    src="https://pitchar.io/storage/${src}"
-                    id="${imgid}"
-                    onclick="pushImg(this);"
-                    crossorigin="anonymous"
-                    alt="${imgid}"
-                  />
-                </div>
-              </div>`;
-
-          $(elem).appendTo("#unsplash_thumb_upload");
-        }
-      }
-      setTimeout(() => {
-        $('#upload_loader').addClass('d-none')
-        $('#unsplash_thumb_upload').removeClass('d-none')
-      }, 2000);
-    },
-  });
-});
-
-function renameAsset(input, check) {
-  document.getElementById(input.id).readOnly = false;
-  document.getElementById(check.id).style.opacity = 1;
-}
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction(e) {
-  var dropdowns = document.getElementsByClassName("dropdown-content");
-  for (i = 0; i < dropdowns.length; i++) {
-    var openDropdown = dropdowns[i];
-    if (openDropdown.classList.contains('show') && openDropdown.id !== e.id) {
-      openDropdown.classList.remove('show');
-    }
-  }
-  document.getElementById(e.id).classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-// $.ajax({
-//   method: "POST",
-//   url: "http://pitchar.io/api/v1/_fetch_markers",
-//   data: { authtoken: token, submit: 1 },
-//   success(data) {
-//     console.log(data);
-//     if (!data.data) return;
-//     var markers = data.Data;
-//     for (var i = 0; i < markers.length; i++) {
-//       marker = markers[i];
-//       // var node = document.createElement('img');
-//       // // node.src = marker.linkmarker;
-//       // node.id = 'markerimg' + i;
-//       // node.style = 'padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:150px;';
-//       // node.setAttribute('onclick', 'selectMarker(this);');
-//       // node.setAttribute('data-markerid', marker.id);
-//       // document.getElementById('gallerymarkers').appendChild(node);
-//       var elem = `
-//             <div class="col-sm-2 float-left img-panel" id="media_">
-//             <div class="overlay">
-//                     <div class="icons float-right mt-3 mr-2">
-//                       <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-
-//                       </i>
-//                     </div>
-//                   </div>
-//             <div class="w-100 float-left col-sm-12 p-0">
-
-//               <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="${marker.linkmarker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" style="height: 150px">
-//             </div>
-//             <div class="mt-1 float-left w-100" id="name_"><small></small></div>
-//           </div>`;
-//       // $('#gallerymarkers').append(elem);
-//       $("#unsplash_thumb_marker").append(elem);
-//     }
-//   },
-// });

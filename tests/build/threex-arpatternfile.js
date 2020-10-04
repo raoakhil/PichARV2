@@ -182,6 +182,11 @@ THREEx.ArPatternFile.uploadMarker = function ()  {
         },
 		success: function (data) {
 			console.log(data);
+			$('#marker_alert').show();
+			setTimeout(() => {
+			  $('#marker_alert').hide();
+			}, 4000);
+			fetchMarkers()
 			// m_id = data.Data.id;
 			// var datapatt = new FormData();
 			// datapatt.append('submit', 1);

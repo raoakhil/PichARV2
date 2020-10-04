@@ -169,6 +169,30 @@
 
   <body>
     <section id="header">
+      <div id="assets_alert" class="alert alert-success" style="display: none;" role="alert">
+        <i class="fas fa-check mr-2"></i> Asset has been uploaded 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="marker_alert" class="alert alert-success" style="display: none;" role="alert">
+        <i class="fas fa-check mr-2"></i> Marker has been uploaded 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="delete_alert" class="alert alert-danger" style="display: none;" role="alert">
+        <i class="fas fa-times mr-2"></i> Asset has been deleted
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="rename_alert" class="alert alert-info" style="display: none;" role="alert">
+        <i class="fas fa-check mr-2"></i> Asset has been renamed
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <nav class="navbar navbar-expand-md navbar-default fixed-top pr-0">
         <a href="#" class="navbar-brand p-0">
           <h3 style="margin: 0; font-size: 30px;">PitchAR</h3>
@@ -3753,7 +3777,7 @@
                 <div class="col-md-3 px-0">
                   <form class="mb-0" id="form" enctype="multipart/form-data" method="post">
                     <!-- <input id='auth2' name="authtoken" type="hidden" value=""> -->
-                    <label class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld m-0">
+                    <label for="image" class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld m-0">
                       <input id="image" class="d-none" type="file" accept='image/*'/>
                       Image
                     </label>
@@ -3774,12 +3798,14 @@
                   <form class="mb-0" id="form6" enctype="multipart/form-data" method="post">
                     <!-- <input id='auth5' name="authtoken" type="hidden" value=""> -->
                     <!-- <label>Name :</label><br><input id="videoname" name="name"><br> -->
-                    <label class="btn py-3 btn-block btn-primary btn-upload-media me-upload-vid m-0">
-                      <input id="video" name="video" class="d-none" type="file" />
+                    <label for="video" class="btn py-3 btn-block btn-primary btn-upload-media m-0">
+                      <input id="video" class="d-none" type="file" />
                       Video
                     </label>
+                  
+                    <input type="hidden" name="type" value="video">
+                  
                     <!-- <label>Thumbnail :</label><input id="videothumb" name="thumbnail" type="file"> -->
-                    <input type="hidden" name="create" value="1">
                     <!-- <label>Is this a 360 video? :</label> -->
                     <!-- <input type='hidden' id='vidtype' name='type' value="2D"> -->
                     <!-- <input type='checkbox' onclick="chgvidtype(this);"> -->
@@ -3789,7 +3815,7 @@
                   
                 </div>
                 <div class="col-md-3 px-0">
-                  <label  class="btn m-0 btn-block btn-primary btn-upload-media me-upload-vid">
+                  <label for="360video"  class="btn m-0 btn-block btn-primary btn-upload-media me-upload-vid">
                     <input id="360video" class="d-none " type="file" name="video"/>
                     360 Video
                   </label>
@@ -3849,7 +3875,7 @@
           </div>
           <div 
             class="panel-content padding-panel style-scroll"
-            style="height: calc(100vh - 240px - 91px);"
+            style="height: calc(100vh - 260px - 91px);"
           >
             <div class="content-container">
               <div class="content mb-3 d-none">
@@ -3921,7 +3947,7 @@
                 </div>
               </div>
 
-              <div class="content mb-3">
+              <div id="upload__content" class="content mb-3">
                 <img id="my-image" src="#" class="d-none"/>
                 <div class="content-title">MY FILES</div>
                 <div id="upload_loader" class="loader"></div>
@@ -4303,22 +4329,44 @@
           updateFullMarkerImage();
         });
 
-      document
-        .querySelector("#fileinput")
-        .addEventListener("change", function () {
-          //debugger;
-          var file = this.files[0];
-          // debugger
-          console.log(file)
+      $("#fileinput").change(function () {
+        //debugger;
+        console.log('clicked')
+        var file = this.files[0];
+        // debugger
+        console.log(file)
 
-          var reader = new FileReader();
-          reader.onload = function (event) {
-            innerImageURL = event.target.result;
-            updateFullMarkerImage();
-          };
-          reader.readAsDataURL(file);
-          THREEx.ArPatternFile.uploadMarker()
-        });
+        var reader = new FileReader();
+        reader.onload = function (event) {
+          innerImageURL = event.target.result;
+          updateFullMarkerImage();
+        };
+        reader.readAsDataURL(file);
+        THREEx.ArPatternFile.uploadMarker()
+      });
+
+      $("#image").change(function () {
+        console.log($("#image"));
+        readURL(this);
+        console.log("changed");
+        var index = bool - 1;
+        if (bool) {
+          $(".cr-boundary").eq(index).css("display", "none");
+          $(".cr-slider-wrap").eq(index).css("display", "none");
+        }
+        bool++;
+      });
+
+      $("#video").change(function () {
+        console.log("Ok");
+        uploadVid();
+      });
+      $("#360video").change(function () {
+        console.log("Ok 360");
+        uploadVid();
+      });
+
+
 
       function updateFullMarkerImage() {
         // get patternRatio

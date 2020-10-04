@@ -1902,3 +1902,11 @@ input[type=range]:focus::-ms-fill-upper {
 .uploaded {
   background-color: #2E384D;
 }
+
+.alert {
+  margin-top: 90px;
+  z-index: 2;
+  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+}
