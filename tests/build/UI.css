@@ -1842,7 +1842,7 @@ input[type=range]:focus::-ms-fill-upper {
 .dropbtn {
   background-color: #fff;
   color: white;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 50%;
   font-size: 14px;
   border: none;
@@ -1862,7 +1862,7 @@ input[type=range]:focus::-ms-fill-upper {
   display: inline-block;
   z-index: 2;
   top: 34px;
-  left: 103px;
+  left: 101px;
 }
 
 /* Dropdown Content (Hidden by Default) */
