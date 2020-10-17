@@ -17,7 +17,6 @@ var linkid;
 const accessToken =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWE0ZTNhMzlhMTkxNDQ2YmRkNzQ2MzBlMGJkNGYyN2NiNTkzOGFjZGE2MDNkM2ZiZGZlMzQwNTA2M2EzZDMyZTgxZWY1OTU2N2IzZDM4NjUiLCJpYXQiOjE2MDA2OTA3NzQsIm5iZiI6MTYwMDY5MDc3NCwiZXhwIjoxNjMyMjI2Nzc0LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.hZwmynYSNzctxn6cdy_9Gtffd5Yeu-cJF50xK_eUInXLLhe9kjRz5XZiLMGeF1eTyLPCWYt3sOm5z5sZfS965H_RPecdk39qjM0dF4gzmM3FqaUINFAaQcgORtLBNa3-dnv7sKxe48sovQfQj4hzXBe-0U5IyhBBNESwCwrebRG9pMJEMYrsJUBL34A2HQHyzTniMPA7rpn6VZd4DvCJRlwlA1DvekjS4YryJ2QswZHKPewLw7EcedcoBhWE4mmnow6KhZ-F5YRJkvPg4azSdwzO6bO-Ep9YVsHUlG4Uz_K2IXJSMRcLU-9SW3CISWGNUKH_BLADnWYoi7txEARGo6KUtlMAVyu8qF2p3GjktMNXGrS0Aokctqi3fUy-1mM0zKLHH_bJdGwLSkOcmhXhWNU4xjW3taf-gXqzJk62C2xKTCQj6rEWqg5AddYpU6692pFyJcHkysgaM6kFLUk-GT2vGAqQ8_QKsqqJqyehmow6rXD26a0HhTABuZ0EitNm3-dFFWFVueZSXi4IulVf3mJlPH_fXBQ6yoHVl47Lexr_-6JdrL0rXYP2I7PjXGi_8eafB2xTgOBomiMX-drtVPAjJjx-GK2PsLgl821VK-Fo_UX_viaUypkk3B6SuWevu8jHpiyMbl-KU4BjGGAwJ6yB4JaqqySTZrs1n-XaGj0";
 
-
 // function auto() {
 //     document.getElementById('auth').value = token;
 //     document.getElementById('auth2').value = token;
@@ -191,6 +190,8 @@ function pushTxt(e) {
 
 // Video functionalities
 function pushVid(e) {
+  console.log(e);
+  console.log(e.dataset.source);
   if (e.dataset.type == "2D") {
     var node = document.createElement("a-video");
     node.setAttribute("src", e.dataset.source);
@@ -200,6 +201,7 @@ function pushVid(e) {
     node.setAttribute("scale", { x: 1, y: 1, z: 1 });
     node.setAttribute("visible", "true");
     node.setAttribute("click-drag", "");
+    node.setAttribute("autoplay", "0");
     node.classList.add("exp");
     document.getElementById("perswin").appendChild(node);
   } else if (e.dataset.type == "360") {
@@ -295,11 +297,12 @@ function delimg(id) {
     },
     success(data) {
       console.log(data);
-      $('#delete_alert').show()
+      $("#delete_alert").show();
       setTimeout(() => {
-        $('#delete_alert').hide()
+        $("#delete_alert").hide();
       }, 4000);
-      fetchUplodsPics()
+      fetchUplodsPics();
+      fetchUploadMedia();
       // $(e).closest(".img-panel").hide();
       // e.parentNode.parentNode.style.display = 'none';
     },
@@ -614,7 +617,7 @@ function readURL(input) {
           $("#unsplash_thumb_upload").removeClass("d-none");
           $(".croppie-container").remove();
           let template = `<img id="my-image" src="#" class="d-none"/>`;
-          $('#upload__content').prepend(template)
+          $("#upload__content").prepend(template);
           uploadImg();
         });
       });
@@ -647,12 +650,12 @@ $("#audio").change(function () {
 // });
 $(".obj-file").change(function () {
   if ($(".obj-file.obj").val()) {
-    console.log('true')
-    $("#obj_label").addClass('uploaded')
+    console.log("true");
+    $("#obj_label").addClass("uploaded");
     // $("#obj_label").text('DONE');
   }
   if ($(".obj-file.mtl").val()) {
-    $("#mtl_label").addClass('uploaded')
+    $("#mtl_label").addClass("uploaded");
     // $("#mtl_label").text('DONE');
   }
   if ($(".obj-file.obj").val() !== "" && $(".obj-file.mtl").val() !== "") {
@@ -714,11 +717,12 @@ function uploadImg(event) {
     },
     success(data) {
       console.log(data);
-      $('#assets_alert').show();
+      $("#assets_alert").show();
       setTimeout(() => {
-        $('#assets_alert').hide();
+        $("#assets_alert").hide();
       }, 4000);
-      fetchUplodsPics()
+      fetchUplodsPics();
+      fetchUploadMedia();
       // var div = document.createElement('div');
       // div.setAttribute('class', 'hbox');
       // var node = document.createElement('img');
@@ -745,66 +749,67 @@ function uploadImg(event) {
 }
 
 //for edit name
-function editNameAsset(id, e2, icon) {
+function editNameAsset(id, newName, checkIcon, assetType) {
+  console.log(id, newName, checkIcon, assetType);
   const assetData = {
-    name: e2.value,
-    type: 'image'
-  }
+    name: newName.value,
+    // type: "image",
+  };
   // if (edittype == "a") {
-    $.ajax({
-      method: "PUT",
-      url: `https://pitchar.io/api/v1/assets/${id}`,
-      data: JSON.stringify(assetData),
-      processData: false,
-      contentType: false,
-      headers: {
-        "Accept": "application/json",
-        "Authorization": "Bearer " + accessToken,
-        "Content-Type": "application/json"
-      },
-      xhr: function () {
-        var xhr = new window.XMLHttpRequest();
-        // Upload progress
-        xhr.upload.addEventListener(
-          "progress",
-          function (evt) {
-            if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
-              //Do something with upload progress
-              uploadbar.style.width = percentComplete * 100 + "%";
-              if (percentComplete == 1) uploadbar.style.width = 0;
-            }
-          },
-          false
-        );
+  $.ajax({
+    method: "PUT",
+    url: `https://pitchar.io/api/v1/assets/${id}`,
+    data: JSON.stringify(assetData),
+    processData: false,
+    contentType: false,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      // Upload progress
+      xhr.upload.addEventListener(
+        "progress",
+        function (evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            //Do something with upload progress
+            uploadbar.style.width = percentComplete * 100 + "%";
+            if (percentComplete == 1) uploadbar.style.width = 0;
+          }
+        },
+        false
+      );
 
-        // Download progress
-        xhr.addEventListener(
-          "progress",
-          function (evt) {
-            if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
-              // Do something with download progress
-              uploadbar.style.width = percentComplete * 100 + "%";
-              if (percentComplete == 1) uploadbar.style.width = 0;
-            }
-          },
-          false
-        );
+      // Download progress
+      xhr.addEventListener(
+        "progress",
+        function (evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            // Do something with download progress
+            uploadbar.style.width = percentComplete * 100 + "%";
+            if (percentComplete == 1) uploadbar.style.width = 0;
+          }
+        },
+        false
+      );
 
-        return xhr;
-      },
-      success(data) {
-        console.log(data)
-        document.getElementById(icon.id).style.opacity = 0;
-        $('#rename_alert').show()
-        setTimeout(() => {
-          $('#rename_alert').hide()
-        }, 4000);
-        // $("#name_" + data.data.id).text(data.data.name);
-      },
-    });
-  // } 
+      return xhr;
+    },
+    success(data) {
+      console.log(data);
+      document.getElementById(checkIcon.id).style.opacity = 0;
+      $("#rename_alert").show();
+      setTimeout(() => {
+        $("#rename_alert").hide();
+      }, 4000);
+      // $("#name_" + data.data.id).text(data.data.name);
+    },
+  });
+  // }
   // else {
   //   $.ajax({
   //     method: "POST",
@@ -912,8 +917,8 @@ $("#imagebut").click(function () {
     // document.getElementById('unsplashImgs').appendChild(node);
   }
   setTimeout(() => {
-    $('#img_loader').addClass('d-none')
-    $('#unsplashImgs').removeClass('d-none')
+    $("#img_loader").addClass("d-none");
+    $("#unsplashImgs").removeClass("d-none");
   }, 2000);
 
   // $.ajax({
@@ -1479,13 +1484,16 @@ function uploadObj(event) {
       return xhr;
     },
     success(data) {
-      $("#obj_label").removeClass('uploaded');
-      $("#mtl_label").removeClass('uploaded');
-      $('#assets_alert').show();
+      $("#obj_label").removeClass("uploaded");
+      $("#mtl_label").removeClass("uploaded");
+      $("#assets_alert").show();
       setTimeout(() => {
-        $('#assets_alert').hide();
+        $("#assets_alert").hide();
       }, 4000);
       console.log(data);
+      $(".obj-file.obj").val('');
+      $(".obj-file.mtl").val('');
+      $(".obj-gltf-file.gltf").val('');
       // var node = document.createElement('img');
       // node.src = data.data.objthumbnail;
       // node.width = 125;
@@ -1523,9 +1531,9 @@ $(".audio_assets").click(function () {
   selectItem("vertical-bars", "active", panel);
   selectItem("left-fixed-bar", "selected", this);
 
-//   document.getElementById("galleryauds").innerHTML = "";
-//   document.getElementsByClassName("searchbar")[5].value = "";
-//   document.getElementsByClassName("searchbar")[6].value = "";
+  //   document.getElementById("galleryauds").innerHTML = "";
+  //   document.getElementsByClassName("searchbar")[5].value = "";
+  //   document.getElementsByClassName("searchbar")[6].value = "";
   var searchFS = document.getElementsByClassName("searchFS");
   //searchFS[0].addEventListener('keyup', function (event) {
   //	event.preventDefault();
@@ -1648,108 +1656,108 @@ $(".audio_assets").click(function () {
   });
   //}
   //});
-//   $.ajax({
-//     method: "post",
-//     url: "http://pitchar.io/api/v1/_fetch_media",
-//     data: {
-//       submit: 1,
-//       authtoken: token,
-//     },
-//     dataType: "json",
-//     success(result) {
-//       // console.log('hiiiiiiiiiiiiiii', result)
-//       var medias = result.media;
-//       $(".gallery_audio").html("");
-//       var count_aud = 0;
-//       for (var i = 0; i < medias.length; i++) {
-//         media = medias[i];
-//         var node = document.createElement("img");
-//         node.src = media.thumbnail;
-//         node.width = 125;
-//         node.height = 125;
-//         node.id = "img" + i;
-//         node.style = "margin:4px;";
-//         node.setAttribute("onclick", "pushAud(this)");
-//         node.setAttribute("class", "image");
-//         node.setAttribute("data-source", media.audio);
-//         var div = document.createElement("div");
-//         div.setAttribute("class", "hbox");
-//         div.appendChild(node);
-//         var overlay = document.createElement("div");
-//         overlay.setAttribute("class", "options");
-//         var del = document.createElement("button");
-//         del.setAttribute("onclick", "delaud(this)");
-//         del.innerHTML = "<i class='fa fa-trash'></i>";
-//         del.setAttribute("data-pid", media.id);
-//         overlay.appendChild(del);
-//         div.appendChild(node);
-//         div.appendChild(overlay);
+  //   $.ajax({
+  //     method: "post",
+  //     url: "http://pitchar.io/api/v1/_fetch_media",
+  //     data: {
+  //       submit: 1,
+  //       authtoken: token,
+  //     },
+  //     dataType: "json",
+  //     success(result) {
+  //       // console.log('hiiiiiiiiiiiiiii', result)
+  //       var medias = result.media;
+  //       $(".gallery_audio").html("");
+  //       var count_aud = 0;
+  //       for (var i = 0; i < medias.length; i++) {
+  //         media = medias[i];
+  //         var node = document.createElement("img");
+  //         node.src = media.thumbnail;
+  //         node.width = 125;
+  //         node.height = 125;
+  //         node.id = "img" + i;
+  //         node.style = "margin:4px;";
+  //         node.setAttribute("onclick", "pushAud(this)");
+  //         node.setAttribute("class", "image");
+  //         node.setAttribute("data-source", media.audio);
+  //         var div = document.createElement("div");
+  //         div.setAttribute("class", "hbox");
+  //         div.appendChild(node);
+  //         var overlay = document.createElement("div");
+  //         overlay.setAttribute("class", "options");
+  //         var del = document.createElement("button");
+  //         del.setAttribute("onclick", "delaud(this)");
+  //         del.innerHTML = "<i class='fa fa-trash'></i>";
+  //         del.setAttribute("data-pid", media.id);
+  //         overlay.appendChild(del);
+  //         div.appendChild(node);
+  //         div.appendChild(overlay);
 
-//         var edit = document.createElement("button");
-//         edit.setAttribute("onclick", "editAssetId(this)");
-//         edit.setAttribute("data-toggle", "modal");
-//         edit.setAttribute("data-target", "#editmodal");
-//         edit.setAttribute("data-pid", media.id);
-//         edit.setAttribute("data-typ", "m");
-//         edit.innerHTML = "<i class='fa fa-edit'></i>";
-//         overlay.appendChild(edit);
-//         var elem = `
-// 				<div class="col-sm-2 float-left img-panel" id="media_${media.id}">
-// 				<div class="overlay">
-// 				<div class="icons float-right mt-3 mr-2">
-// 				<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-// 				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-// 				<span class="tooltiptext">
-// 				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+  //         var edit = document.createElement("button");
+  //         edit.setAttribute("onclick", "editAssetId(this)");
+  //         edit.setAttribute("data-toggle", "modal");
+  //         edit.setAttribute("data-target", "#editmodal");
+  //         edit.setAttribute("data-pid", media.id);
+  //         edit.setAttribute("data-typ", "m");
+  //         edit.innerHTML = "<i class='fa fa-edit'></i>";
+  //         overlay.appendChild(edit);
+  //         var elem = `
+  // 				<div class="col-sm-2 float-left img-panel" id="media_${media.id}">
+  // 				<div class="overlay">
+  // 				<div class="icons float-right mt-3 mr-2">
+  // 				<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+  // 				<i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+  // 				<span class="tooltiptext">
+  // 				<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
 
-// 				<div class="w-100 float-left">Crop</div>
-// 				<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
-// 				<h5 onclick='delaud(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
-// 				</span>
-// 				</i>
-// 				</div>
-// 				</div>
-// 				<div class="w-100 float-left col-sm-12 p-0">
-// 				<img class="w-100 pt-4 pb-4 " src="${media.thumbnail}" id="img${i}" data-source="${media.audio}" alt="Chania" style="height: 150px">
-// 				</div>
-// 				</div>
-// 				`;
-//         if (media.type == "audio" && media.audio != "") {
-//           document.getElementById("galleryauds").appendChild(div);
-//           $(elem).appendTo("#galleryimgs");
-//           if (count_aud < 6) {
-//             $(div).appendTo(".gallery_audio");
-//           }
-//           count_aud++;
-//         }
-//         perm = i;
+  // 				<div class="w-100 float-left">Crop</div>
+  // 				<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+  // 				<h5 onclick='delaud(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+  // 				</span>
+  // 				</i>
+  // 				</div>
+  // 				</div>
+  // 				<div class="w-100 float-left col-sm-12 p-0">
+  // 				<img class="w-100 pt-4 pb-4 " src="${media.thumbnail}" id="img${i}" data-source="${media.audio}" alt="Chania" style="height: 150px">
+  // 				</div>
+  // 				</div>
+  // 				`;
+  //         if (media.type == "audio" && media.audio != "") {
+  //           document.getElementById("galleryauds").appendChild(div);
+  //           $(elem).appendTo("#galleryimgs");
+  //           if (count_aud < 6) {
+  //             $(div).appendTo(".gallery_audio");
+  //           }
+  //           count_aud++;
+  //         }
+  //         perm = i;
 
-//         var audioPrev = document.createElement("button");
-//         audioPrev.setAttribute("data-source", media.audio);
-//         audioPrev.setAttribute("onclick", "previewAudio(this);");
-//         audioPrev.innerHTML = "<i class='fa fa-play'></i>";
-//         overlay.appendChild(audioPrev);
-//         div.appendChild(node);
-//         div.appendChild(overlay);
+  //         var audioPrev = document.createElement("button");
+  //         audioPrev.setAttribute("data-source", media.audio);
+  //         audioPrev.setAttribute("onclick", "previewAudio(this);");
+  //         audioPrev.innerHTML = "<i class='fa fa-play'></i>";
+  //         overlay.appendChild(audioPrev);
+  //         div.appendChild(node);
+  //         div.appendChild(overlay);
 
-//         var audioLoop = document.createElement("select");
-//         audioLoop.id = "audioLoop" + i;
-//         var opt1 = document.createElement("option");
-//         opt1.value = "play once";
-//         opt1.innerHTML = "play once";
-//         audioLoop.appendChild(opt1);
-//         var opt2 = document.createElement("option");
-//         opt2.value = "repeat";
-//         opt2.innerHTML = "repeat";
-//         audioLoop.appendChild(opt2);
-//         audioLoop.setAttribute("data-loop", false);
-//         audioLoop.setAttribute("onclick", "toogleLoop(this)");
-//         overlay.appendChild(audioLoop);
-//         div.appendChild(node);
-//         div.appendChild(overlay);
-//       }
-//     },
-//   });
+  //         var audioLoop = document.createElement("select");
+  //         audioLoop.id = "audioLoop" + i;
+  //         var opt1 = document.createElement("option");
+  //         opt1.value = "play once";
+  //         opt1.innerHTML = "play once";
+  //         audioLoop.appendChild(opt1);
+  //         var opt2 = document.createElement("option");
+  //         opt2.value = "repeat";
+  //         opt2.innerHTML = "repeat";
+  //         audioLoop.appendChild(opt2);
+  //         audioLoop.setAttribute("data-loop", false);
+  //         audioLoop.setAttribute("onclick", "toogleLoop(this)");
+  //         overlay.appendChild(audioLoop);
+  //         div.appendChild(node);
+  //         div.appendChild(overlay);
+  //       }
+  //     },
+  //   });
 });
 
 var l = 15;
@@ -2139,18 +2147,17 @@ function uploadVid(files) {
   console.log("Ok again");
   let form = document.querySelector("#form6");
   let formData = new FormData(form);
-  let input = document.getElementById('video');
-  let input360 = document.getElementById('360video');
+  let input = document.getElementById("video");
+  let input360 = document.getElementById("360video");
   if ($("#video").val()) {
-    console.log('video')
+    console.log("video");
     formData.append("name", $("#video").val().slice(12, -3));
-    formData.append('video', input.files[0]);
+    formData.append("video", input.files[0]);
   } else if ($("#360video").val()) {
-    console.log('360video')
+    console.log("360video");
     formData.append("name", $("#360video").val().slice(12, -3));
-    formData.append("type", 'video');
-    formData.append('video', input360.files[0]);
-
+    formData.append("type", "360");
+    formData.append("video", input360.files[0]);
   }
 
   // var div = document.createElement('div');
@@ -2201,12 +2208,12 @@ function uploadVid(files) {
     },
     success(data) {
       console.log(data);
-      $('#assets_alert').show();
+      $("#assets_alert").show();
       setTimeout(() => {
-        $('#assets_alert').hide();
+        $("#assets_alert").hide();
       }, 4000);
-      $("#video").val('');
-      $("#360video").val('');
+      $("#video").val("");
+      $("#360video").val("");
       uploadbar.style.width = 0;
       var node = document.createElement("img");
       node.src = data.data.thumbnail;
@@ -2234,13 +2241,16 @@ function uploadVid(files) {
   });
 }
 
-function delvid(e) {
+function delVideo(id) {
   $.ajax({
-    method: "POST",
-    url: "http://pitchar.io/user/apis/_delete-media.php",
-    data: { authtoken: token, product_id: e.dataset.pid },
+    method: "DELETE",
+    url: `https://pitchar.io/api/v1/medias/${id}`,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
     success(data) {
-      e.parentNode.parentNode.style.display = "none";
+      console.log(data);
     },
   });
 }
@@ -2476,44 +2486,43 @@ scene.add(container);
 const API_KEY = "AIzaSyANZMpdihFsQgcJkFIEjasfiLgX6Nyb8SE";
 $("body").on("keyup", ".searchGooglePoly", function (event) {
   event.preventDefault();
-  
-  
+
   var que = $(this).val();
-  console.log(que)
+  console.log(que);
   if (que !== "") {
     // if (event.keyCode === 13) {
-      //alert("searchGooglePoly");
+    //alert("searchGooglePoly");
 
-      var settings = {
-        async: true,
-        crossDomain: true,
-        url: `https://poly.googleapis.com/v1/assets?keywords=${que}&format=OBJ&key=${API_KEY}`,
-        method: "GET",
-      };
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `https://poly.googleapis.com/v1/assets?keywords=${que}&format=OBJ&key=${API_KEY}`,
+      method: "GET",
+    };
 
-      $.ajax(settings)
-        .done(function (response) {
-          console.log(response);
-          $(".googlepoly_srch").html("");
-          $('#loader').removeClass('d-none')
-          $(".googlepoly_srch").addClass('d-none')
-          $(".googlepolyImgs").addClass('d-none');
-          // document.getElementById("googlePolyImgs").innerHTML = "";
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      $(".googlepoly_srch").html("");
+      $("#loader").removeClass("d-none");
+      $(".googlepoly_srch").addClass("d-none");
+      $(".googlepolyImgs").addClass("d-none");
+      // document.getElementById("googlePolyImgs").innerHTML = "";
 
-          var modResults = response.assets;
-          // console.log(modResults, 'test');
-          console.log(modResults);
-          for (var i = 0; i < 10; i++) {
-            var src = modResults[i].thumbnail.url;
-            var format = modResults[i].formats.find((format) => {
-              return format.formatType === "OBJ";
-            });
-            var obj = format.root;
-            var mtl = format.resources.find((resource) => {
-              return resource.url.endsWith("mtl");
-            });
-            var imgid = "img" + i;
-            var elem = `
+      var modResults = response.assets;
+      // console.log(modResults, 'test');
+      console.log(modResults);
+      for (var i = 0; i < 10; i++) {
+        console.log(modResults[i])
+        var src = modResults[i].thumbnail.url;
+        var format = modResults[i].formats.find((format) => {
+          return format.formatType === "OBJ";
+        });
+        var obj = format.root;
+        var mtl = format.resources.find((resource) => {
+          return resource.url.endsWith("mtl");
+        });
+        var imgid = "img" + i;
+        var elem = `
                   <div
                       class="img__wrap"
                       data-source="${modResults[i].name}"
@@ -2529,33 +2538,31 @@ $("body").on("keyup", ".searchGooglePoly", function (event) {
                   </div>
               `;
 
-            // var del = document.createElement('button');
-            // del.setAttribute('onclick', 'delaud(this)');
-            // del.innerHTML = "<i class='fa fa-trash'></i>";
-            // overlay.appendChild(del);
-            // div.appendChild(elem);
-            // document.getElementById('googlePolyImgs').appendChild(elem);
+        // var del = document.createElement('button');
+        // del.setAttribute('onclick', 'delaud(this)');
+        // del.innerHTML = "<i class='fa fa-trash'></i>";
+        // overlay.appendChild(del);
+        // div.appendChild(elem);
+        // document.getElementById('googlePolyImgs').appendChild(elem);
 
-            $(elem).appendTo(".googlepoly_srch");
-            // div.appendChild(elem);
-          }
-          $(".googlepoly_srch").removeClass('d-none')
-          $('#loader').addClass('d-none')
-        })
+        $(elem).appendTo(".googlepoly_srch");
+        // div.appendChild(elem);
+      }
+      $(".googlepoly_srch").removeClass("d-none");
+      $("#loader").addClass("d-none");
+    });
     // }
   } else {
-    $('#loader').addClass('d-none')
+    $("#loader").addClass("d-none");
     $(".googlepoly_srch").addClass("d-none");
-    $(".googlepolyImgs").removeClass('d-none');
+    $(".googlepolyImgs").removeClass("d-none");
 
     // $(".googlepolyImgs").show();
-    
-
   }
-  
 });
 
 function pushPolyModel(e) {
+  console.log(e.dataset)
   // var loader = new THREE.MTLLoader();
   // loader.setCrossOrigin( true );
   // loader.setMaterialOptions( { ignoreZeroRGBs: true } );
@@ -2626,18 +2633,20 @@ document
   .getElementById("choosemarkerbut")
   .addEventListener("click", function (e) {
     // document.getElementById('gallerymarkers').innerHTML = "<img src='marker/hiro.png' width='150px' style='padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);' onclick='resetMarker(this);'>";
-    fetchMarkers()
+    fetchMarkers();
   });
 
 function clickMarker(e) {
-  $(`#${e.id}`).on("click", function(e) {
+  $(`#${e.id}`).on("click", function (e) {
     e.stopPropagation();
   });
   $(`#${e.id}`).click();
 }
 
-$('#uploads_panel_btn').click(function () {
-  fetchUplodsPics()
+$("#uploads_panel_btn").click(async function () {
+  await fetchUplodsPics();
+  await fetchUploadMedia();
+  await fetchModels();
 });
 
 function renameAsset(input, check) {
@@ -2651,26 +2660,26 @@ function myFunction(e) {
   var dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {
     var openDropdown = dropdowns[i];
-    if (openDropdown.classList.contains('show') && openDropdown.id !== e.id) {
-      openDropdown.classList.remove('show');
+    if (openDropdown.classList.contains("show") && openDropdown.id !== e.id) {
+      openDropdown.classList.remove("show");
     }
   }
   document.getElementById(e.id).classList.toggle("show");
 }
 
 // Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
+window.onclick = function (event) {
+  if (!event.target.matches(".dropbtn")) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
       }
     }
   }
-}
+};
 
 // $.ajax({
 //   method: "POST",
@@ -2710,124 +2719,304 @@ window.onclick = function(event) {
 //   },
 // });
 
-function fetchUplodsPics() {
-  $('#unsplash_thumb_upload').html('')
-  $('#upload_loader').removeClass('d-none')
-  $('#unsplash_thumb_upload').addClass('d-none')
-  
-  // $('#unsplash_thumb_upload').html('')
-  // for (var i = 0; i < 20; i++) {
-  //     var node = document.createElement('img');
-  //     node.src = unpic[i].urls.small;
-  //     node.setAttribute('onclick', 'pushImg(this);');
-  //     node.setAttribute('crossorigin', 'anonymous');
-  //     node.classList.add('img__hover')
+function fetchfetching(url) {
+  return $.ajax({
+    method: "GET",
+    url,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+}
 
-  //     document.getElementById('unsplash_thumb').appendChild(node);
-  //     document.getElementById('unsplash_thumb').appendChild(secNode);
+async function fetchUplodsPics() {
+  $("#unsplash_thumb_upload").html("");
+  $("#upload_loader").removeClass("d-none");
+  $("#unsplash_thumb_upload").addClass("d-none");
+
+  let {
+    data: { data },
+  } = await fetchfetching("https://pitchar.io/api/v1/assets");
+  if (!data.length) return;
+  console.log(data);
+  let imagesTitle = `
+      <h4
+        style="
+          width: 100%;
+          font-size: 12px;
+          color: gray;
+          margin-top: 0;
+          margin-bottom: 0;
+          color: #b0bac9;
+        "
+      >IMAGES</h4><br>
+    `;
+  $(imagesTitle).appendTo("#unsplash_thumb_upload");
+
+  var assets = data;
+  // var count_ast = 0;
+  for (var i = 0; i < assets.length; i++) {
+    var asset = assets[i];
+    var src = asset.image;
+    var imgid = `uploadsImg${i}`;
+    var dropdownId = `myDropdown${i}`;
+    var inputId = `input${i}`;
+    var checkId = `rename__check${i}`;
+    asset.name = asset.name.toUpperCase();
+    var format = src ? src.slice(-3).toUpperCase() : "N/A";
+
+    if (asset.type === "image" && asset.image !== "") {
+      // if (count_ast < 6) {
+      //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+      //     $(imag).appendTo('#unsplash_thumb_upload');
+      // }
+      // count_ast++;
+
+      var elem = `
+          <div class="upload__wrap">
+            <div class="dropdown">
+              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                <i style="color: black" class="fa fa-ellipsis-v"></i>
+              </button>
+              <div id="${dropdownId}" class="dropdown-content">
+                <div class="d-flex align-items-center">
+                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId}, 'image')" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                </div>
+                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                <hr style="margin: .5em 0;">
+                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+              </div>
+            </div>
+            <div
+              onclick="clickImg(${imgid})"
+            >
+              <img
+                src="https://pitchar.io/storage/${src}"
+                id="${imgid}"
+                onclick="pushImg(this);"
+                crossorigin="anonymous"
+                alt="${imgid}"
+                style="margin: 5px 1px;"
+              />
+            </div>
+          </div>`;
+
+      $(elem).appendTo("#unsplash_thumb_upload");
+    }
+  }
+  setTimeout(() => {
+    $("#upload_loader").addClass("d-none");
+    $("#unsplash_thumb_upload").removeClass("d-none");
+  }, 1000);
+  // Fetch Images
+  // $.ajax({
+  //   method: "GET",
+  //   async: true,
+  //   url: "https://pitchar.io/api/v1/assets",
+  //   headers: {
+  //     Accept: "application/json",
+  //     Authorization: "Bearer " + accessToken,
+  //   },
+  //   success({ data: { data } }) {
+
+  //   },
+  // });
+}
+
+async function fetchUploadMedia() {
+  let {
+    data: { data },
+  } = await fetchfetching("https://pitchar.io/api/v1/medias");
+  if (!data.length) return;
+  console.log(data);
+  let videosTitle = `
+    <br> <h4
+      style="
+        width: 100%;
+        font-size: 12px;
+        color: gray;
+        margin-bottom: 0;
+        color: #b0bac9;
+      "
+    >MEDIA</h4><br>
+  `;
+  $(videosTitle).appendTo("#unsplash_thumb_upload");
+
+  for (var i = 0; i < data.length; i++) {
+    var asset = data[i];
+    var src = asset.video;
+    if (!src) continue;
+    src = `https://pitchar.io/storage/${asset.video}`;
+    console.log(asset);
+    var imgid = `uploadsVid${i}`;
+    var dropdownId = `myDropdownVid${i}`;
+    var inputId = `inputVid${i}`;
+    var checkId = `rename__checkVid${i}`;
+    asset.name = asset.name.toUpperCase();
+    var format = src.slice(-3).toUpperCase();
+    var type = `${asset.type}`;
+    console.log(type);
+
+    // if (asset.type === "image" && asset.image !== "") {
+    // if (count_ast < 6) {
+    //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+    //     $(imag).appendTo('#unsplash_thumb_upload');
+    // }
+    // count_ast++;
+
+    // var elem = `
+    //     <div class="upload__wrap">
+    //       <div class="dropdown">
+    //         <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+    //           <i style="color: black" class="fa fa-ellipsis-v"></i>
+    //         </button>
+    //         <div id="${dropdownId}" class="dropdown-content">
+    //           <div class="d-flex align-items-center">
+    //             <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+    //           </div>
+    //           <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+    //           <hr style="margin: .5em 0;">
+    //           <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+    //           <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+    //         </div>
+    //       </div>
+    //       <div
+    //         onclick="clickVid(${imgid})"
+    //       >
+    //         <video autoplay="0" data-type="${asset.type}" src="${src}" poster="${src}" width="120" height="140" id="${imgid}" onclick="pushVid(this);">
+    //           <source src="${src}#t=0.1" type="video/mp4">
+    //         </video>
+    //       </div>
+    //     </div>`;
+
+    var elem = `
+          <div class="upload__wrap">
+            <div class="dropdown">
+              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                <i style="color: black" class="fa fa-ellipsis-v"></i>
+              </button>
+              <div id="${dropdownId}" class="dropdown-content">
+                <div class="d-flex align-items-center">
+                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                </div>
+                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                <hr style="margin: .5em 0;">
+                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+              </div>
+            </div>
+            <div
+              onclick="clickVid(${imgid})"
+            >
+              <img data-type="${asset.type}" src="${src}#t=1" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+            </div>
+          </div>`;
+
+    $(elem).appendTo("#unsplash_thumb_upload");
+    // }
+  }
+  // for (var i = 0; i < data.length; i++) {
+  //   var media = data[i];
+  //   if (!media.video) continue
+  //   console.log(media)
+
+  //   var elem = `
+  //   <div class="img-panel" id="media_${media.id}">
+  //     <div class="w-100 float-left col-sm-12 p-0">
+  //       <video width="120" height="140" controls  id="img${i}" onclick="pushVid(this);">
+  //         <source src="https://pitchar.io/storage/${media.video}" type="video/mp4">
+  //       </video>
+  //     </div>
+  //   </div>
+  //   `;
+
+  //   // if ((media.type == "2D" || media.type == "360") && media.video) {
+  //     $(elem).appendTo("#unsplash_thumb_upload");
+  //   // }
+  //   // var node = document.createElement("img");
+  //   // node.src = media.thumbnail;
+  //   // node.width = 125;
+  //   // node.height = 125;
+  //   // node.id = "img" + i;
+  //   // node.style = "margin:4px;";
+  //   // node.setAttribute("onclick", "pushVid(this);");
+  //   // if (media.type == "2D" || media.type == "360")
+  //   //   document.getElementById("galleryvids").appendChild(node);
+  //   // perm = i;
   // }
-  // for (var i = 0; i < 20; i++) {
-  //     var node = document.createElement('img');
-  //     node.src = unpic[i].urls.small;
-  //     node.setAttribute('onclick', 'pushImg(this);');
-  //     node.setAttribute('crossorigin', 'anonymous');
-  //     document.getElementById('unsplash_thumb_upload').appendChild(node);
-  // }
+}
+
+async function fetchModels() {
+  let {
+    data: { data },
+  } = await fetchfetching("https://pitchar.io/api/v1/assets");
+  data = data.filter(
+    (element) => element.type !== "image"
+  );
+  console.log(data)
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].name === 'gtlf') continue;
+    console.log(data[i].obj)
+    console.log(data[i].mtl)
+    // var src = data[i].thumbnail.url;
+    // var format = data[i].formats.find((format) => {
+    //   return format.formatType === "OBJ";
+    // });
+    // var obj = format.root;
+    // var mtl = format.resources.find((resource) => {
+    //   return resource.url.endsWith("mtl");
+    // });
+    var imgid = "img" + i;
+    var elem = `
+        <div
+            class="img__wrap"
+            data-source="${data[i].name}"
+            id="${imgid}"
+            data-obj="https://pitchar.io/storage/${data[i].obj}"
+            data-mtl="https://pitchar.io/storage/${data[i].mtl}"
+            onclick="pushPolyModel(this);"
+        >
+            <img
+                src="https://images.unsplash.com/photo-1593642634627-6fdaf35209f4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ2MDYzfQ"    
+            />
+            <p class="img__description">${data[i].name}</p>
+        </div>
+    `;
+
+    $(elem).appendTo("#unsplash_thumb_upload");
+    // $(elem).appendTo(".googlepolyImgs");
+  }
+}
+
+function clickVid(e) {
+  $(`#${e.id}`).on("click", function (e) {
+    e.stopPropagation();
+  });
+  $(`#${e.id}`).click();
+}
+
+function fetchMarkers() {
+  $("#unsplash_thumb_marker").html("");
+  $("#marker_loader").removeClass("d-none");
+  $("#unsplash_thumb_marker").addClass("d-none");
+
   $.ajax({
     method: "GET",
-    url: "https://pitchar.io/api/v1/assets",
+    url: "https://pitchar.io/api/v1/markers",
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
     success({ data: { data } }) {
-      console.log(data)
-      var assets = data;
-      // var count_ast = 0;
-      for (var i = 0; i < assets.length; i++) {
-        var asset = assets[i];
-        var src = asset.image;
-        var imgid = `uploadsImg${i}`
-        var dropdownId = `myDropdown${i}`;
-        var inputId = `input${i}`;
-        var checkId = `rename__check${i}`;
-        asset.name = asset.name.toUpperCase()
-        var format = src ? src.slice(-3).toUpperCase() : 'N/A'
-
-        if (asset.type === "image" && asset.image !== "") {
-          // if (count_ast < 6) {
-          //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
-          //     $(imag).appendTo('#unsplash_thumb_upload');
-          // }
-          // count_ast++;
-          
-          var elem = `
-              <div class="upload__wrap">
-                <div class="dropdown">
-                  <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
-                    <i style="color: black" class="fa fa-ellipsis-v"></i>
-                  </button>
-                  <div id="${dropdownId}" class="dropdown-content">
-                    <div class="d-flex align-items-center">
-                      <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
-                    </div>
-                    <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
-                    <hr style="margin: .5em 0;">
-                    <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-                    <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
-                  </div>
-                </div>
-                <div
-                  onclick="clickImg(${imgid})"
-                >
-                  <img
-                    src="https://pitchar.io/storage/${src}"
-                    id="${imgid}"
-                    onclick="pushImg(this);"
-                    crossorigin="anonymous"
-                    alt="${imgid}"
-                  />
-                </div>
-              </div>`;
-
-          $(elem).appendTo("#unsplash_thumb_upload");
-        }
-      }
-      setTimeout(() => {
-        $('#upload_loader').addClass('d-none')
-        $('#unsplash_thumb_upload').removeClass('d-none')
-      }, 1000);
-    },
-  });
-}
-
-function fetchMarkers() {
-  $('#unsplash_thumb_marker').html('')
-    $('#marker_loader').removeClass('d-none')
-    $('#unsplash_thumb_marker').addClass('d-none')
-
-    $.ajax({
-      method: "GET",
-      url: "https://pitchar.io/api/v1/markers",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-      success({ data: { data } }) {
-        if (!data.length) return;
-        var markers = data;
-        console.log(data);
-        for (var i = 0; i < markers.length; i++) {
-          marker = markers[i];
-          let markerId = `markerimg${i}`
-          // var node = document.createElement('img');
-          // // node.src = marker.linkmarker;
-          // node.id = 'markerimg' + i;
-          // node.style = 'padding:5px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:150px;';
-          // node.setAttribute('onclick', 'selectMarker(this);');
-          // node.setAttribute('data-markerid', marker.id);
-          // document.getElementById('gallerymarkers').appendChild(node);
-          var elem = `
+      if (!data.length) return;
+      var markers = data;
+      console.log(data);
+      for (var i = 0; i < markers.length; i++) {
+        marker = markers[i];
+        let markerId = `markerimg${i}`;
+        var elem = `
               <div
                 class="img__wrap"
                 onclick="clickMarker(${markerId})"
@@ -2843,41 +3032,201 @@ function fetchMarkers() {
                 <p class="img__description">${marker.name}</p>
               </div>
           `;
-          // var elem = `
-          //     <div
-          //       class="img__wrap"
-          //       onclick="clickImg(${markerId})"
-          //     >
-          //       <img
-          //         src="https://pitchar.io/storage/${marker.marker}"
-          //         data-markerid="${marker.id}"
-          //         id="${markerId}"
-          //         onclick="selectMarker(this)"
-          //         alt="Chania"
-          //         crossorigin="anonymous"
-          //       />
-          //       <p class="img__description">${marker.name}</p>
-          //     </div>
-          // `;
-          // var elem = `
-          //   <div class="img-panel" id="media_">
-          //     <div class="overlay">
-          //       <div class="icons float-right mt-3 mr-2">
-          //         <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-          //       </div>
-          //     </div>
-          //     <div class="w-100 float-left col-sm-12 p-0">
-          //       <img data-markerid="${marker.id}" class="w-100 pt-4 pb-4 " src="https://pitchar.io/storage/${marker.marker}" id="'markerimg'+${i}" onclick="selectMarker(this);" alt="Chania" >
-          //     </div>
-          //     <div class="mt-1 float-left w-100" id="name_"><small></small></div>
-          //   </div>`;
-          $("#unsplash_thumb_marker").append(elem);
-          // $('#unsplash_thumb_marker').append(elem)
-        }
-        setTimeout(() => {
-          $('#marker_loader').addClass('d-none')
-          $('#unsplash_thumb_marker').removeClass('d-none')
-        }, 1000);
-      },
-    });
+        $("#unsplash_thumb_marker").append(elem);
+      }
+      setTimeout(() => {
+        $("#marker_loader").addClass("d-none");
+        $("#unsplash_thumb_marker").removeClass("d-none");
+      }, 1000);
+    },
+  });
 }
+
+function editVideoName(id, newName, checkIcon, assetType) {
+  console.log(id, newName, checkIcon, assetType);
+  const assetData = {
+    name: newName.value,
+    // type: "image",
+  };
+  // if (edittype == "a") {
+  $.ajax({
+    method: "PUT",
+    url: `https://pitchar.io/api/v1/medias/${id}`,
+    data: JSON.stringify(assetData),
+    processData: false,
+    contentType: false,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      // Upload progress
+      xhr.upload.addEventListener(
+        "progress",
+        function (evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            //Do something with upload progress
+            uploadbar.style.width = percentComplete * 100 + "%";
+            if (percentComplete == 1) uploadbar.style.width = 0;
+          }
+        },
+        false
+      );
+
+      // Download progress
+      xhr.addEventListener(
+        "progress",
+        function (evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            // Do something with download progress
+            uploadbar.style.width = percentComplete * 100 + "%";
+            if (percentComplete == 1) uploadbar.style.width = 0;
+          }
+        },
+        false
+      );
+
+      return xhr;
+    },
+    success(data) {
+      console.log(data);
+      document.getElementById(checkIcon.id).style.opacity = 0;
+      $("#rename_alert").show();
+      setTimeout(() => {
+        $("#rename_alert").hide();
+      }, 4000);
+      // $("#name_" + data.data.id).text(data.data.name);
+    },
+  });
+  // }
+  // else {
+  //   $.ajax({
+  //     method: "POST",
+  //     url: "http://pitchar.io/user/apis/_update_media.php",
+  //     data: formData,
+  //     processData: false,
+  //     contentType: false,
+  //     xhr: function () {
+  //       var xhr = new window.XMLHttpRequest();
+
+  //       // Upload progress
+  //       xhr.upload.addEventListener(
+  //         "progress",
+  //         function (evt) {
+  //           if (evt.lengthComputable) {
+  //             var percentComplete = evt.loaded / evt.total;
+  //             //Do something with upload progress
+  //             uploadbar.style.width = percentComplete * 100 + "%";
+  //             if (percentComplete == 1) uploadbar.style.width = 0;
+  //           }
+  //         },
+  //         false
+  //       );
+
+  //       // Download progress
+  //       xhr.addEventListener(
+  //         "progress",
+  //         function (evt) {
+  //           if (evt.lengthComputable) {
+  //             var percentComplete = evt.loaded / evt.total;
+  //             // Do something with download progress
+  //             uploadbar.style.width = percentComplete * 100 + "%";
+  //             if (percentComplete == 1) uploadbar.style.width = 0;
+  //           }
+  //         },
+  //         false
+  //       );
+
+  //       return xhr;
+  //     },
+  //     success(data) {
+  //       $("#name_" + data.id).text(data.name);
+  //     },
+  //   });
+  // }
+}
+
+// Search Uploads
+// $("body").on("keyup", ".uploads_search", function (event) {
+//   event.preventDefault();
+//   $("#unsplash_thumb_upload").html("");
+//   var que = $(this).val();
+//   let result = [];
+//   console.log(que);
+//   if (que !== "") {
+//     var settings = {
+//       async: true,
+//       url: `https://pitchar.io/api/v1/assets`,
+//       headers: {
+//         Accept: "application/json",
+//         Authorization: "Bearer " + accessToken,
+//       },
+//       method: "GET",
+//     };
+
+//     $.ajax(settings).done(function ({ data: { data } }) {
+//       result = data.filter((element) => {
+//         return element.name.includes(que)
+//       }, []);
+
+//     for (var i = 0; i < result.length; i++) {
+//       var asset = result[i];
+//       console.log(asset)
+//       var src = asset.image;
+//       var imgid = `uploadsImg${i}`;
+//       var dropdownId = `myDropdown${i}`;
+//       var inputId = `input${i}`;
+//       var checkId = `rename__check${i}`;
+//       asset.name = asset.name.toUpperCase();
+//       var format = src ? src.slice(-3).toUpperCase() : "N/A";
+
+//       if (asset.type === "image" && asset.image !== "") {
+//         // if (count_ast < 6) {
+//         //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+//         //     $(imag).appendTo('#unsplash_thumb_upload');
+//         // }
+//         // count_ast++;
+
+//         var elem = `
+//             <div class="upload__wrap">
+//               <div class="dropdown">
+//                 <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+//                   <i style="color: black" class="fa fa-ellipsis-v"></i>
+//                 </button>
+//                 <div id="${dropdownId}" class="dropdown-content">
+//                   <div class="d-flex align-items-center">
+//                     <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+//                   </div>
+//                   <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+//                   <hr style="margin: .5em 0;">
+//                   <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+//                   <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+//                 </div>
+//               </div>
+//               <div
+//                 onclick="clickImg(${imgid})"
+//               >
+//                 <img
+//                   src="https://pitchar.io/storage/${src}"
+//                   id="${imgid}"
+//                   onclick="pushImg(this);"
+//                   crossorigin="anonymous"
+//                   alt="${imgid}"
+//                 />
+//               </div>
+//             </div>`;
+
+//         $(elem).appendTo("#unsplash_thumb_upload");
+//       }
+//     }
+//     });
+//     console.log(result)
+
+//   } else {
+
+//   }
+// });
