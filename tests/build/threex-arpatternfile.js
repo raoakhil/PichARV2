@@ -81,8 +81,9 @@ THREEx.ArPatternFile.triggerDownload = function (patternFileString) {
 	var domElement = window.document.createElement('a');
 	domElement.href = window.URL.createObjectURL(new Blob([patternFileString], { type: 'text/plain' }));
 	var fil = new Blob([patternFileString], { type: 'text/plain' });
+	console.log('fill', fil)
 	Blobpatt = fil;
-	uploadMarker();
+	THREEx.ArPatternFile.uploadMarker();
 
 
 }
@@ -180,37 +181,39 @@ THREEx.ArPatternFile.uploadMarker = function ()  {
             'Accept' : 'application/json',
             'Authorization' : 'Bearer '+ accessToken,
         },
-		success: function (data) {
+		success: function ({ data: data }) {
 			console.log(data);
-			$('#marker_alert').show();
-			setTimeout(() => {
-			  $('#marker_alert').hide();
-			}, 4000);
-			fetchMarkers()
-			// m_id = data.Data.id;
-			// var datapatt = new FormData();
-			// datapatt.append('submit', 1);
-			// datapatt.append('authtoken', token);
-			// datapatt.append('marker_id', m_id)
-			// datapatt.append('patt', Blobpatt, 'marker.patt');
-			// $.ajax({
-			// 	method: 'POST',
-			// 	url: 'http://pitchar.io/api/v1/_post_pattern',
-			// 	data: datapatt,
-			// 	enctype: 'multipart/form-data',
-			// 	contentType: false,
-			// 	processData: false,
-			// 	headers: {
-			// 		'Accept' : 'application/json',
-			// 		'Authorization' : 'Bearer '+ accessToken,
-			// 	},
-			// 	success: function (data) {
-			// 		console.log(data);
-			// 	},
-			// 	error: function (res) {
-			// 		console.log(res);
-			// 	}
-			// });
+			console.log('BlobPatt', Blobpatt);
+			// $('#marker_alert').show();
+			// setTimeout(() => {
+			//   $('#marker_alert').hide();
+			// }, 4000);
+			
+			
+			m_id = data.id;
+			console.log('id', m_id)
+			var datapatt = new FormData();
+			datapatt.append('pattern', Blobpatt, 'marker.patt');
+			console.log(datapatt.get('pattern'))
+			$.ajax({
+				method: 'PUT',
+				url: `https://pitchar.io/api/v1/markers/updatePattern/${m_id}`,
+				data: datapatt,
+				enctype: 'multipart/form-data',
+				contentType: false,
+				processData: false,
+				headers: {
+					'Accept' : 'application/json',
+					'Authorization' : 'Bearer '+ accessToken,
+				},
+				success: function (data) {
+					console.log(data);
+					fetchMarkers()
+				},
+				error: function (res) {
+					console.log(res);
+				}
+			});
 
 		},
 		error: function (res) {
