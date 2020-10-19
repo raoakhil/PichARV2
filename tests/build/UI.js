@@ -1891,8 +1891,10 @@ $("body").on("keyup", ".searchFS", function (event) {
   var que = $(this).val();
   if (que != "") {
     // console.log(que);
-    if (event.keyCode === 13) {
+    // if (event.keyCode === 13) {
       //alert("searchFS");
+      $('#aud_loader').removeClass('d-none')
+      $(".free_sound").hide();
       $(".free_sound_srch").html("");
       var settings = {
         async: true,
@@ -1915,74 +1917,21 @@ $("body").on("keyup", ".searchFS", function (event) {
 
         console.log(audResults);
         for (var i = 0; i < audResults.length; i++) {
-          // var node = document.createElement('img');
-          // //node.src=media.thumbnail;
-          // node.width = 125;
-          // node.height = 125;
-          // node.id = 'img' + i;
-          // node.style = 'margin:4px;';
-          // node.setAttribute('onclick', 'pushAud(this);');
-          // node.setAttribute('class', 'image');
-          // node.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
-          // var div = document.createElement('div');
-          // div.setAttribute('class', 'hbox');
-          // div.appendChild(node);
-          // var overlay = document.createElement('div');
-          // overlay.setAttribute('class', 'options');
-          // var del = document.createElement('button');
-          // del.setAttribute('onclick', 'delaud(this)');
-          // del.innerHTML = "<i class='fa fa-trash'></i>";
-          // overlay.appendChild(del);
-          // div.appendChild(node);
-          // div.appendChild(overlay);
-          // document.getElementById('fsImgs').appendChild(div);
-          // //if(media.type=='audio')
-          // //document.getElementById("galleryauds").appendChild(div);
-          // //perm=i;
+          
 
-          // var audioPrev = document.createElement('button');
-          // audioPrev.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
-          // audioPrev.id = audResults[i].name;
-          // audioPrev.setAttribute('onclick', 'previewAudio(this);');
-          // audioPrev.innerHTML = "<i class='fa fa-play'></i>";
-          // overlay.appendChild(audioPrev);
-          // div.appendChild(node);
-          // div.appendChild(overlay);
 
-          // var audioLoop = document.createElement('select');
-          // audioLoop.id = 'audioLoop' + i;
-          // var opt1 = document.createElement('option');
-          // opt1.value = 'play once';
-          // opt1.innerHTML = 'play once';
-          // audioLoop.appendChild(opt1);
-          // var opt2 = document.createElement('option');
-          // opt2.value = 'repeat';
-          // opt2.innerHTML = 'repeat';
-          // audioLoop.appendChild(opt2);
-          // audioLoop.setAttribute('data-loop', false);
-          // audioLoop.setAttribute('onclick', 'toogleLoop(this)');
-          // overlay.appendChild(audioLoop);
-
-          // div.appendChild(node);
-          // div.appendChild(overlay);
           var node = document.createElement("img");
           node.src = def_icon;
           node.width = 125;
           node.height = 125;
           // node.id = 'img' + i;
           node.style = "margin:4px;";
-          // node.setAttribute('onclick', 'pushAud(this);');
-          // node.setAttribute('class', 'image');
-          // node.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
           var div = document.createElement("div");
           div.setAttribute("class", "hbox");
           div.appendChild(node);
           var overlay = document.createElement("div");
           overlay.setAttribute("class", "options");
-          // var del = document.createElement('button');
-          // del.setAttribute('onclick', 'delaud(this)');
-          // del.innerHTML = "<i class='fa fa-trash'></i>";
-          // overlay.appendChild(del);
+
           div.appendChild(node);
           div.appendChild(overlay);
           document.getElementById("fsImgs").appendChild(div);
@@ -2053,7 +2002,7 @@ $("body").on("keyup", ".searchFS", function (event) {
           div.appendChild(node);
           div.appendChild(overlay);
 
-          $(".free_sound").hide();
+          // $(".free_sound").hide();
 
           $(div).appendTo(".free_sound_srch");
 
@@ -2061,8 +2010,9 @@ $("body").on("keyup", ".searchFS", function (event) {
           $(".free_sound_srch").removeClass("d-none");
         }
       });
-    }
+    // }
   } else {
+    $('#aud_loader').addClass('d-none')
     $(".free_sound").show();
     $(".free_sound_srch").hide();
   }
