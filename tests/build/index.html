@@ -3272,13 +3272,6 @@
                     style="display: none;"
                   >
                     <input id="auth4" name="authtoken" type="hidden" value="" />
-                    <!-- <label>Name :</label> -->
-                    <!-- <input id="audioname" name="audio" type="text"> -->
-                    <!-- <br> -->
-                    <!-- <label>Audio :</label> -->
-                    <input id="audio" name="audio" type="file" />
-                    <!-- <label>Thumbnail :</label>
-									<input id="audiothumb" name="thumbnail" type="file"> -->
                     <input type="hidden" name="create" value="1" />
                     <input type="hidden" name="type" value="audio" />
                     <br />
@@ -3428,6 +3421,7 @@
                 <div class="content-title">UNSPLASH</div>
                 <div id="img_loader" class="loader"></div>
                 <div class="images-options d-none" id="unsplashImgs"></div>
+                <div class="images-options d-none" id="unsplashImgs_srch"></div>
                 
               </div>
               <!-- <div class="panel-footer text-center">
@@ -3776,12 +3770,10 @@
               >
                 <div class="col-md-3 px-0">
                   <form class="mb-0" id="form" enctype="multipart/form-data" method="post">
-                    <!-- <input id='auth2' name="authtoken" type="hidden" value=""> -->
                     <label for="image" class="btn py-3 btn-block btn-primary btn-upload-media me-opt-upld m-0">
                       <input id="image" class="d-none" type="file" accept='image/*'/>
                       Image
                     </label>
-                    <!-- <input type="hidden" name="create" value="1"> -->
                     <input type="hidden" name="type" value="image">
                   </form>
                 </div>
@@ -3801,6 +3793,7 @@
                   </label>
                 </div>
               </div>
+              
               <button id="upload__3d_btn" class="btn btn-success btn-upload-media btn-block py-2 mt-2">
                 Uploads 3D Model
               </button>
@@ -3819,8 +3812,6 @@
                   margin-bottom: 0;
                 "
               >
-                <!-- <input id='auth3' name="authtoken" type="hidden" value=""> -->
-                <!-- <input type="hidden" name="create" value="1"> -->
                 <div class="col-md-3 px-0">
                   <label id="obj_label" class="mb-0 btn py-3 btn-block btn-primary ml-0  obj">
                     <input id="obj"  class="d-none obj-file obj" type="file" name="obj"/>
@@ -3842,11 +3833,21 @@
               </form>
                 
                 
-            </div>
+              </div>
+
+              <!-- <button id="upload__3d_btn" class="btn btn-success btn-upload-media btn-block py-2 mt-2">
+                UPLOAD AUDIO
+              </button> -->
+              <div class="col-md-12 px-0 mt-4">
+                <label id="audio_label" class="mb-0 btn py-2 btn-block btn-success ml-0  obj">
+                  <input id="audio" class="d-none audio-file audio" type="file" name="audio"/>
+                  UPLOAD AUDIO
+                </label>
+              </div>
             </div>
           </div>
           <div class="search-block border-b">
-            <div class="padding-panel pt-4">
+            <div class="padding-panel pt-0">
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control uploads_search" placeholder="Search" />
@@ -3855,7 +3856,7 @@
           </div>
           <div 
             class="panel-content padding-panel style-scroll"
-            style="height: calc(100vh - 260px - 91px);"
+            style="height: calc(100vh - 301px - 91px);"
           >
             <div class="content-container">
               <div class="content mb-3 d-none">
@@ -4261,7 +4262,6 @@
       document
         .querySelector("#buttonDownloadEncoded")
         .addEventListener("click", function () {
-          debugger;
           if (innerImageURL === null) {
             alert("upload a file first");
             return false;
@@ -4271,6 +4271,7 @@
           THREEx.ArPatternFile.encodeImageURL(
             innerImageURL,
             function onComplete(patternFileString) {
+              console.log('blaaa', patternFileString)
               THREEx.ArPatternFile.triggerDownload(patternFileString);
             }
           );
@@ -4320,9 +4321,15 @@
         reader.onload = function (event) {
           innerImageURL = event.target.result;
           updateFullMarkerImage();
+          THREEx.ArPatternFile.encodeImageURL(
+            innerImageURL,
+            function onComplete(patternFileString) {
+              console.log('blaaa', patternFileString)
+              THREEx.ArPatternFile.triggerDownload(patternFileString);
+            }
+          );
         };
         reader.readAsDataURL(file);
-        THREEx.ArPatternFile.uploadMarker()
       });
 
       $("#image").change(function () {
@@ -4353,13 +4360,13 @@
         var patternRatio =
           document.querySelector("#patternRatioSlider").value / 100;
         console.log(patternRatio)
+          // $('#buttonDownloadEncoded').click()
 
           THREEx.ArPatternFile.buildFullMarker(
           innerImageURL,
           patternRatio,
           function onComplete(markerUrl) {
             fullMarkerURL = markerUrl;
-
             // put fullMarkerImage into #imageContainer
           }
         );

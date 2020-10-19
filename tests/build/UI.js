@@ -397,6 +397,7 @@ function pushObj(e) {
 // }
 
 function pushAud(e) {
+  console.log('Audio Pushed!')
   w++;
   a = 10 + w * 60;
   var d2 = document.getElementById("d2");
@@ -405,11 +406,11 @@ function pushAud(e) {
   node.id = id;
 
   var idAudioLoop = e.id.substr(3);
-  var audioValue = document.getElementById("audioLoop" + idAudioLoop).dataset
-    .loop;
-  if (audioValue === "true") {
-    node.setAttribute("loop", true);
-  }
+  // var audioValue = document.getElementById("audioLoop" + idAudioLoop).dataset
+  //   .loop;
+  // if (audioValue === "true") {
+  //   node.setAttribute("loop", true);
+  // }
 
   var src = document.createElement("source");
   src.src = e.dataset.source;
@@ -637,8 +638,9 @@ function readURL(input) {
 //   bool++;
 // });
 
-$("#audio").change(function () {
-  uploadAud();
+$("#audio").change(function (e) {
+  console.log('Audio changed!')
+  uploadAud(e.target.files[0]);
 });
 // $("#video").change(function () {
 //   console.log("Ok");
@@ -2078,13 +2080,20 @@ function delaud(e) {
 }
 
 // to upload audio files
-function uploadAud(event) {
-  let form = document.querySelector("#form4");
-  let formData = new FormData(form);
+function uploadAud(file) {
+  console.log('File: ', file)
+  let audioForm = new FormData();
+  audioForm.append('audio', file);
+  audioForm.append('name', file.name);
+  audioForm.append('type', 'audio');
   $.ajax({
     method: "POST",
-    url: "http://pitchar.io/user/apis/_create-media.php",
-    data: formData,
+    url: "https://pitchar.io/api/v1/medias",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    data: audioForm,
     processData: false,
     contentType: false,
     xhr: function () {
@@ -2121,16 +2130,17 @@ function uploadAud(event) {
       return xhr;
     },
     success(data) {
-      uploadbar.style.width = 0;
-      var node = document.createElement("img");
-      node.src = data.data.thumbnail;
-      node.width = 125;
-      node.height = 125;
-      node.id = "img" + perm;
-      node.style = "margin:4px;";
-      node.setAttribute("onclick", "pushAud(this);");
-      document.getElementById("galleryauds").appendChild(node);
-      $(".audio-panel .btn-showmore").click();
+      console.log(data)
+      // uploadbar.style.width = 0;
+      // var node = document.createElement("img");
+      // node.src = data.data.thumbnail;
+      // node.width = 125;
+      // node.height = 125;
+      // node.id = "img" + perm;
+      // node.style = "margin:4px;";
+      // node.setAttribute("onclick", "pushAud(this);");
+      // document.getElementById("galleryauds").appendChild(node);
+      // $(".audio-panel .btn-showmore").click();
     },
   });
 }
@@ -2647,6 +2657,7 @@ $("#uploads_panel_btn").click(async function () {
   await fetchUplodsPics();
   await fetchUploadMedia();
   await fetchModels();
+  await fetchAudio()
 });
 
 function renameAsset(input, check) {
@@ -2840,13 +2851,14 @@ async function fetchUploadMedia() {
         margin-bottom: 0;
         color: #b0bac9;
       "
-    >MEDIA</h4><br>
+    >MEDIA & MODELS</h4><br>
   `;
   $(videosTitle).appendTo("#unsplash_thumb_upload");
 
   for (var i = 0; i < data.length; i++) {
     var asset = data[i];
     var src = asset.video;
+    console.log(asset)
     if (!src) continue;
     src = `https://pitchar.io/storage/${asset.video}`;
     console.log(asset);
@@ -2910,7 +2922,7 @@ async function fetchUploadMedia() {
             <div
               onclick="clickVid(${imgid})"
             >
-              <img data-type="${asset.type}" src="${src}#t=1" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+              <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
             </div>
           </div>`;
 
@@ -2958,8 +2970,7 @@ async function fetchModels() {
   console.log(data)
   for (var i = 0; i < data.length; i++) {
     if (data[i].name === 'gtlf') continue;
-    console.log(data[i].obj)
-    console.log(data[i].mtl)
+    console.log(data[i])
     // var src = data[i].thumbnail.url;
     // var format = data[i].formats.find((format) => {
     //   return format.formatType === "OBJ";
@@ -2979,7 +2990,7 @@ async function fetchModels() {
             onclick="pushPolyModel(this);"
         >
             <img
-                src="https://images.unsplash.com/photo-1593642634627-6fdaf35209f4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ2MDYzfQ"    
+                src="https://pitchar.io/storage/${data[i].objthumbnail}"
             />
             <p class="img__description">${data[i].name}</p>
         </div>
@@ -2988,6 +2999,88 @@ async function fetchModels() {
     $(elem).appendTo("#unsplash_thumb_upload");
     // $(elem).appendTo(".googlepolyImgs");
   }
+}
+
+async function fetchAudio() {
+  let {
+    data: { data },
+  } = await fetchfetching("https://pitchar.io/api/v1/medias");
+  if (!data.length) return;
+  console.log('fetching...', data);
+
+  for (var i = 0; i < data.length; i++) {
+    var asset = data[i];
+    var src = asset.audio;
+    console.log('audio', asset)
+    if (asset.type !== 'audio' || !src) continue;
+    console.log('audio', asset)
+    src = `https://pitchar.io/storage/${asset.audio}`;
+    console.log(asset);
+    var imgid = `uploadsAud${i}`;
+    var dropdownId = `myDropdownAud${i}`;
+    var inputId = `inputAud${i}`;
+    var checkId = `rename__checkAud${i}`;
+    asset.name = asset.name.toUpperCase();
+    var format = src.slice(-3).toUpperCase();
+    var type = `${asset.type}`;
+    console.log(type);
+
+
+    var elem = `
+          <div class="upload__wrap">
+            <div class="dropdown">
+              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                <i style="color: black" class="fa fa-ellipsis-v"></i>
+              </button>
+              <div id="${dropdownId}" class="dropdown-content">
+                <div class="d-flex align-items-center">
+                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                </div>
+                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                <hr style="margin: .5em 0;">
+                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+              </div>
+            </div>
+            <div
+              onclick="clickVid(${imgid})"
+            >
+              <img data-source="${src}" src="https://pitchar.io/storage/${asset.thumbnail}" id="${imgid}" onclick="pushAud(this);" />
+            </div>
+          </div>`;
+
+    $(elem).appendTo("#unsplash_thumb_upload");
+    // }
+  }
+  // for (var i = 0; i < data.length; i++) {
+  //   var media = data[i];
+  //   if (!media.video) continue
+  //   console.log(media)
+
+  //   var elem = `
+  //   <div class="img-panel" id="media_${media.id}">
+  //     <div class="w-100 float-left col-sm-12 p-0">
+  //       <video width="120" height="140" controls  id="img${i}" onclick="pushVid(this);">
+  //         <source src="https://pitchar.io/storage/${media.video}" type="video/mp4">
+  //       </video>
+  //     </div>
+  //   </div>
+  //   `;
+
+  //   // if ((media.type == "2D" || media.type == "360") && media.video) {
+  //     $(elem).appendTo("#unsplash_thumb_upload");
+  //   // }
+  //   // var node = document.createElement("img");
+  //   // node.src = media.thumbnail;
+  //   // node.width = 125;
+  //   // node.height = 125;
+  //   // node.id = "img" + i;
+  //   // node.style = "margin:4px;";
+  //   // node.setAttribute("onclick", "pushVid(this);");
+  //   // if (media.type == "2D" || media.type == "360")
+  //   //   document.getElementById("galleryvids").appendChild(node);
+  //   // perm = i;
+  // }
 }
 
 function clickVid(e) {
