@@ -72,10 +72,10 @@ window.onload = function () {
   $("body").on("keyup", ".unsplash_srch_new", function (event) {
     event.preventDefault();
     if (event.keyCode === 13) return;
-    $('#img_loader').removeClass('d-none')
-    $('#unsplashImgs').addClass('d-none')
-    document.getElementById("unsplashImgs").innerHTML = "";
-    // if (event.keyCode === 13) {
+    if (event.target.value !== "") {
+      $("#unsplashImgs").addClass("d-none");
+      document.getElementById("unsplashImgs_srch").innerHTML = "";
+      // if (event.keyCode === 13) {
       console.log(String(event.target.value));
       unsplash.search
         .photos(String(event.target.value), 1)
@@ -85,18 +85,18 @@ window.onload = function () {
           for (var i = 0; i < 10; i++) {
             let imgid = `srch_unsplash${i}`;
             var elem = `
-                <div
-                    class="img__wrap"
-                    onclick="clickImg(${imgid})"
-                >
-                    <img
-                        src="${json.results[i].urls.regular}"
-                        id="${imgid}"
-                        onclick="pushImg(this);"
-                        crossorigin="anonymous"
-                    />
-                    <p class="img__description">${json.results[i].alt_description}</p>
-                </div>`;
+                  <div
+                      class="img__wrap"
+                      onclick="clickImg(${imgid})"
+                  >
+                      <img
+                          src="${json.results[i].urls.regular}"
+                          id="${imgid}"
+                          onclick="pushImg(this);"
+                          crossorigin="anonymous"
+                      />
+                      <p class="img__description">${json.results[i].alt_description}</p>
+                  </div>`;
 
             // var node = document.createElement("img");
             // node.src = json.results[i].urls.regular;
@@ -105,12 +105,18 @@ window.onload = function () {
             // node.style = "margin:4px;max-width:50%;";
             // node.setAttribute("onclick", "pushImg(this);");
             // node.setAttribute("crossorigin", "anonymous");
-            $(elem).appendTo("#unsplashImgs");
+            $(elem).appendTo("#unsplashImgs_srch");
             // document.getElementById("unsplashImgs").append(node);
           }
-          $('#img_loader').addClass('d-none')
-          $('#unsplashImgs').removeClass('d-none')
+          $("#img_loader").addClass("d-none");
+          
+          $("#unsplashImgs_srch").removeClass("d-none");
         });
+    } else {
+      $("#unsplashImgs").removeClass("d-none");
+      $("#unsplashImgs_srch").html("");
+    }
+
     // }
   });
 };
