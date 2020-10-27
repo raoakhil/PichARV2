@@ -3194,82 +3194,88 @@ function editVideoName(id, newName, checkIcon, assetType) {
 }
 
 // Search Uploads
-// $("body").on("keyup", ".uploads_search", function (event) {
-//   event.preventDefault();
-//   $("#unsplash_thumb_upload").html("");
-//   var que = $(this).val();
-//   let result = [];
-//   console.log(que);
-//   if (que !== "") {
-//     var settings = {
-//       async: true,
-//       url: `https://pitchar.io/api/v1/assets`,
-//       headers: {
-//         Accept: "application/json",
-//         Authorization: "Bearer " + accessToken,
-//       },
-//       method: "GET",
-//     };
+$("body").on("keyup", ".uploads_search", function (event) {
+  event.preventDefault();
+  var que = $(this).val().toLowerCase();
+  let result = [];
+  if (que !== "") {
+    var settings = {
+      async: true,
+      url: `https://pitchar.io/api/v1/assets`,
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      method: "GET",
+    };
 
-//     $.ajax(settings).done(function ({ data: { data } }) {
-//       result = data.filter((element) => {
-//         return element.name.includes(que)
-//       }, []);
+    console.log('Hi')
+    console.log(que)
+    $("#unsplash_thumb_upload").hide();
+    $.ajax(settings).done(function ({ data: { data } }) {
+      console.log(data)
+      result = data.filter((element) => {
+        return element.name.includes(que)
+      }, []);
 
-//     for (var i = 0; i < result.length; i++) {
-//       var asset = result[i];
-//       console.log(asset)
-//       var src = asset.image;
-//       var imgid = `uploadsImg${i}`;
-//       var dropdownId = `myDropdown${i}`;
-//       var inputId = `input${i}`;
-//       var checkId = `rename__check${i}`;
-//       asset.name = asset.name.toUpperCase();
-//       var format = src ? src.slice(-3).toUpperCase() : "N/A";
+      $('#unsplash_thumb_upload_srch').html('')
 
-//       if (asset.type === "image" && asset.image !== "") {
-//         // if (count_ast < 6) {
-//         //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
-//         //     $(imag).appendTo('#unsplash_thumb_upload');
-//         // }
-//         // count_ast++;
+      console.log('result', result)
 
-//         var elem = `
-//             <div class="upload__wrap">
-//               <div class="dropdown">
-//                 <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
-//                   <i style="color: black" class="fa fa-ellipsis-v"></i>
-//                 </button>
-//                 <div id="${dropdownId}" class="dropdown-content">
-//                   <div class="d-flex align-items-center">
-//                     <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
-//                   </div>
-//                   <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
-//                   <hr style="margin: .5em 0;">
-//                   <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-//                   <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
-//                 </div>
-//               </div>
-//               <div
-//                 onclick="clickImg(${imgid})"
-//               >
-//                 <img
-//                   src="https://pitchar.io/storage/${src}"
-//                   id="${imgid}"
-//                   onclick="pushImg(this);"
-//                   crossorigin="anonymous"
-//                   alt="${imgid}"
-//                 />
-//               </div>
-//             </div>`;
+    for (var i = 0; i < result.length; i++) {
+      var asset = result[i];
+      console.log(asset)
+      var src = asset.image;
+      var imgid = `uploadsImg_srch${i}`;
+      var dropdownId = `myDropdown_srch${i}`;
+      var inputId = `input_srch${i}`;
+      var checkId = `rename__check_srch${i}`;
+      asset.name = asset.name.toUpperCase();
+      var format = src ? src.slice(-3).toUpperCase() : "N/A";
 
-//         $(elem).appendTo("#unsplash_thumb_upload");
-//       }
-//     }
-//     });
-//     console.log(result)
+      if (asset.type === "image" && asset.image !== "") {
+        // if (count_ast < 6) {
+        //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+        //     $(imag).appendTo('#unsplash_thumb_upload');
+        // }
+        // count_ast++;
 
-//   } else {
+        var elem = `
+            <div class="upload__wrap">
+              <div class="dropdown">
+                <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                  <i style="color: black" class="fa fa-ellipsis-v"></i>
+                </button>
+                <div id="${dropdownId}" class="dropdown-content">
+                  <div class="d-flex align-items-center">
+                    <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editNameAsset(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                  </div>
+                  <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                  <hr style="margin: .5em 0;">
+                  <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                  <a onclick="delimg(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+                </div>
+              </div>
+              <div
+                onclick="clickImg(${imgid})"
+              >
+                <img
+                  src="https://pitchar.io/storage/${src}"
+                  id="${imgid}"
+                  onclick="pushImg(this);"
+                  crossorigin="anonymous"
+                  alt="${imgid}"
+                />
+              </div>
+            </div>`;
 
-//   }
-// });
+        $(elem).appendTo("#unsplash_thumb_upload_srch");
+      }
+    }
+    });
+    console.log(result)
+
+  } else {
+    $("#unsplash_thumb_upload").show();
+  }
+});
