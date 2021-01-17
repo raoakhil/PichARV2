@@ -3208,9 +3208,7 @@ $("body").on("keyup", ".uploads_search", function (event) {
       },
       method: "GET",
     };
-
-    console.log('Hi')
-    console.log(que)
+    
     $("#unsplash_thumb_upload").hide();
     $.ajax(settings).done(function ({ data: { data } }) {
       console.log(data)
@@ -3219,8 +3217,6 @@ $("body").on("keyup", ".uploads_search", function (event) {
       }, []);
 
       $('#unsplash_thumb_upload_srch').html('')
-
-      console.log('result', result)
 
     for (var i = 0; i < result.length; i++) {
       var asset = result[i];
