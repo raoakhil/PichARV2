@@ -173,11 +173,54 @@ function selectMarker(e) {
 			//	logo.object3D.position.z = -1.5;
 			$('#choosemarker .close').click();
 			$('.modal-backdrop').remove();
-			var fullMarkerImage = document.createElement('img');
-			fullMarkerImage.src = 'https://pitchar.io/storage/' + data.marker;
+			const title = `
+				<span
+					id="file__name"
+					style="
+					float: left;
+					width: 89%;
+					font-size: 16px;
+					color: #8798ad;
+					letter-spacing: 2px;"
+				>Pitch#830
+				</span>
+			`
+			const image = `
+				<img
+					src="${'https://pitchar.io/storage/' + data.marker}"
+					style="width: 121px; height: 114px; margin-right: 5px;"
+				/>
+			`
+
+			const actions = `
+			<span style="position: relative; top: 28px;">
+                  <a
+                    style="
+                      font-size: 12px;
+                      letter-spacing: 1.4px;
+                      margin-left: 3px;
+                    "
+                    href="#"
+                    id="buttonDownloadFullImage"
+                    >DOWNLOAD MARKER</a
+                  >
+                  <br />
+                  <span style="font-size: 12px; color: #8798ad;" class="pt-3"
+                    >CHANGE</span
+                  >
+                </span>`
+			// var fullMarkerImage = document.createElement('img');
+			// fullMarkerImage.src = 'https://pitchar.io/storage/' + data.marker;
+			// fullMarkerImage.style.width = '121px';
+			// fullMarkerImage.style.headers = '114px';
+			// fullMarkerImage.style.marginRight = '5px';
 			var container = document.querySelector('#object-panel');
 			while (container.firstChild) container.removeChild(container.firstChild);
-			container.appendChild(fullMarkerImage);
+			// container.appendChild(fullMarkerImage);
+
+			$(title).appendTo('#object-panel');
+			$(image).appendTo('#object-panel');
+			$(actions).appendTo('#object-panel');
 		}
 	});
 }
