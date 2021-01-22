@@ -397,7 +397,7 @@ function pushObj(e) {
 // }
 
 function pushAud(e) {
-  console.log('Audio Pushed!')
+  console.log("Audio Pushed!");
   w++;
   a = 10 + w * 60;
   var d2 = document.getElementById("d2");
@@ -424,7 +424,7 @@ function pushAud(e) {
   play.style.position = "fixed";
   play.style.bottom = "50px";
   play.style.marginLeft = a + "px";
-  play.style.marginLeft= '140px'
+  play.style.marginLeft = "140px";
   //play.setAttribute('onclick', 'playaud(this)');
   play.setAttribute("onclick", "audioset(this)");
   play.setAttribute("data-toggle", "modal");
@@ -640,7 +640,7 @@ function readURL(input) {
 // });
 
 $("#audio").change(function (e) {
-  console.log('Audio changed!')
+  console.log("Audio changed!");
   uploadAud(e.target.files[0]);
 });
 // $("#video").change(function () {
@@ -1494,9 +1494,9 @@ function uploadObj(event) {
         $("#assets_alert").hide();
       }, 4000);
       console.log(data);
-      $(".obj-file.obj").val('');
-      $(".obj-file.mtl").val('');
-      $(".obj-gltf-file.gltf").val('');
+      $(".obj-file.obj").val("");
+      $(".obj-file.mtl").val("");
+      $(".obj-gltf-file.gltf").val("");
       // var node = document.createElement('img');
       // node.src = data.data.objthumbnail;
       // node.width = 125;
@@ -1893,127 +1893,124 @@ $("body").on("keyup", ".searchFS", function (event) {
   if (que != "") {
     // console.log(que);
     // if (event.keyCode === 13) {
-      //alert("searchFS");
-      $('#aud_loader').removeClass('d-none')
-      $(".free_sound").hide();
-      $(".free_sound_srch").html("");
-      var settings = {
-        async: true,
-        crossDomain: true,
-        url:
-          "https://freesound.org/apiv2/search/text/?query=" +
-          que +
-          "&fields=name,previews&token=EGxQRoYUVQsqYXQ5gbbk9oSp5zU9MICs4KEa9404",
-        method: "GET",
-      };
+    //alert("searchFS");
+    $("#aud_loader").removeClass("d-none");
+    $(".free_sound").hide();
+    $(".free_sound_srch").html("");
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url:
+        "https://freesound.org/apiv2/search/text/?query=" +
+        que +
+        "&fields=name,previews&token=EGxQRoYUVQsqYXQ5gbbk9oSp5zU9MICs4KEa9404",
+      method: "GET",
+    };
 
-      $.ajax(settings).done(function (response) {
-        // console.log(response);
-        document.getElementById("fsImgs").innerHTML = "";
+    $.ajax(settings).done(function (response) {
+      // console.log(response);
+      document.getElementById("fsImgs").innerHTML = "";
 
-        var audResults = response.results;
-        // console.log(audResults, 'audResults')
-        var def_icon =
-          "https://i.pinimg.com/564x/9c/02/99/9c0299159f127212cb8c37531b99bd2a.jpg";
+      var audResults = response.results;
+      // console.log(audResults, 'audResults')
+      var def_icon =
+        "https://i.pinimg.com/564x/9c/02/99/9c0299159f127212cb8c37531b99bd2a.jpg";
 
-        console.log(audResults);
-        for (var i = 0; i < audResults.length; i++) {
-          
+      console.log(audResults);
+      for (var i = 0; i < audResults.length; i++) {
+        var node = document.createElement("img");
+        node.src = def_icon;
+        node.width = 125;
+        node.height = 125;
+        // node.id = 'img' + i;
+        node.style = "margin:4px;";
+        var div = document.createElement("div");
+        div.setAttribute("class", "hbox");
+        div.appendChild(node);
+        var overlay = document.createElement("div");
+        overlay.setAttribute("class", "options");
 
-
-          var node = document.createElement("img");
-          node.src = def_icon;
-          node.width = 125;
-          node.height = 125;
-          // node.id = 'img' + i;
-          node.style = "margin:4px;";
-          var div = document.createElement("div");
-          div.setAttribute("class", "hbox");
-          div.appendChild(node);
-          var overlay = document.createElement("div");
-          overlay.setAttribute("class", "options");
-
-          div.appendChild(node);
-          div.appendChild(overlay);
-          document.getElementById("fsImgs").appendChild(div);
-          $(div).appendTo(".free_sound");
-          if (i < 6) {
-            $(div).appendTo(".FS_audio");
-          }
-          //if(media.type=='audio')
-          //document.getElementById("galleryauds").appendChild(div);
-          //perm=i;
-
-          var audioPrev = document.createElement("button");
-          audioPrev.setAttribute(
-            "data-source",
-            audResults[i].previews["preview-lq-mp3"]
-          );
-          audioPrev.id = audResults[i].name;
-          audioPrev.classList.add("play__audio");
-          audioPrev.setAttribute("onclick", "previewAudio(this);");
-          audioPrev.innerHTML = "<i class='fa fa-play'></i>";
-          overlay.appendChild(audioPrev);
-          div.appendChild(node);
-          div.appendChild(overlay);
-
-          // var audioLoop = document.createElement('select');
-          // audioLoop.id = 'audioLoop' + i;
-          // var opt1 = document.createElement('option');
-          // opt1.value = 'play once';
-          // opt1.innerHTML = 'play once';
-          // audioLoop.appendChild(opt1);
-          // var opt2 = document.createElement('option');
-          // opt2.value = 'repeat';
-          // opt2.innerHTML = 'repeat';
-          // audioLoop.appendChild(opt2);
-          // audioLoop.setAttribute('data-loop', false);
-          // audioLoop.setAttribute('onclick', 'toogleLoop(this)');
-
-          var repeat = document.createElement("img");
-          repeat.src = "./repeat.png";
-          repeat.classList.add("repeat__btn");
-
-          var playOnce = document.createElement("img");
-          playOnce.src = "./repeat.png";
-          playOnce.classList.add("play-once__btn");
-
-          var addToScene = document.createElement("div");
-          addToScene.id = "audioLoop" + i;
-          addToScene.classList.add("add-to-scene__btn");
-
-          var hr = document.createElement("hr");
-          var addToSceneBtn = document.createElement("button");
-          addToSceneBtn.innerHTML = "ADD TO SCENE";
-          addToSceneBtn.id = "img" + i;
-          addToSceneBtn.setAttribute("onclick", "pushAud(this);");
-          addToSceneBtn.setAttribute("class", "image");
-          addToSceneBtn.setAttribute(
-            "data-source",
-            audResults[i].previews["preview-lq-mp3"]
-          );
-
-          addToScene.appendChild(hr);
-          addToScene.appendChild(addToSceneBtn);
-
-          overlay.appendChild(repeat);
-          overlay.appendChild(playOnce);
-          overlay.appendChild(addToScene);
-
-          div.appendChild(node);
-          div.appendChild(overlay);
-
-          // $(".free_sound").hide();
-
-          $(div).appendTo(".free_sound_srch");
-
-          $("#aud_loader").addClass("d-none");
-          $(".free_sound_srch").removeClass("d-none");
+        div.appendChild(node);
+        div.appendChild(overlay);
+        document.getElementById("fsImgs").appendChild(div);
+        $(div).appendTo(".free_sound");
+        if (i < 6) {
+          $(div).appendTo(".FS_audio");
         }
-      });
+        //if(media.type=='audio')
+        //document.getElementById("galleryauds").appendChild(div);
+        //perm=i;
+
+        var audioPrev = document.createElement("button");
+        audioPrev.setAttribute(
+          "data-source",
+          audResults[i].previews["preview-lq-mp3"]
+        );
+        audioPrev.id = audResults[i].name;
+        audioPrev.classList.add("play__audio");
+        audioPrev.setAttribute("onclick", "previewAudio(this);");
+        audioPrev.innerHTML = "<i class='fa fa-play'></i>";
+        overlay.appendChild(audioPrev);
+        div.appendChild(node);
+        div.appendChild(overlay);
+
+        // var audioLoop = document.createElement('select');
+        // audioLoop.id = 'audioLoop' + i;
+        // var opt1 = document.createElement('option');
+        // opt1.value = 'play once';
+        // opt1.innerHTML = 'play once';
+        // audioLoop.appendChild(opt1);
+        // var opt2 = document.createElement('option');
+        // opt2.value = 'repeat';
+        // opt2.innerHTML = 'repeat';
+        // audioLoop.appendChild(opt2);
+        // audioLoop.setAttribute('data-loop', false);
+        // audioLoop.setAttribute('onclick', 'toogleLoop(this)');
+
+        var repeat = document.createElement("img");
+        repeat.src = "./repeat.png";
+        repeat.classList.add("repeat__btn");
+
+        var playOnce = document.createElement("img");
+        playOnce.src = "./repeat.png";
+        playOnce.classList.add("play-once__btn");
+
+        var addToScene = document.createElement("div");
+        addToScene.id = "audioLoop" + i;
+        addToScene.classList.add("add-to-scene__btn");
+
+        var hr = document.createElement("hr");
+        var addToSceneBtn = document.createElement("button");
+        addToSceneBtn.innerHTML = "ADD TO SCENE";
+        addToSceneBtn.id = "img" + i;
+        addToSceneBtn.setAttribute("onclick", "pushAud(this);");
+        addToSceneBtn.setAttribute("class", "image");
+        addToSceneBtn.setAttribute(
+          "data-source",
+          audResults[i].previews["preview-lq-mp3"]
+        );
+
+        addToScene.appendChild(hr);
+        addToScene.appendChild(addToSceneBtn);
+
+        overlay.appendChild(repeat);
+        overlay.appendChild(playOnce);
+        overlay.appendChild(addToScene);
+
+        div.appendChild(node);
+        div.appendChild(overlay);
+
+        // $(".free_sound").hide();
+
+        $(div).appendTo(".free_sound_srch");
+
+        $("#aud_loader").addClass("d-none");
+        $(".free_sound_srch").removeClass("d-none");
+      }
+    });
     // }
   } else {
-    $('#aud_loader').addClass('d-none')
+    $("#aud_loader").addClass("d-none");
     $(".free_sound").show();
     $(".free_sound_srch").hide();
   }
@@ -2032,11 +2029,11 @@ function delaud(e) {
 
 // to upload audio files
 function uploadAud(file) {
-  console.log('File: ', file)
+  console.log("File: ", file);
   let audioForm = new FormData();
-  audioForm.append('audio', file);
-  audioForm.append('name', file.name);
-  audioForm.append('type', 'audio');
+  audioForm.append("audio", file);
+  audioForm.append("name", file.name);
+  audioForm.append("type", "audio");
   $.ajax({
     method: "POST",
     url: "https://pitchar.io/api/v1/medias",
@@ -2081,7 +2078,7 @@ function uploadAud(file) {
       return xhr;
     },
     success(data) {
-      console.log(data)
+      console.log(data);
       // uploadbar.style.width = 0;
       // var node = document.createElement("img");
       // node.src = data.data.thumbnail;
@@ -2473,7 +2470,7 @@ $("body").on("keyup", ".searchGooglePoly", function (event) {
       // console.log(modResults, 'test');
       console.log(modResults);
       for (var i = 0; i < 10; i++) {
-        console.log(modResults[i])
+        console.log(modResults[i]);
         var src = modResults[i].thumbnail.url;
         var format = modResults[i].formats.find((format) => {
           return format.formatType === "OBJ";
@@ -2523,7 +2520,7 @@ $("body").on("keyup", ".searchGooglePoly", function (event) {
 });
 
 function pushPolyModel(e) {
-  console.log(e.dataset)
+  console.log(e.dataset);
   // var loader = new THREE.MTLLoader();
   // loader.setCrossOrigin( true );
   // loader.setMaterialOptions( { ignoreZeroRGBs: true } );
@@ -2608,7 +2605,7 @@ $("#uploads_panel_btn").click(async function () {
   await fetchUplodsPics();
   await fetchUploadMedia();
   await fetchModels();
-  await fetchAudio()
+  await fetchAudio();
 });
 
 function renameAsset(input, check) {
@@ -2809,9 +2806,13 @@ async function fetchUploadMedia() {
   for (var i = 0; i < data.length; i++) {
     var asset = data[i];
     var src = asset.video;
-    console.log(asset)
+    console.log(asset);
     if (!src) continue;
-    src = `https://pitchar.io/storage/${asset.video}`;
+    if (asset.video) {
+      src = `https://pitchar.io/storage/${asset.video}`;
+    } else if (asset.audio) {
+      src = `https://pitchar.io/storage/${asset.audio}`;
+    }
     console.log(asset);
     var imgid = `uploadsVid${i}`;
     var dropdownId = `myDropdownVid${i}`;
@@ -2854,7 +2855,31 @@ async function fetchUploadMedia() {
     //       </div>
     //     </div>`;
 
-    var elem = `
+    if (asset.video) {
+      var elem = `
+            <div class="upload__wrap">
+              <div class="dropdown">
+                <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                  <i style="color: black" class="fa fa-ellipsis-v"></i>
+                </button>
+                <div id="${dropdownId}" class="dropdown-content">
+                  <div class="d-flex align-items-center">
+                    <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                  </div>
+                  <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                  <hr style="margin: .5em 0;">
+                  <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                  <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+                </div>
+              </div>
+              <div
+                onclick="clickVid(${imgid})"
+              >
+                <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+              </div>
+            </div>`;
+    } else if (asset.audio) {
+      var elem = `
           <div class="upload__wrap">
             <div class="dropdown">
               <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
@@ -2873,9 +2898,10 @@ async function fetchUploadMedia() {
             <div
               onclick="clickVid(${imgid})"
             >
-              <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+              <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushAud(this);" />
             </div>
           </div>`;
+    }
 
     $(elem).appendTo("#unsplash_thumb_upload");
     // }
@@ -2915,13 +2941,11 @@ async function fetchModels() {
   let {
     data: { data },
   } = await fetchfetching("https://pitchar.io/api/v1/assets");
-  data = data.filter(
-    (element) => element.type !== "image"
-  );
-  console.log(data)
+  data = data.filter((element) => element.type !== "image");
+  console.log(data);
   for (var i = 0; i < data.length; i++) {
-    if (data[i].name === 'gtlf') continue;
-    console.log(data[i])
+    if (data[i].name === "gtlf") continue;
+    console.log(data[i]);
     // var src = data[i].thumbnail.url;
     // var format = data[i].formats.find((format) => {
     //   return format.formatType === "OBJ";
@@ -2957,14 +2981,14 @@ async function fetchAudio() {
     data: { data },
   } = await fetchfetching("https://pitchar.io/api/v1/medias");
   if (!data.length) return;
-  console.log('fetching...', data);
+  console.log("fetching...", data);
 
   for (var i = 0; i < data.length; i++) {
     var asset = data[i];
     var src = asset.audio;
-    console.log('audio', asset)
-    if (asset.type !== 'audio' || !src) continue;
-    console.log('audio', asset)
+    console.log("audio", asset);
+    if (asset.type !== "audio" || !src) continue;
+    console.log("audio", asset);
     src = `https://pitchar.io/storage/${asset.audio}`;
     console.log(asset);
     var imgid = `uploadsAud${i}`;
@@ -2975,7 +2999,6 @@ async function fetchAudio() {
     var format = src.slice(-3).toUpperCase();
     var type = `${asset.type}`;
     console.log(type);
-
 
     var elem = `
           <div class="upload__wrap">
@@ -3209,35 +3232,35 @@ $("body").on("keyup", ".uploads_search", function (event) {
       },
       method: "GET",
     };
-    
+
     $("#unsplash_thumb_upload").hide();
     $.ajax(settings).done(function ({ data: { data } }) {
-      console.log(data)
+      console.log(data);
       result = data.filter((element) => {
-        return element.name.includes(que)
+        return element.name.includes(que);
       }, []);
 
-      $('#unsplash_thumb_upload_srch').html('')
+      $("#unsplash_thumb_upload_srch").html("");
 
-    for (var i = 0; i < result.length; i++) {
-      var asset = result[i];
-      console.log(asset)
-      var src = asset.image;
-      var imgid = `uploadsImg_srch${i}`;
-      var dropdownId = `myDropdown_srch${i}`;
-      var inputId = `input_srch${i}`;
-      var checkId = `rename__check_srch${i}`;
-      asset.name = asset.name.toUpperCase();
-      var format = src ? src.slice(-3).toUpperCase() : "N/A";
+      for (var i = 0; i < result.length; i++) {
+        var asset = result[i];
+        console.log(asset);
+        var src = asset.image;
+        var imgid = `uploadsImg_srch${i}`;
+        var dropdownId = `myDropdown_srch${i}`;
+        var inputId = `input_srch${i}`;
+        var checkId = `rename__check_srch${i}`;
+        asset.name = asset.name.toUpperCase();
+        var format = src ? src.slice(-3).toUpperCase() : "N/A";
 
-      if (asset.type === "image" && asset.image !== "") {
-        // if (count_ast < 6) {
-        //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
-        //     $(imag).appendTo('#unsplash_thumb_upload');
-        // }
-        // count_ast++;
+        if (asset.type === "image" && asset.image !== "") {
+          // if (count_ast < 6) {
+          //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+          //     $(imag).appendTo('#unsplash_thumb_upload');
+          // }
+          // count_ast++;
 
-        var elem = `
+          var elem = `
             <div class="upload__wrap">
               <div class="dropdown">
                 <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
@@ -3266,12 +3289,11 @@ $("body").on("keyup", ".uploads_search", function (event) {
               </div>
             </div>`;
 
-        $(elem).appendTo("#unsplash_thumb_upload_srch");
+          $(elem).appendTo("#unsplash_thumb_upload_srch");
+        }
       }
-    }
     });
-    console.log(result)
-
+    console.log(result);
   } else {
     $("#unsplash_thumb_upload").show();
   }
