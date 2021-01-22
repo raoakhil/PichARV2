@@ -424,6 +424,7 @@ function pushAud(e) {
   play.style.position = "fixed";
   play.style.bottom = "50px";
   play.style.marginLeft = a + "px";
+  play.style.marginLeft= '140px'
   //play.setAttribute('onclick', 'playaud(this)');
   play.setAttribute("onclick", "audioset(this)");
   play.setAttribute("data-toggle", "modal");
