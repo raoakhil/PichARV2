@@ -515,6 +515,7 @@
                             width: 140px;
                             max-width: 100%;
                           "
+                          onclick="sharelnk(this)"
                         >
                           <i style="font-size: 18px;" class="fa fa-link"></i>
                           <span style="font-size: 9px;">LINK</span>
@@ -1362,11 +1363,11 @@
                     <div class="col-sm-5 mt-2 mb-2 float-left">
                       <div class="form-group has-search m-0">
                         <span class="fa fa-search form-control-feedback"></span>
-                        <input
+                        <!-- <input
                           type="text"
                           class="form-control searchYT"
                           placeholder="Search videos from Youtube"
-                        />
+                        /> -->
                       </div>
                     </div>
                   </div>
@@ -2544,13 +2545,13 @@
                 <div id="galleryvids"></div>
               </div>
               <div id="ytdiv" class="tab-pane">
-                <input
+                <!-- <input
                   type="search"
                   class="searchYT searchbar"
                   autocomplete="on"
                   onsubmit="searchYT(this)"
-                />
-                <div id="ytImgs"></div>
+                /> -->
+                <!-- <div id="ytImgs"></div> -->
                 <br />
                 <br />
               </div>
@@ -2634,13 +2635,13 @@
                 <div id="galleryvids"></div>
               </div>
               <div id="ytdiv" class="tab-pane">
-                <input
+                <!-- <input
                   type="search"
                   class="searchYT searchbar"
                   autocomplete="on"
                   onsubmit="searchYT(this)"
                 />
-                <div id="ytImgs"></div>
+                <div id="ytImgs"></div> -->
                 <br />
                 <br />
               </div>
@@ -2872,7 +2873,7 @@
             >UPLOADS</small
           >
         </div>
-        <div
+        <!-- <div
           onclick="setActive(this)"
           id="g-drive_panel_btn"
           class="left-bar-item menu-left"
@@ -2893,7 +2894,7 @@
             "
             >G DRIVE</small
           >
-        </div>
+        </div> -->
         <div
           onclick="setActive(this)"
           id="template_panel_btn"
@@ -3058,38 +3059,14 @@
         </div>
       </div>
       <div id="video_assets" class="left-bar-panel video-panel">
-        <!-- <div class="panel-indicators">
-                <div class="indicator selected">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext"><b>Upload Your Media</b><br><br>Add any media you want from your computer or social accounts. </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Images</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Wix Free Videos</span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Images </span>
-                    </div>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-dot custom-tooltip"> <span class="tooltiptext">Shutterstock Videos</span>
-                    </div>
-                </div>
-            </div> -->
         <div class="bar-cover">
           <div class="left-bar-header">
             <div class="title border-b padding-l-24">
               Video
-              <!-- <div class="btn-close btn-close-panel">&times;</div> -->
             </div>
           </div>
           <div class="search-block border-b">
             <div class="padding-panel">
-              <!-- <p>What are you looking for?</p> -->
               <div class="form-group has-search m-0">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control searchYT" placeholder="Search" />
@@ -3101,30 +3078,6 @@
               <div class="content mb-3 d-none">
                 <div class="content-title">Upload Your media</div>
                 <div class="media-options">
-                  <!-- <form
-                    id="form6"
-                    enctype="multipart/form-data"
-                    method="post"
-                    style="display: none;"
-                  >
-                    <input id="auth5" name="authtoken" type="hidden" value="" /> -->
-                    <!-- <label>Name :</label>
-										<br>
-										<input id="videoname" name="name">
-										<br>
-										<label>Video :</label> -->
-                    <!-- <input id="video" name="video" type="file" /> -->
-                    <!-- <label>Thumbnail :</label>
-										<input id="videothumb" name="thumbnail" type="file"> -->
-                    <!-- <input type="hidden" name="create" value="1" /> -->
-                    <!-- <label>Is this a 360 video? :</label>
-										<input type='hidden' id='vidtype' name='type' value="2D">
-										<input type='checkbox' onclick="chgvidtype(this);"> -->
-                    <!-- <br>
-										<br> -->
-                    <!-- <input type="textarea" name="tags" rows=4 col=4 value="" placeholder="tags" data-role="tagsinput" /> -->
-                  <!-- </form> -->
-
                   <div
                     class="m-option me-upload-vid bg-blue"
                     tab=".upload-pc"
@@ -3202,10 +3155,18 @@
                 <!-- <div class="images-options vid_youtube"></div> -->
                 <div
                       class="vid_youtube video_gallery you_tube"
+                      style="display: flex;
+                      flex-direction: column;
+                      flex-flow: wrap;
+                      justify-content: space-between;"
                     ></div>
                     <div
                       class=" you_tube_srch"
                     ></div>
+                    <div id="ytImgs" style="display: flex;
+                    flex-direction: column;
+                    flex-flow: wrap;
+                    justify-content: space-between;"></div>
                 <!-- <div class="bar-body text-center">
                   <span
                     class="badge badge-pill badge-light btn-showmore"
@@ -4714,7 +4675,7 @@
       }
     </script>
 
-    <!-- <script src="https://apis.google.com/js/client ?onload=init"></script> -->
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
     <script
       type="text/javascript"
       src="https://apis.google.com/js/api.js?onload=onApiLoad"

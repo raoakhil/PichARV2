@@ -901,7 +901,7 @@ $("#imagebut").click(function () {
                 onclick="pushImg(this);"
                 crossorigin="anonymous"
             />
-            <p class="img__description">${unpic[i].alt_description}</p>
+            <p class="img__description"><span>${unpic[i].alt_description.slice(0, 10)}<span></p>
         </div>
     `;
     // var node = document.createElement("img");
@@ -971,7 +971,7 @@ $("#imagebut").click(function () {
   //                     id="${imgid}"
   //                     onclick="pushImg(this);"
   //                 />
-  //                 <p class="img__description">${asset.name}</p>
+  //                 <p class="img__description"><span>${asset.name}<span></p>
   //             </div>`
 
   //             var elem = `
@@ -1085,7 +1085,12 @@ $("body").on("keyup", ".searchImg", function (event) {
 $("body").on("keyup", ".searchYT", function (event) {
   event.preventDefault();
   var q = $(this).val();
+  console.log(q)
+  if (!q.length) {
+    $('.you_tube').show()
+  }
   if (event.keyCode === 13) {
+    $('.you_tube').hide()
     var request = gapi.client.youtube.search.list({
       q: q,
       maxResults: 12,
@@ -1181,7 +1186,7 @@ $(".3d_assets").click(function () {
                     <img
                         src="${src}"    
                     />
-                    <p class="img__description">${modResults[i].displayName}</p>
+                    <p class="img__description"><span>${modResults[i].displayName.slice(0, 10)}<span></p>
                 </div>
             `;
 
@@ -2229,57 +2234,59 @@ $(".video_assets").click(function () {
   //     event.preventDefault();
   // if (event.keyCode === 13) {
   var q = searchYT[0].value;
-  // var request = gapi.client.youtube.search.list({
-  //     q: q,
-  //     maxResults: 12,
-  //     type: 'video',
-  //     part: 'snippet',
-  //     videoEmbeddable: 'true',
-  //     videoSyndicated: 'true'
-  // });
+  console.log(gapi)
+  var request = gapi.client.youtube.search.list({
+      q: q,
+      maxResults: 12,
+      type: 'video',
+      part: 'snippet',
+      videoEmbeddable: 'true',
+      videoSyndicated: 'true'
+  });
 
-  // request.execute(function(response) {
-  //     document.getElementById('ytImgs').innerHTML = '';
-  //     var assets = response.items;
-  //     $('.vid_youtube').html('');
-  //     for (var i = 0; i < 6; i++) {
-  //         let asset = assets[i];
-  //         var src = asset.snippet.thumbnails.high.url;
-  //         var id = 'ytimg' + i;
-  //         var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
-  //         $(ele).appendTo('.vid_youtube');
-  //     }
-  //     $('.you_tube').html('');
-  //     // console.log("Hi there!!!");
-  //     // console.log(assets);
-  //     for (var i = 0; i < assets.length; i++) {
-  //         asset = assets[i];
-  //         var node = document.createElement('img');
-  //         node.src = asset.snippet.thumbnails.high.url;
-  //         // node.width = 125;
-  //         node.id = 'ytimg' + i;
-  //         node.style = 'max-width:50%';
-  //         node.setAttribute('onclick', 'pushYT(this);');
-  //         node.setAttribute('data-source', asset.id.videoId);
-  //         document.getElementById('ytImgs').appendChild(node);
-  //         $(node).appendTo('.you_tube');
-  //         perm = i;
-  //     }
-  // });
+  request.execute(function(response) {
+      document.getElementById('ytImgs').innerHTML = '';
+      var assets = response.items;
+      $('.vid_youtube').html('');
+      for (var i = 0; i < 6; i++) {
+          let asset = assets[i];
+          var src = asset.snippet.thumbnails.high.url;
+          var id = 'ytimg' + i;
+          node.style = 'margin: 5px;';
+          var ele = `<img data-typ="m" data-type="" data-pid="${id}" src="${src}" id="${id}" data-source="${asset.id.videoId}" onclick="pushYT(this);" alt="">`;
+          $(ele).appendTo('.vid_youtube');
+      }
+      $('.you_tube').html('');
+      // console.log("Hi there!!!");
+      // console.log(assets);
+      for (var i = 0; i < assets.length; i++) {
+          asset = assets[i];
+          var node = document.createElement('img');
+          node.src = asset.snippet.thumbnails.high.url;
+          // node.width = 125;
+          node.id = 'ytimg' + i;
+          node.style = 'max-width:50%';
+          node.style = 'margin: 5px;';
+          node.setAttribute('onclick', 'pushYT(this);');
+          node.setAttribute('data-source', asset.id.videoId);
+          document.getElementById('ytImgs').appendChild(node);
+          $(node).appendTo('.you_tube');
+          perm = i;
+      }
+  });
   // }
   // });
 
   $.ajax({
-    method: "post",
-    url: "http://pitchar.io/api/v1/_fetch_media",
-    data: {
-      submit: 1,
-      authtoken: token,
+    method: "GET",
+    url: "https://pitchar.io/api/v1/medias",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
     },
-    dataType: "json",
-    success(result) {
-      console.log(result);
-      var medias = result.media;
+    success({data: {data}}) {
+      console.log(data);
+      var medias = data;
       if (medias.length > 0) {
         $(".video_gallery").html("");
         var count_vid = 0;
@@ -2338,7 +2345,7 @@ $(".video_assets").click(function () {
 						</div>
 					  </div>
 					<div class="w-100 float-left col-sm-12 p-0">
-					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
+					  <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="https://pitchar.io/storage/${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
 					</div>
 
 				  </div>
@@ -2348,7 +2355,7 @@ $(".video_assets").click(function () {
             document.getElementById("galleryvids").appendChild(div);
             var id = "img" + i;
             if (count_vid < 6) {
-              var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${media.thumbnail}" id="${id}" data-source="${media.video}" onclick="pushVid(this);" alt="">`;
+              var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${media.thumbnail}" id="${id}" data-source="https://pitchar.io/storage/${media.video}" onclick="pushVid(this);" alt="">`;
               $(ele).appendTo(".video_gallery");
               count_vid++;
             }
@@ -2492,7 +2499,7 @@ $("body").on("keyup", ".searchGooglePoly", function (event) {
                       <img
                           src="${src}"    
                       />
-                      <p class="img__description">${modResults[i].displayName}</p>
+                      <p class="img__description"><span>${modResults[i].displayName.slice(0, 10)}<span></p>
                   </div>
               `;
 
@@ -2967,7 +2974,7 @@ async function fetchModels() {
             <img
                 src="https://pitchar.io/storage/${data[i].objthumbnail}"
             />
-            <p class="img__description">${data[i].name}</p>
+            <p class="img__description"><span>${data[i].name.slice(0, 10)}<span></p>
         </div>
     `;
 
@@ -3096,7 +3103,7 @@ function fetchMarkers() {
                   alt="Chania"
                   crossorigin="anonymous"
                 />
-                <p class="img__description">${marker.name}</p>
+                <p class="img__description"><span>${marker.name.slice(0, 10)}<span></p>
               </div>
           `;
         $("#unsplash_thumb_marker").append(elem);

@@ -1910,3 +1910,25 @@ input[type=range]:focus::-ms-fill-upper {
   margin-right: auto;
   margin-left: auto;
 }
+
+#ytImgs img {
+  margin: 5px !important;
+  height: 110px !important;
+    width: 129px !important;
+}
+
+#unsplashImgs img, .img__description, .img__wrap {
+  height: auto !important;
+}
+
+#unsplashImgs .img__description {
+  height: 95% !important;
+  line-height: normal !important;
+}
+
+.img__description span {
+  position: absolute;
+  top: 40%;
+  width: 68px;
+  left: 25%;
+}

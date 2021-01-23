@@ -32,7 +32,6 @@ const unsplash = new Unsplash({
 });
 
 function clickImg(elem) {
-  console.log(elem);
   $(`#${elem.id}`).click();
 }
 
@@ -43,7 +42,6 @@ unsplash.photos
     unpic = json;
     document.getElementById("unsplashImgs").innerHTML = "";
     for (var i = 0; i < json.length; i++) {
-      console.log(json[i]);
       let imgid = `unsplash${i}`;
       var elem = `
                 <div
@@ -76,12 +74,10 @@ window.onload = function () {
       $("#unsplashImgs").addClass("d-none");
       document.getElementById("unsplashImgs_srch").innerHTML = "";
       // if (event.keyCode === 13) {
-      console.log(String(event.target.value));
       unsplash.search
         .photos(String(event.target.value), 1)
         .then(toJson)
         .then((json) => {
-          console.log(json);
           for (var i = 0; i < 10; i++) {
             let imgid = `srch_unsplash${i}`;
             var elem = `
