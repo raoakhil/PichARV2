@@ -29,6 +29,7 @@ const accessToken =
 // }
 // auto();
 
+
 function editAssetId(e) {
   $(".media-info").addClass("show");
   $(".media-info")
@@ -3401,4 +3402,114 @@ $("body").on("keyup", ".uploads_search", function (event) {
   } else {
     $("#unsplash_thumb_upload").show();
   }
+});
+
+$(".template_asset").click(async function () {
+  let {
+    data: { data },
+  } = await fetchfetching("https://pitchar.io/api/v1/templates");
+  console.log(data);
+  if (!data.length) return;
+  for (var i = 0; i < data.length; i++) {
+    var asset = data[i];
+    var src = asset.video;
+    console.log('assets', asset);
+    // if (asset.video) {
+    //   src = `https://pitchar.io/storage/${asset.video}`;
+    // } else if (asset.audio) {
+    //   src = `https://pitchar.io/storage/${asset.audio}`;
+    // }
+    var imgid = `uploadsVid${i}`;
+    var dropdownId = `myDropdownVid${i}`;
+    var inputId = `inputVid${i}`;
+    var checkId = `rename__checkVid${i}`;
+    asset.name = asset.name.toUpperCase();
+    var format = src.slice(-3).toUpperCase();
+    var type = `${asset.type}`;
+    console.log(type);
+
+    // if (asset.type === "image" && asset.image !== "") {
+    // if (count_ast < 6) {
+    //     var imag = `<img src="https://pitchar.io/storage/${src}" onclick="pushImg(this);"  alt="">`;
+    //     $(imag).appendTo('#unsplash_thumb_upload');
+    // }
+    // count_ast++;
+
+    // var elem = `
+    //     <div class="upload__wrap">
+    //       <div class="dropdown">
+    //         <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+    //           <i style="color: black" class="fa fa-ellipsis-v"></i>
+    //         </button>
+    //         <div id="${dropdownId}" class="dropdown-content">
+    //           <div class="d-flex align-items-center">
+    //             <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+    //           </div>
+    //           <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+    //           <hr style="margin: .5em 0;">
+    //           <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+    //           <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+    //         </div>
+    //       </div>
+    //       <div
+    //         onclick="clickVid(${imgid})"
+    //       >
+    //         <video autoplay="0" data-type="${asset.type}" src="${src}" poster="${src}" width="120" height="140" id="${imgid}" onclick="pushVid(this);">
+    //           <source src="${src}#t=0.1" type="video/mp4">
+    //         </video>
+    //       </div>
+    //     </div>`;
+
+    if (asset.video) {
+      var elem = `
+            <div class="upload__wrap">
+              <div class="dropdown">
+                <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                  <i style="color: black" class="fa fa-ellipsis-v"></i>
+                </button>
+                <div id="${dropdownId}" class="dropdown-content">
+                  <div class="d-flex align-items-center">
+                    <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                  </div>
+                  <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                  <hr style="margin: .5em 0;">
+                  <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                  <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+                </div>
+              </div>
+              <div
+                onclick="clickVid(${imgid})"
+              >
+                <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+              </div>
+            </div>`;
+    } else if (asset.audio) {
+      var elem = `
+          <div class="upload__wrap">
+            <div class="dropdown">
+              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                <i style="color: black" class="fa fa-ellipsis-v"></i>
+              </button>
+              <div id="${dropdownId}" class="dropdown-content">
+                <div class="d-flex align-items-center">
+                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                </div>
+                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+                <hr style="margin: .5em 0;">
+                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+              </div>
+            </div>
+            <div
+              onclick="clickVid(${imgid})"
+            >
+              <img data-type="${asset.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushAud(this);" />
+            </div>
+          </div>`;
+    }
+
+    $(elem).appendTo("#unsplash_thumb_upload");
+    // }
+  }
+
 });

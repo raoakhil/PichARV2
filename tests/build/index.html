@@ -530,7 +530,7 @@
                         >
                           <i
                             style="font-size: 18px;"
-                            class="fa fa-facebook-f"
+                            class="fas fa-facebook-f"
                           ></i>
                           <span style="font-size: 9px;">FACEBOOK</span>
                         </div>
@@ -542,7 +542,7 @@
                             max-width: 100%;
                           "
                         >
-                          <i style="font-size: 18px;" class="fa fa-twitter"></i>
+                          <i style="font-size: 18px;" class="fas fa-twitter"></i>
                           <span style="font-size: 9px;">TWITTER</span>
                         </div>
                         <!-- <div class="col-md-2 m-option d-block" style="background:transparent; width: 140px; max-width: 100%;">
@@ -558,7 +558,7 @@
                         >
                           <i
                             style="font-size: 18px; color: green;"
-                            class="fa fa-whatsapp"
+                            class="fas fa-whatsapp"
                           ></i>
                           <span style="font-size: 9px;">WHATSAPP</span>
                         </div>
@@ -2898,7 +2898,7 @@
         <div
           onclick="setActive(this)"
           id="template_panel_btn"
-          class="left-bar-item menu-left"
+          class="left-bar-item menu-left template_asset"
           style="padding-bottom: 54px;"
           panel-name=".templates-panel"
         >
@@ -3972,6 +3972,45 @@
         </div>
       </div>
 
+      <div id="templates_panel" class="left-bar-panel templates-panel">
+        <div class="bar-cover">
+          <div class="left-bar-header">
+            <div class="title border-b padding-l-24">
+              Templates
+            </div>
+          </div>
+          <div class="search-block border-b">
+            <div class="padding-panel">
+              <div class="form-group has-search m-0">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input
+                  type="text"
+                  class="form-control unsplash_srch_new"
+                  placeholder="Search"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="panel-content padding-panel style-scroll" style='padding-right: 12px;'>
+            <div class="content-container">
+              <div class="content mb-3 d-none">
+                <div class="content-title">Upload Your media</div>
+              </div>
+              <div class="content mb-3">
+                <div class="content-title">TEMPLATES</div>
+                <div id="img_loader" class="loader"></div>
+                <div class="images-options d-none" id="templates__gal"></div>
+                <div class="images-options d-none" id="templates_srch"></div>
+                
+              </div>
+              <!-- <div class="panel-footer text-center">
+                            <button class="btn btn-primary btn-upload-media btn-round-blue me-opt-upld">Upload Media</button>
+                        </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
       </div>
       <div id="effect-options" class="effect-options d-none">
         <div class="mb-3">
@@ -4290,6 +4329,7 @@
         var reader = new FileReader();
         reader.onload = function (event) {
           innerImageURL = event.target.result;
+          console.log(event.target.result)
           updateFullMarkerImage();
           THREEx.ArPatternFile.encodeImageURL(
             innerImageURL,

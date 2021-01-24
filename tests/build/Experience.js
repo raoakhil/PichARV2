@@ -34,8 +34,10 @@ var end =
   "');} function audioset(e){var x= document.getElementById(e.dataset.source);x.play();} function xyz(){document.getElementById('splashscreen').style.display= 'none';}</script></body></html>";
 
 // var file;
+var experienceId;
 
 if (expid != 0) fetchExperience();
+var markerId;
 
 function readFile() {
   showEntities();
@@ -73,10 +75,12 @@ function sharelnk(e) {
   // if expid == 0 else {editExperiance}
   var exptxt = document.getElementById("exptxt");
   exptxt.value = readFile();
-  // if (expid == 0) {
+  if (!experienceId) {
   let form = document.querySelector("#form0");
   let formData = new FormData(form);
-  console.log(formData);
+  formData.append('name', exptxt.name)
+  formData.append('marker_id', markerId)
+  console.log(exptxt)
   $.ajax({
     method: "POST",
     url: "https://pitchar.io/api/v1/experiences",
@@ -121,19 +125,22 @@ function sharelnk(e) {
       return xhr;
     },
     success(data) {
-      console.log(data);
-      uploadbar.style.width = 0;
-      console.log(data.Data.share_experience);
-      document.getElementById("shrlnk").value = data.Data.share_experience;
-      //window.location.href= "http://studio.pitchar.io/build/?token="+token+"&edit="+data.Data.id;
-      edit_Id = data.Data.id;
-      console.log(edit_Id + "= editid");
+      console.log(data.data.share_experience);
+      experienceId = data.data.id;
+      const url = `https://pitchar.io/storage/${data.data.share_experience}`;
+      window.open(url);
+      // uploadbar.style.width = 0;
+      // console.log(data.Data.share_experience);
+      // document.getElementById("shrlnk").value = data.Data.share_experience;
+      // window.location.href= "http://studio.pitchar.io/build/?token="+token+"&edit="+data.Data.id;
+      // edit_Id = data.Data.id;
+      // console.log(edit_Id + "= editid");
     },
   });
 
-  // } else {
-  // 	editExperience(exptxt.value);
-  // }
+  } else {
+  	editExperience(exptxt.value);
+  }
 
   console.log(k);
 }
@@ -156,10 +163,11 @@ function selectMarker(e) {
       Authorization: "Bearer " + accessToken,
     },
     success({ data }) {
+      markerId = data.id;
       console.log(data);
-      console.log(data.marker);
+      // console.log('marker', data.id);
       start1 =
-        "<html><head><script src='https://aframe.io/releases/0.9.0/aframe.min.js'></script><script src='https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js'></script>" +
+        "<html><head><script src='https://aframe.io/releases/1.0.0/aframe.min.js'></script><script src='https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js'></script>" +
         "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>" +
         "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script></head>" +
         "<body style='margin : 0px; overflow: hidden;'>" +
@@ -192,57 +200,59 @@ function selectMarker(e) {
       //	logo.object3D.position.z = -1.5;
       $("#choosemarker .close").click();
       $(".modal-backdrop").remove();
+      $("#object-panel").empty();
+      $("#buttonDownloadFullImage").remove();
+      console.log($("#buttonDownloadFullImage"));
+
       const title = `
-				<span
-					id="file__name"
-					style="
-					float: left;
-					width: 89%;
-					font-size: 16px;
-					color: #8798ad;
-					letter-spacing: 2px;"
-				>Pitch#830
-				</span>
-			`;
-      const image = `
-				<img
-					src="${"https://pitchar.io/storage/" + data.marker}"
+      <span
+      id="file__name"
+      style="
+        float: left;
+        width: 89%;
+        font-size: 16px;
+        color: #8798ad;
+        letter-spacing: 2px;
+      "
+      >Pitch#830</span
+    >
+    <img
+					src="https://pitchar.io/storage/${data.marker}"
 					style="width: 121px; height: 114px; margin-right: 5px;"
 				/>
+    <span style="position: relative; top: 28px;">
+      <a
+        style="
+          font-size: 12px;
+          letter-spacing: 1.4px;
+          margin-left: 3px;
+        "
+        href="#"
+        id="buttonDownloadFullImage"
+        >DOWNLOAD MARKER</a
+      >
+      <br />
+      <span style="font-size: 12px; color: #8798ad;" class="pt-3"
+        >CHANGE</span
+      >
 			`;
-
-      const actions = `
-			<span style="position: relative; top: 28px;">
-                  <a
-                    style="
-                      font-size: 12px;
-                      letter-spacing: 1.4px;
-                      margin-left: 3px;
-                    "
-                    href="#"
-                    id="buttonDownloadFullImage"
-                    >DOWNLOAD MARKER</a
-                  >
-                  <br />
-                  <span style="font-size: 12px; color: #8798ad;" class="pt-3"
-                    >CHANGE</span
-                  >
-                </span>`;
       // var fullMarkerImage = document.createElement('img');
       // fullMarkerImage.src = 'https://pitchar.io/storage/' + data.marker;
       // fullMarkerImage.style.width = '121px';
       // fullMarkerImage.style.headers = '114px';
       // fullMarkerImage.style.marginRight = '5px';
-      var container = document.querySelector("#object-panel");
-      while (container.firstChild) container.removeChild(container.firstChild);
-      // container.appendChild(fullMarkerImage);
+      // var container = document.querySelector("#object-panel");
+      // while (container.firstChild) container.removeChild(container.firstChild);
 
+      // container.appendChild(fullMarkerImage);
+      
       $(title).appendTo("#object-panel");
-      $(image).appendTo("#object-panel");
-      $(actions).appendTo("#object-panel");
+      // $(image).appendTo("#object-panel");
+      // $(actions).appendTo("#object-panel");
     },
   });
 }
+
 
 function resetMarker(e) {
   start1 =
@@ -313,16 +323,18 @@ function fetchExperience() {
 function editExperience(exptxt) {
   $.ajax({
     method: "PUT",
-    url: `https://pitchar.io/api/v1/experiences/${exptxt}`,
+    url: `https://pitchar.io/api/v1/experiences/${experienceId}`,
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    data: { authtoken: token, id: expid, submit: 1, experience: exptxt },
+    data: { experience: exptxt, marker_id: markerId, name: 'experience' },
     success(data) {
       console.log(data);
-      uploadbar.style.width = 0;
-      document.getElementById("shrlnk").value = data.Data.share_experience;
+      const url = `https://pitchar.io/storage/${data.data.share_experience}`;
+      window.open(url);
+      // uploadbar.style.width = 0;
+      // document.getElementById("shrlnk").value = data.Data.share_experience;
     },
   });
 }
