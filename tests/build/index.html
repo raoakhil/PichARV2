@@ -4265,7 +4265,7 @@
       var innerImageURL = null;
       var fullMarkerURL = null;
 
-      innerImageURL = "trainer/inner-images/inner-hiro.png";
+      // innerImageURL = "trainer/inner-images/inner-hiro.png";
       updateFullMarkerImage();
 
       document
@@ -4288,7 +4288,26 @@
 
       document
         .querySelector("#buttonDownloadFullImage")
-        .addEventListener("click", function () {
+        .addEventListener("click", downloadMarkerV2);
+      // document
+      //   .querySelector("#buttonDownloadFullImage")
+      //   .addEventListener("click", function () {
+      //     // debugger
+      //     if (innerImageURL === null) {
+      //       alert("upload a file first");
+      //       return;
+      //     }
+
+      //     // tech from https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+      //     var domElement = window.document.createElement("a");
+      //     domElement.href = fullMarkerURL;
+      //     domElement.download = "marker.png";
+      //     document.body.appendChild(domElement);
+      //     domElement.click();
+      //     document.body.removeChild(domElement);
+      //   });
+
+        function downloadMarkerV2() {
           // debugger
           if (innerImageURL === null) {
             alert("upload a file first");
@@ -4302,7 +4321,7 @@
           document.body.appendChild(domElement);
           domElement.click();
           document.body.removeChild(domElement);
-        });
+        }
 
       document
         .querySelector("#patternRatioSlider")
@@ -4326,20 +4345,92 @@
         // debugger
         console.log(file)
 
+        // var reader = new FileReader();
+        // reader.onload = function (event) {
+        //   innerImageURL = event.target.result
+        //   updateFullMarkerImage()
+        // };
+        // reader.readAsDataURL(file);
+
         var reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = function (event) {
           innerImageURL = event.target.result;
-          console.log(event.target.result)
           updateFullMarkerImage();
+          console.log(event.target.result)
           THREEx.ArPatternFile.encodeImageURL(
             innerImageURL,
             function onComplete(patternFileString) {
               console.log('blaaa', patternFileString)
               THREEx.ArPatternFile.triggerDownload(patternFileString);
             }
-          );
-        };
-        reader.readAsDataURL(file);
+            );
+          };
+        // reader.readAsDataURL(file);
+  //       var m_id;
+	// var dataimg = new FormData();
+
+	// console.log(Blobimg)
+	// console.log($('#fileinput').val().slice(7, -4))
+
+	// dataimg.append('marker', file);
+	// dataimg.append('name', $('#fileinput').val().slice(7, -4));
+
+	// console.log(dataimg.get('marker'))
+
+	// // console.log(expid)
+	// $.ajax({
+	// 	method: 'POST',
+	// 	url: 'https://pitchar.io/api/v1/markers',
+	// 	data: dataimg,
+	// 	enctype: 'multipart/form-data',
+	// 	contentType: false,
+	// 	processData: false,
+	// 	headers: {
+  //           'Accept' : 'application/json',
+  //           'Authorization' : 'Bearer '+ accessToken,
+  //       },
+	// 	success: function ({ data: data }) {
+	// 		console.log(data);
+	// 		console.log('BlobPatt', Blobpatt);
+	// 		// $('#marker_alert').show();
+	// 		// setTimeout(() => {
+	// 		//   $('#marker_alert').hide();
+	// 		// }, 4000);
+			
+			
+	// 		m_id = data.id;
+	// 		console.log('id', m_id)
+	// 		var datapatt = new FormData();
+	// 		datapatt.append('pattern', Blobpatt, 'marker.patt');
+	// 		console.log(datapatt.get('pattern'))
+	// 		$.ajax({
+	// 			method: 'PUT',
+	// 			url: `https://pitchar.io/api/v1/markers/updatePattern/${m_id}`,
+	// 			data: datapatt,
+	// 			enctype: 'multipart/form-data',
+	// 			contentType: false,
+	// 			processData: false,
+	// 			headers: {
+	// 				'Accept' : 'application/json',
+	// 				'Authorization' : 'Bearer '+ accessToken,
+	// 			},
+	// 			success: function (data) {
+	// 				console.log(data);
+	// 				fetchMarkers()
+	// 			},
+	// 			error: function (res) {
+	// 				console.log(res);
+	// 			}
+	// 		});
+
+	// 	},
+	// 	error: function (res) {
+	// 		console.log(res);
+	// 	}
+	// });
+
+
       });
 
       $("#image").change(function () {
@@ -4366,22 +4457,22 @@
 
 
       function updateFullMarkerImage() {
-        // get patternRatio
-        var patternRatio =
-          document.querySelector("#patternRatioSlider").value / 100;
-        console.log(patternRatio)
-          // $('#buttonDownloadEncoded').click()
+      // get patternRatio
+      var patternRatio = document.querySelector('#patternRatioSlider').value / 100
 
-          THREEx.ArPatternFile.buildFullMarker(
-          innerImageURL,
-          patternRatio,
-          function onComplete(markerUrl) {
-            fullMarkerURL = markerUrl;
-            // put fullMarkerImage into #imageContainer
-          }
-        );
-        console.log('here;')
-      }
+      THREEx.ArPatternFile.buildFullMarker(innerImageURL, patternRatio, function onComplete(markerUrl) {
+        fullMarkerURL = markerUrl
+
+        var fullMarkerImage = document.createElement('img')
+        fullMarkerImage.src = fullMarkerURL
+
+        // put fullMarkerImage into #imageContainer
+        var container = document.querySelector('#imageContainer')
+        while (container.firstChild) container.removeChild(container.firstChild);
+        container.appendChild(fullMarkerImage)
+
+      })
+    }
 
     </script>
 

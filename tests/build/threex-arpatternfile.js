@@ -83,13 +83,10 @@ THREEx.ArPatternFile.triggerDownload = function (patternFileString) {
 	var fil = new Blob([patternFileString], { type: 'text/plain' });
 	console.log('fill', fil)
 	Blobpatt = fil;
-	THREEx.ArPatternFile.uploadMarker();
-
-
 }
 
 THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onComplete) {
-	console.log('im here')
+	console.log('im here', innerImageURL)
 	var whiteMargin = 0.1
 	var blackMargin = (1 - 2 * whiteMargin) * ((1 - pattRatio) / 2)
 	// var blackMargin = 0.2
@@ -149,7 +146,9 @@ THREEx.ArPatternFile.buildFullMarker = function (innerImageURL, pattRatio, onCom
 		var imageUrl = canvas.toDataURL()
 		onComplete(imageUrl)
 		canvas.toBlob(function (blob) {
+			console.log('blob',blob )
 			Blobimg = blob;
+			THREEx.ArPatternFile.uploadMarker();
 		}, 'image/jpeg', 1.0);
 
 	})
