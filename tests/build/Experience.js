@@ -174,14 +174,12 @@ function selectMarker(e) {
         "<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam;debugUIEnabled: false;'>";
       end1 =
         "<div id='splashscreen' style='background-color: white; height:100% ; width:100%; position:absolute; top:0px; left:0px; z-index:4;'>" +
-        "<img src='https://upload.wikimedia.org/wikipedia/commons/4/48/Hiro_marker_ARjs.png' width='40%' style='margin: 10px;float:left;'>" +
+        "<img src='https://pitchar.io/storage/" + data.marker +"' width='40%' style='margin: 10px;float:left;'>" +
         "<a href='#' style='position: absolute;top: 0px;margin: 10px;text-decoration: none;color:#4846ae;'>Share Marker</a>" +
         "<a onclick='facebook()' style='position: absolute;top: 24px;margin: 10px;text-decoration: none;color: #505050; cursor: pointer;'>Facebook</a>" +
         "<a onclick='whatsapp()' data-action='share/whatsapp/share' style='position: absolute;top: 48px;margin: 10px;text-decoration: none;color:#505050; cursor: pointer;'>Whatsapp</a>" +
         "<a onclick='urll()' style='position: absolute;top: 72px;margin: 10px;text-decoration: none;color:#505050; cursor: pointer;'> URL</a>" +
-        "<a href='https://pitchar.io/storage/" +
-        data.marker +
-        "' style='position: absolute;top: calc(40vw + 10px);left: 10px; margin: 10px;text-decoration: none;color:#4846ae;' download>Download Image Marker</a>" +
+        "<a href='https://pitchar.io/storage/" + data.marker +"' style='position: absolute;top: calc(40vw + 10px);left: 10px; margin: 10px;text-decoration: none;color:#4846ae;' download>Download Image Marker</a>" +
         "<button style='background-color: #4846ae;color: white;width:100%;position:absolute;bottom:0px;left:0px;padding:10px;' onclick='xyz()'> Watch AR Experience </button>" +
         "</div>";
       end =
@@ -203,6 +201,7 @@ function selectMarker(e) {
       $("#object-panel").empty();
       $("#buttonDownloadFullImage").remove();
       console.log($("#buttonDownloadFullImage"));
+      innerImageURL = `https://pitchar.io/storage/${data.marker}`
 
       const title = `
       <span
@@ -228,7 +227,7 @@ function selectMarker(e) {
           margin-left: 3px;
         "
         href="#"
-        id="buttonDownloadFullImage"
+        onclick="downloadMarkerV2()"
         >DOWNLOAD MARKER</a
       >
       <br />
