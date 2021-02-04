@@ -76,70 +76,69 @@ function sharelnk(e) {
   var exptxt = document.getElementById("exptxt");
   exptxt.value = readFile();
   if (!experienceId) {
-  let form = document.querySelector("#form0");
-  let formData = new FormData(form);
-  formData.append('name', exptxt.name)
-  formData.append('marker_id', markerId)
-  console.log(exptxt)
-  $.ajax({
-    method: "POST",
-    url: "https://pitchar.io/api/v1/experiences",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    data: formData,
-    processData: false,
-    contentType: false,
-    xhr: function () {
-      var xhr = new window.XMLHttpRequest();
+    let form = document.querySelector("#form0");
+    let formData = new FormData(form);
+    formData.append("name", exptxt.name);
+    formData.append("marker_id", markerId);
+    console.log(exptxt);
+    $.ajax({
+      method: "POST",
+      url: "https://pitchar.io/api/v1/experiences",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      data: formData,
+      processData: false,
+      contentType: false,
+      xhr: function () {
+        var xhr = new window.XMLHttpRequest();
 
-      // Upload progress
-      xhr.upload.addEventListener(
-        "progress",
-        function (evt) {
-          if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total;
-            //Do something with upload progress
-            uploadbar.style.width = percentComplete * 100 + "%";
-            if (percentComplete == 1) uploadbar.style.width = 0;
-          }
-        },
-        false
-      );
+        // Upload progress
+        xhr.upload.addEventListener(
+          "progress",
+          function (evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = evt.loaded / evt.total;
+              //Do something with upload progress
+              uploadbar.style.width = percentComplete * 100 + "%";
+              if (percentComplete == 1) uploadbar.style.width = 0;
+            }
+          },
+          false
+        );
 
-      // Download progress
-      xhr.addEventListener(
-        "progress",
-        function (evt) {
-          if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total;
-            // Do something with download progress
-            uploadbar.style.width = percentComplete * 100 + "%";
-            if (percentComplete == 1) uploadbar.style.width = 0;
-          }
-        },
-        false
-      );
+        // Download progress
+        xhr.addEventListener(
+          "progress",
+          function (evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = evt.loaded / evt.total;
+              // Do something with download progress
+              uploadbar.style.width = percentComplete * 100 + "%";
+              if (percentComplete == 1) uploadbar.style.width = 0;
+            }
+          },
+          false
+        );
 
-      return xhr;
-    },
-    success(data) {
-      console.log(data.data.share_experience);
-      experienceId = data.data.id;
-      const url = `https://pitchar.io/storage/${data.data.share_experience}`;
-      window.open(url);
-      // uploadbar.style.width = 0;
-      // console.log(data.Data.share_experience);
-      // document.getElementById("shrlnk").value = data.Data.share_experience;
-      // window.location.href= "http://studio.pitchar.io/build/?token="+token+"&edit="+data.Data.id;
-      // edit_Id = data.Data.id;
-      // console.log(edit_Id + "= editid");
-    },
-  });
-
+        return xhr;
+      },
+      success(data) {
+        console.log(data.data.share_experience);
+        experienceId = data.data.id;
+        const url = `https://pitchar.io/storage/${data.data.share_experience}`;
+        window.open(url);
+        // uploadbar.style.width = 0;
+        // console.log(data.Data.share_experience);
+        // document.getElementById("shrlnk").value = data.Data.share_experience;
+        // window.location.href= "http://studio.pitchar.io/build/?token="+token+"&edit="+data.Data.id;
+        // edit_Id = data.Data.id;
+        // console.log(edit_Id + "= editid");
+      },
+    });
   } else {
-  	editExperience(exptxt.value);
+    editExperience(exptxt.value);
   }
 
   console.log(k);
@@ -184,15 +183,14 @@ function selectMarker(e) {
         "</div>";
       end =
         "<div id='ytmodal' class='modal' tabindex='-1' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-header'><button type='button' onclick='ytremove(this);' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button><br></div><div class='modal-body'><iframe id='ytembed' src='' width='100%' height='60%' frameborder=0px allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen ></iframe></div></div></div></div>" +
-        "<script>  function urll(){ window.open('https://pitchar.io/storage/" +
-        data.marker +
-        "'); } function whatsapp() { window.open('whatsapp://send?text=" +
-        document.location.href +
-        "'); } function ytremove(e){document.getElementById('ytembed').src = '';} function ytset(e){ ytembed= document.getElementById('ytembed'); ytembed.src= 'https://www.youtube.com/embed/'+e.dataset.source; } function facebook(){window.open('https://www.facebook.com/sharer/sharer.php?u=#" +
-        document.location.href +
+        "<script>  function urll(){ window.open('https://pitchar.io/storage/" + data.marker +"'); } function whatsapp() { window.open('whatsapp://send?text=" + document.location.href +
+        "'); } function ytremove(e){document.getElementById('ytembed').src = '';} function ytset(e){ ytembed= document.getElementById('ytembed'); ytembed.src= 'https://www.youtube.com/embed/'+e.dataset.source; } function facebook(){window.open('https://www.facebook.com/sharer/sharer.php?u=#" + document.location.href +
         "');} function audioset(e){var x= document.getElementById(e.dataset.source);x.play();} function xyz(){document.getElementById('splashscreen').style.display= 'none';}</script></body></html>";
       mid2d = "</a-marker-camera></a-scene>";
-      // marker = "<a-marker preset='pattern' type='pattern' url=" + "'" + data.Data[0].linkpatt + "'" + ">";
+      // marker =
+      //   "<a-marker preset='pattern' type='pattern' url=" + "'" + data.patte +"'" +
+      //   ">";
+      marker = `<a-marker preset='pattern' type='pattern' url="https://pitchar.io/storage/${data.pattern}"`
       var logo = document.getElementById("imglogo");
       logo.setAttribute("src", "https://pitchar.io/storage/" + data.marker);
       //	logo.object3D.position.z = -1.5;
@@ -201,7 +199,7 @@ function selectMarker(e) {
       $("#object-panel").empty();
       $("#buttonDownloadFullImage").remove();
       console.log($("#buttonDownloadFullImage"));
-      innerImageURL = `https://pitchar.io/storage/${data.marker}`
+      innerImageURL = `https://pitchar.io/storage/${data.marker}`;
 
       const title = `
       <span
@@ -244,14 +242,13 @@ function selectMarker(e) {
       // while (container.firstChild) container.removeChild(container.firstChild);
 
       // container.appendChild(fullMarkerImage);
-      
+
       $(title).appendTo("#object-panel");
       // $(image).appendTo("#object-panel");
       // $(actions).appendTo("#object-panel");
     },
   });
 }
-
 
 function resetMarker(e) {
   start1 =
@@ -327,7 +324,7 @@ function editExperience(exptxt) {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    data: { experience: exptxt, marker_id: markerId, name: 'experience' },
+    data: { experience: exptxt, marker_id: markerId, name: "experience" },
     success(data) {
       console.log(data);
       const url = `https://pitchar.io/storage/${data.data.share_experience}`;
