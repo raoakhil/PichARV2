@@ -511,7 +511,8 @@ function playAudio(e) {
 }
 
 function toogleLoop(e) {
-  if (e.value == "repeat") {
+  console.log(e.dataset)
+  if (e.id == "repeat") {
     e.dataset.loop = true;
   } else {
     e.dataset.loop = false;
@@ -902,7 +903,7 @@ $("#imagebut").click(function () {
                 onclick="pushImg(this);"
                 crossorigin="anonymous"
             />
-            <p class="img__description"><span>${unpic[i].alt_description.slice(
+            <p class="img__description"><span>${unpic[i].alt_description?.slice(
               0,
               10
             )}<span></p>
@@ -1630,11 +1631,16 @@ $(".audio_assets").click(function () {
       // opt2.innerHTML = 'repeat';
       // audioLoop.appendChild(opt2);
       // audioLoop.setAttribute('data-loop', false);
-      // audioLoop.setAttribute('onclick', 'toogleLoop(this)');
-
+      
       var repeat = document.createElement("img");
       repeat.src = "./repeat.png";
       repeat.classList.add("repeat__btn");
+      repeat.id = 'repeat'
+      repeat.setAttribute('onclick', 'toogleLoop(this)');
+      repeat.setAttribute(
+        "data-source",
+        audResults[i].previews["preview-lq-mp3"]
+      );
 
       var playOnce = document.createElement("img");
       playOnce.src = "./repeat.png";
@@ -2319,142 +2325,142 @@ $(".video_assets").click(function () {
   // }
   // });
 
-  $.ajax({
-    method: "GET",
-    url: "https://pitchar.io/api/v1/medias",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    success({ data: { data } }) {
-      console.log(data);
-      var medias = data;
-      if (medias.length > 0) {
-        $(".video_gallery").html("");
-        var count_vid = 0;
-        let assetsTitle = `
-          <h4
-            style="
-              width: 100%;
-              font-size: 12px;
-              color: gray;
-              margin-top: 0;
-              margin-bottom: 0;
-              color: #b0bac9;
-            "
-          >ASSETS</h4><br>
-      `;
-        $(assetsTitle).appendTo(".video_gallery");
-        for (var i = 0; i < medias.length; i++) {
-          media = medias[i];
-          var node = document.createElement("img");
-          node.src = media.thumbnail;
-          node.width = 125;
-          node.height = 125;
-          node.id = "img" + i;
-          node.style = "margin:4px;";
-          node.setAttribute("onclick", "pushVid(this);");
-          node.setAttribute("class", "image");
-          node.setAttribute("data-source", media.video);
-          node.setAttribute("data-type", media.type);
-          var div = document.createElement("div");
-          div.setAttribute("class", "hbox");
-          div.appendChild(node);
-          var overlay = document.createElement("div");
-          overlay.setAttribute("class", "options");
-          var del = document.createElement("button");
-          del.setAttribute("onclick", "delaud(this)");
-          del.innerHTML = "<i class='fa fa-trash'></i>";
-          del.setAttribute("data-pid", media.id);
-          overlay.appendChild(del);
-          var edit = document.createElement("button");
-          edit.setAttribute("onclick", "editAssetId(this)");
-          edit.setAttribute("data-toggle", "modal");
-          edit.setAttribute("data-target", "#editmodal");
-          edit.setAttribute("data-pid", media.id);
-          edit.setAttribute("data-typ", "m");
-          edit.innerHTML = "<i class='fa fa-edit'></i>";
-          overlay.appendChild(edit);
-          var videotype = document.createElement("button");
-          videotype.innerHTML =
-            "<b style='position:absolute;left:2px;top:2px;'>" +
-            media.type +
-            "</b>";
-          overlay.appendChild(videotype);
-          div.appendChild(overlay);
-          if (media.video) {
-            src = `https://pitchar.io/storage/${media.video}`;
-          } else if (media.audio) {
-            src = `https://pitchar.io/storage/${media.audio}`;
-          }
-          console.log(media);
-          var imgid = `uploadsVid${i}`;
-          var dropdownId = `myDropdownVid${i}`;
-          var inputId = `inputVid${i}`;
-          var checkId = `rename__checkVid${i}`;
-          media.name = media.name.toUpperCase();
-          var format = src.slice(-3).toUpperCase();
-          var type = `${media.type}`;
-          console.log(type);
-          var elem = `
-          <div class="upload__wrap">
-            <div class="dropdown">
-              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
-                <i style="color: black" class="fa fa-ellipsis-v"></i>
-              </button>
-              <div id="${dropdownId}" class="dropdown-content">
-                <div class="d-flex align-items-center">
-                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${media.name}"/> <i id="${checkId}" onclick="editVideoName(${media.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
-                </div>
-                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
-                <hr style="margin: .5em 0;">
-                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-                <a onclick="delVideo(${media.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
-              </div>
-            </div>
-            <div
-              onclick="clickVid(${imgid})"
-            >
-              <img data-type="${media.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
-            </div>
-          </div>`;
-          // var elem = `
-					// <div class="col-sm-2 float-left img-panel" id="media_${media.id}">
-					// <div class="overlay">
-					// 	<div class="icons float-right mt-3 mr-2">
-					// 	  <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-					// 	  <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-					// 		  <span class="tooltiptext">
-					// 			<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+  // $.ajax({
+  //   method: "GET",
+  //   url: "https://pitchar.io/api/v1/medias",
+  //   headers: {
+  //     Accept: "application/json",
+  //     Authorization: "Bearer " + accessToken,
+  //   },
+  //   success({ data: { data } }) {
+  //     console.log(data);
+  //     var medias = data;
+  //     if (medias.length > 0) {
+  //       $(".video_gallery").html("");
+  //       var count_vid = 0;
+  //       let assetsTitle = `
+  //         <h4
+  //           style="
+  //             width: 100%;
+  //             font-size: 12px;
+  //             color: gray;
+  //             margin-top: 0;
+  //             margin-bottom: 0;
+  //             color: #b0bac9;
+  //           "
+  //         >ASSETS</h4><br>
+  //     `;
+  //       $(assetsTitle).appendTo(".video_gallery");
+  //       for (var i = 0; i < medias.length; i++) {
+  //         media = medias[i];
+  //         var node = document.createElement("img");
+  //         node.src = media.thumbnail;
+  //         node.width = 125;
+  //         node.height = 125;
+  //         node.id = "img" + i;
+  //         node.style = "margin:4px;";
+  //         node.setAttribute("onclick", "pushVid(this);");
+  //         node.setAttribute("class", "image");
+  //         node.setAttribute("data-source", media.video);
+  //         node.setAttribute("data-type", media.type);
+  //         var div = document.createElement("div");
+  //         div.setAttribute("class", "hbox");
+  //         div.appendChild(node);
+  //         var overlay = document.createElement("div");
+  //         overlay.setAttribute("class", "options");
+  //         var del = document.createElement("button");
+  //         del.setAttribute("onclick", "delaud(this)");
+  //         del.innerHTML = "<i class='fa fa-trash'></i>";
+  //         del.setAttribute("data-pid", media.id);
+  //         overlay.appendChild(del);
+  //         var edit = document.createElement("button");
+  //         edit.setAttribute("onclick", "editAssetId(this)");
+  //         edit.setAttribute("data-toggle", "modal");
+  //         edit.setAttribute("data-target", "#editmodal");
+  //         edit.setAttribute("data-pid", media.id);
+  //         edit.setAttribute("data-typ", "m");
+  //         edit.innerHTML = "<i class='fa fa-edit'></i>";
+  //         overlay.appendChild(edit);
+  //         var videotype = document.createElement("button");
+  //         videotype.innerHTML =
+  //           "<b style='position:absolute;left:2px;top:2px;'>" +
+  //           media.type +
+  //           "</b>";
+  //         overlay.appendChild(videotype);
+  //         div.appendChild(overlay);
+  //         if (media.video) {
+  //           src = `https://pitchar.io/storage/${media.video}`;
+  //         } else if (media.audio) {
+  //           src = `https://pitchar.io/storage/${media.audio}`;
+  //         }
+  //         console.log(media);
+  //         var imgid = `uploadsVid${i}`;
+  //         var dropdownId = `myDropdownVid${i}`;
+  //         var inputId = `inputVid${i}`;
+  //         var checkId = `rename__checkVid${i}`;
+  //         media.name = media.name.toUpperCase();
+  //         var format = src.slice(-3).toUpperCase();
+  //         var type = `${media.type}`;
+  //         console.log(type);
+  //         var elem = `
+  //         <div class="upload__wrap">
+  //           <div class="dropdown">
+  //             <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+  //               <i style="color: black" class="fa fa-ellipsis-v"></i>
+  //             </button>
+  //             <div id="${dropdownId}" class="dropdown-content">
+  //               <div class="d-flex align-items-center">
+  //                 <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${media.name}"/> <i id="${checkId}" onclick="editVideoName(${media.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+  //               </div>
+  //               <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+  //               <hr style="margin: .5em 0;">
+  //               <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+  //               <a onclick="delVideo(${media.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+  //             </div>
+  //           </div>
+  //           <div
+  //             onclick="clickVid(${imgid})"
+  //           >
+  //             <img data-type="${media.type}" src="https://pitchar.io/storage/${data.thumbnail}" data-source="${src}" id="${imgid}" onclick="pushVid(this);" />
+  //           </div>
+  //         </div>`;
+  //         // var elem = `
+	// 				// <div class="col-sm-2 float-left img-panel" id="media_${media.id}">
+	// 				// <div class="overlay">
+	// 				// 	<div class="icons float-right mt-3 mr-2">
+	// 				// 	  <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+	// 				// 	  <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+	// 				// 		  <span class="tooltiptext">
+	// 				// 			<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
 
-					// 			<div class="w-100 float-left">Crop</div>
-					// 			<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
-					// 			<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
-					// 		  </span>
-					// 	  </i>
-					// 	</div>
-					//   </div>
-					// <div class="w-100 float-left col-sm-12 p-0">
-					//   <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="https://pitchar.io/storage/${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
-					// </div>
+	// 				// 			<div class="w-100 float-left">Crop</div>
+	// 				// 			<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+	// 				// 			<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+	// 				// 		  </span>
+	// 				// 	  </i>
+	// 				// 	</div>
+	// 				//   </div>
+	// 				// <div class="w-100 float-left col-sm-12 p-0">
+	// 				//   <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="https://pitchar.io/storage/${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
+	// 				// </div>
 
-				  // </div>
-					// `;
-          if ((media.type == "2D" || media.type == "360") && media.video) {
-            $(elem).appendTo("#galleryimgs");
-            document.getElementById("galleryvids").appendChild(div);
-            var id = "img" + i;
-            if (count_vid < 6) {
-              var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${media.thumbnail}" id="${id}" data-source="https://pitchar.io/storage/${media.video}" onclick="pushVid(this);" alt="">`;
-              $(ele).appendTo(".video_gallery");
-              count_vid++;
-            }
-          }
-          perm = i;
-        }
-      }
-    },
-  });
+	// 			  // </div>
+	// 				// `;
+  //         if ((media.type == "2D" || media.type == "360") && media.video) {
+  //           $(elem).appendTo("#galleryimgs");
+  //           document.getElementById("galleryvids").appendChild(div);
+  //           var id = "img" + i;
+  //           if (count_vid < 6) {
+  //             var ele = `<img data-typ="m" data-type="${media.type}" data-pid="${media.id}" src="${media.thumbnail}" id="${id}" data-source="https://pitchar.io/storage/${media.video}" onclick="pushVid(this);" alt="">`;
+  //             $(ele).appendTo(".video_gallery");
+  //             count_vid++;
+  //           }
+  //         }
+  //         perm = i;
+  //       }
+  //     }
+  //   },
+  // });
 });
 
 var l = 15;

@@ -3544,23 +3544,6 @@
                         placeholder="Type your button text..."
                       />
                     </div>
-                    <div class="select-color selectColor">
-                      <div
-                        class="icon-clr-pickr"
-                        onclick="document.getElementById('change-btn-text-color').click()"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="CTA text color"
-                      >
-                        <small class="ml-2 text-muted color1">#cccccc</small>
-                      </div>
-                      <input
-                        type="color"
-                        id="change-btn-text-color"
-                        oninput="colorpicker(this)"
-                        class="form-control d-none textCol"
-                      />
-                    </div>
                   </div>
                 </div>
                 <div class="search-block pb-3">
@@ -3668,7 +3651,7 @@
                       type="range"
                       min="1"
                       max="50"
-                      value="0"
+                      value="1"
                       class="slider"
                       id="butround"
                       oninput="chground(this)"
@@ -3694,23 +3677,29 @@
                       border-radius: 20px;
                       color: #000;
                       display: block;
-                      border-radius: 18px;
-                      margin-top: 25px !important;
-                      border-radius: 39px !important;
+                      border-radius: 0px;
+                      margin-top: 25px !important;    
                       padding: 12px !important;
                     "
                     href="#"
-                    onclick="addbut(this);"
                     class="btn-prev text-center p-2"
                     id="ctabutton"
                     >Button Text</a
                   >
-                  <div
+                  <button
                     class="content-title mt-4"
-                    style="color: #b0bac9; font-size: 12px;"
+                    style="
+                      color: #fff;
+                      font-size: 12px;
+                      background-color: #6D8DFF;
+                      border: 0;
+                      padding: 10px 16px;
+                      border-radius: 4px;
+                    "
+                    onclick="addbut(this);"
                   >
-                    CLICK BUTTON TO ADD TO SCENE
-                  </div>
+                    ADD TO SCENE
+                  </button>
                   <!-- <button onclick="addbut(this);" data-dismiss="modal" style="top: 15px; position: relative;" class="btn-round-blue mt-4 text-center p-2 w-100">Add CTA To Scene</button> -->
                   <!-- <a style="top: 15px; position: relative;" href="#" class="btn-prev btn-round-blue mt-4 text-center p-2 w-100">Add CTA To Scene</a> -->
                 </div>
