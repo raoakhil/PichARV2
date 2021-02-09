@@ -34,10 +34,10 @@ var end =
   "');} function audioset(e){var x= document.getElementById(e.dataset.source);x.play();} function xyz(){document.getElementById('splashscreen').style.display= 'none';}</script></body></html>";
 
 // var file;
-var experienceId;
-
-if (expid != 0) fetchExperience();
+var experienceId = localStorage.getItem('exp');
 var markerId;
+
+if (experienceId) fetchExperience();
 
 function readFile() {
   showEntities();
@@ -126,7 +126,8 @@ function sharelnk(e) {
       },
       success(data) {
         console.log(data.data.share_experience);
-        experienceId = data.data.id;
+        // experienceId = data.data.id;
+        localStorage.setItem('exp', data.data.id)
         const url = `https://pitchar.io/storage/${data.data.share_experience}`;
         window.open(url);
         // uploadbar.style.width = 0;
@@ -292,16 +293,17 @@ function markerless(e) {
 function fetchExperience() {
   $.ajax({
     method: "GET",
-    url: "https://pitchar.io/api/v1/experiences",
+    url: `https://pitchar.io/api/v1/experiences/${experienceId}`,
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
     success(data) {
+      console.log(data)
       if (!data.data) return;
       var dom = document.createElement("html");
       var scene = document.getElementById("perswin");
-      dom.innerHTML = data.Data[0].experience;
+      dom.innerHTML = data.data.experience;
       var els = dom.querySelectorAll(".exp");
       var els2 = dom.querySelectorAll(".exp2");
       console.log(els2);
