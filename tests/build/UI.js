@@ -29,7 +29,6 @@ const accessToken =
 // }
 // auto();
 
-
 function editAssetId(e) {
   $(".media-info").addClass("show");
   $(".media-info")
@@ -420,7 +419,7 @@ function pushObj(e) {
 // 	}
 // }
 
-function pushAud(e) {
+function pushAud(e, ids) {
   console.log("Audio Pushed!");
   w++;
   a = 10 + w * 60;
@@ -429,12 +428,15 @@ function pushAud(e) {
   var id = e.id + "aud";
   node.id = id;
 
-  var idAudioLoop = e.id.substr(3);
+  console.log(ids.id)
+  // console.log(document.querySelector(`#${ids}`))
+  var isLoop = document.getElementById(ids.id).dataset.loop;
+  console.log(isLoop);
   // var audioValue = document.getElementById("audioLoop" + idAudioLoop).dataset
   //   .loop;
-  // if (audioValue === "true") {
-  //   node.setAttribute("loop", true);
-  // }
+  if (isLoop === "true") {
+    node.setAttribute("loop", true);
+  }
 
   var src = document.createElement("source");
   src.src = e.dataset.source;
@@ -533,9 +535,10 @@ function playAudio(e) {
   }
 }
 
-function toogleLoop(e) {
-  console.log(e.dataset)
-  if (e.id == "repeat") {
+function toogleLoop(e, isLooping) {
+  console.log(isLooping);
+  console.log(e.id);
+  if (isLooping) {
     e.dataset.loop = true;
   } else {
     e.dataset.loop = false;
@@ -783,7 +786,7 @@ function editNameAsset(id, newName, checkIcon, assetType) {
     name: newName.value,
     // type: "image",
   };
-  const assetTypeUpdate = assetType === 'marker' ? 'markers' : 'assets'
+  const assetTypeUpdate = assetType === "marker" ? "markers" : "assets";
   // if (edittype == "a") {
   $.ajax({
     method: "PUT",
@@ -1655,19 +1658,17 @@ $(".audio_assets").click(function () {
       // opt2.innerHTML = 'repeat';
       // audioLoop.appendChild(opt2);
       // audioLoop.setAttribute('data-loop', false);
-      
+
       var repeat = document.createElement("img");
       repeat.src = "./repeat.png";
       repeat.classList.add("repeat__btn");
-      repeat.id = 'repeat'
-      repeat.setAttribute('onclick', 'toogleLoop(this)');
-      repeat.setAttribute(
-        "data-source",
-        audResults[i].previews["preview-lq-mp3"]
-      );
+      repeat.id = `fsrepeat${i}`;
+      repeat.setAttribute("onclick", "toogleLoop(this, true)");
 
       var playOnce = document.createElement("img");
       playOnce.src = "./repeat.png";
+      playOnce.id = "play_once";
+      playOnce.setAttribute("onclick", "toogleLoop(this, false)");
       playOnce.classList.add("play-once__btn");
 
       var addToScene = document.createElement("div");
@@ -1678,7 +1679,7 @@ $(".audio_assets").click(function () {
       var addToSceneBtn = document.createElement("button");
       addToSceneBtn.innerHTML = "ADD TO SCENE";
       addToSceneBtn.id = "img" + i;
-      addToSceneBtn.setAttribute("onclick", "pushAud(this);");
+      addToSceneBtn.setAttribute("onclick", `pushAud(this, ${repeat.id});`);
       addToSceneBtn.setAttribute("class", "image");
       addToSceneBtn.setAttribute(
         "data-source",
@@ -2258,7 +2259,7 @@ function delVideo(id) {
 // to fetch videos
 let video = document.getElementById("videobut");
 $(".video_assets").click(function () {
-  console.log('pls')
+  console.log("pls");
   // console.log('Check')
   var panel = $(this).attr("panel-name");
   selectItem("vertical-bars", "active", panel);
@@ -2286,7 +2287,7 @@ $(".video_assets").click(function () {
     document.getElementById("ytImgs").innerHTML = "";
     var assets = response.items;
     if (!assets) {
-      $('.vid_youtube').html('')
+      $(".vid_youtube").html("");
       let youtubeTitle = `
           <h3
             style="
@@ -2317,8 +2318,8 @@ $(".video_assets").click(function () {
       `;
     $(youtubeTitle).appendTo(".vid_youtube");
 
-    console.log('assets' , assets)
-    
+    console.log("assets", assets);
+
     for (var i = 0; i < 6; i++) {
       let asset = assets[i];
       var src = asset.snippet.thumbnails.high.url;
@@ -2329,7 +2330,7 @@ $(".video_assets").click(function () {
     }
 
     $(".you_tube").html("");
-    
+
     $(youtubeTitle).appendTo(".you_tube");
     for (var i = 0; i < assets.length; i++) {
       asset = assets[i];
@@ -2449,27 +2450,27 @@ $(".video_assets").click(function () {
   //           </div>
   //         </div>`;
   //         // var elem = `
-	// 				// <div class="col-sm-2 float-left img-panel" id="media_${media.id}">
-	// 				// <div class="overlay">
-	// 				// 	<div class="icons float-right mt-3 mr-2">
-	// 				// 	  <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
-	// 				// 	  <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
-	// 				// 		  <span class="tooltiptext">
-	// 				// 			<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
+  // 				// <div class="col-sm-2 float-left img-panel" id="media_${media.id}">
+  // 				// <div class="overlay">
+  // 				// 	<div class="icons float-right mt-3 mr-2">
+  // 				// 	  <i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Remove from my favorites" aria-hidden="true"></i>
+  // 				// 	  <i class="fa fa-ellipsis-h custom-tooltip menu-icon" aria-hidden="true">
+  // 				// 		  <span class="tooltiptext">
+  // 				// 			<h5 class="w-100 float-left"><small>Add to my favorites</small><hr style="margin-bottom: 0;"></h5>
 
-	// 				// 			<div class="w-100 float-left">Crop</div>
-	// 				// 			<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
-	// 				// 			<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
-	// 				// 		  </span>
-	// 				// 	  </i>
-	// 				// 	</div>
-	// 				//   </div>
-	// 				// <div class="w-100 float-left col-sm-12 p-0">
-	// 				//   <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="https://pitchar.io/storage/${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
-	// 				// </div>
+  // 				// 			<div class="w-100 float-left">Crop</div>
+  // 				// 			<div data-typ="m" class="w-100 float-left edit_info" data-name="${media.name}" data-tags="${media.tags}" data-pid='${media.id}' onclick='editAssetId(this)' data-toggle="modal">Edit</div>
+  // 				// 			<h5 onclick='delimg(this)' data-pid='${media.id}' class="w-100 float-left pt-2"  style="border-top: 1px solid #ccc"><small>Delete</small></h5>
+  // 				// 		  </span>
+  // 				// 	  </i>
+  // 				// 	</div>
+  // 				//   </div>
+  // 				// <div class="w-100 float-left col-sm-12 p-0">
+  // 				//   <img class="w-100 pt-4 pb-4 " data-type="${media.type}" data-source="https://pitchar.io/storage/${media.video}" src="${media.thumbnail}" id="img${i}" alt="Chania" style="height: 150px" onclick="pushVid(this);">
+  // 				// </div>
 
-	// 			  // </div>
-	// 				// `;
+  // 			  // </div>
+  // 				// `;
   //         if ((media.type == "2D" || media.type == "360") && media.video) {
   //           $(elem).appendTo("#galleryimgs");
   //           document.getElementById("galleryvids").appendChild(div);
@@ -3117,45 +3118,137 @@ async function fetchAudio() {
 
   for (var i = 0; i < data.length; i++) {
     var asset = data[i];
-    var src = asset.audio;
-    console.log("audio", asset);
-    if (asset.type !== "audio" || !src) continue;
-    console.log("audio", asset);
-    src = `https://pitchar.io/storage/${asset.audio}`;
-    console.log(asset);
-    var imgid = `uploadsAud${i}`;
-    var dropdownId = `myDropdownAud${i}`;
-    var inputId = `inputAud${i}`;
-    var checkId = `rename__checkAud${i}`;
-    asset.name = asset.name.toUpperCase();
-    var format = src.slice(-3).toUpperCase();
-    var type = `${asset.type}`;
-    console.log(type);
+    // var src = asset.audio;
+    // console.log("audio", asset);
+    // if (asset.type !== "audio" || !src) continue;
+    // console.log("audio", asset);
+    // src = `https://pitchar.io/storage/${asset.audio}`;
+    // console.log(asset);
+    // var imgid = `uploadsAud${i}`;
+    // var dropdownId = `myDropdownAud${i}`;
+    // var inputId = `inputAud${i}`;
+    // var checkId = `rename__checkAud${i}`;
+    // asset.name = asset.name.toUpperCase();
+    // var format = src.slice(-3).toUpperCase();
+    // var type = `${asset.type}`;
+    // console.log(type);
 
-    var elem = `
-          <div class="upload__wrap">
-            <div class="dropdown">
-              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
-                <i style="color: black" class="fa fa-ellipsis-v"></i>
-              </button>
-              <div id="${dropdownId}" class="dropdown-content">
-                <div class="d-flex align-items-center">
-                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
-                </div>
-                <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
-                <hr style="margin: .5em 0;">
-                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
-                <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
-              </div>
-            </div>
-            <div
-              onclick="clickVid(${imgid})"
-            >
-              <img data-source="${src}" src="https://pitchar.io/storage/${asset.thumbnail}" id="${imgid}" onclick="pushAud(this);" />
-            </div>
-          </div>`;
+    // var elem = `
+    //       <div class="upload__wrap">
+    //         <div class="dropdown">
+    //           <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+    //             <i style="color: black" class="fa fa-ellipsis-v"></i>
+    //           </button>
+    //           <div id="${dropdownId}" class="dropdown-content">
+    //             <div class="d-flex align-items-center">
+    //               <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${asset.name}"/> <i id="${checkId}" onclick="editVideoName(${asset.id}, ${inputId}, ${checkId})" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+    //             </div>
+    //             <small style="color: gray; padding: 0 9px;">FILE TYPE: ${format}</small> <br>
+    //             <hr style="margin: .5em 0;">
+    //             <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+    //             <a onclick="delVideo(${asset.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
+    //           </div>
+    //         </div>
+    //         <div
+    //           onclick="clickVid(${imgid})"
+    //         >
+    //           <img data-source="${src}" src="https://pitchar.io/storage/${asset.thumbnail}" id="${imgid}" onclick="pushAud(this);" />
+    //         </div>
+    //       </div>`;
+    var def_icon =
+      "https://i.pinimg.com/564x/9c/02/99/9c0299159f127212cb8c37531b99bd2a.jpg";
+    var node = document.createElement("img");
+    node.src = def_icon;
+    node.width = 125;
+    node.height = 125;
+    // node.id = 'img' + i;
+    node.style = "margin:4px;";
+    // node.setAttribute('onclick', 'pushAud(this);');
+    // node.setAttribute('class', 'image');
+    // node.setAttribute('data-source', audResults[i].previews['preview-lq-mp3']);
+    var div = document.createElement("div");
+    div.setAttribute("class", "hbox");
+    div.appendChild(node);
+    var overlay = document.createElement("div");
+    overlay.setAttribute("class", "options");
+    // var del = document.createElement('button');
+    // del.setAttribute('onclick', 'delaud(this)');
+    // del.innerHTML = "<i class='fa fa-trash'></i>";
+    // overlay.appendChild(del);
+    div.appendChild(node);
+    div.appendChild(overlay);
+    // document.getElementById("fsImgs").appendChild(div);
+    // $(div).appendTo(".free_sound");
+    // if (i < 6) {
+    //   $(div).appendTo(".FS_audio");
+    // }
+    // //if(media.type=='audio')
+    //document.getElementById("galleryauds").appendChild(div);
+    //perm=i;
 
-    $(elem).appendTo("#unsplash_thumb_upload");
+    var audioPrev = document.createElement("button");
+    audioPrev.setAttribute(
+      "data-source",
+      `https://pitchar.io/storage/${asset.audio}`
+    );
+    // audioPrev.id = audResults[i].name;
+    audioPrev.classList.add("play__audio");
+    audioPrev.setAttribute("onclick", "previewAudio(this);");
+    audioPrev.innerHTML = "<i class='fa fa-play'></i>";
+    overlay.appendChild(audioPrev);
+    div.appendChild(node);
+    div.appendChild(overlay);
+
+    // var audioLoop = document.createElement('select');
+    // audioLoop.id = 'audioLoop' + i;
+    // var opt1 = document.createElement('option');
+    // opt1.value = 'play once';
+    // opt1.innerHTML = 'play once';
+    // audioLoop.appendChild(opt1);
+    // var opt2 = document.createElement('option');
+    // opt2.value = 'repeat';
+    // opt2.innerHTML = 'repeat';
+    // audioLoop.appendChild(opt2);
+    // audioLoop.setAttribute('data-loop', false);
+
+    var repeat = document.createElement("img");
+    repeat.src = "./repeat.png";
+    repeat.classList.add("repeat__btn");
+    repeat.id = `repeatUpload${i}`;
+    repeat.setAttribute("onclick", "toogleLoop(this, true)");
+
+    var playOnce = document.createElement("img");
+    playOnce.src = "./repeat.png";
+    playOnce.id = "play_once";
+    playOnce.setAttribute("onclick", "toogleLoop(this, false)");
+    playOnce.classList.add("play-once__btn");
+
+    var addToScene = document.createElement("div");
+    addToScene.id = "audioLoop" + i;
+    addToScene.classList.add("add-to-scene__btn");
+
+    var hr = document.createElement("hr");
+    var addToSceneBtn = document.createElement("button");
+    addToSceneBtn.innerHTML = "ADD TO SCENE";
+    addToSceneBtn.id = "img" + i;
+    addToSceneBtn.setAttribute("onclick", `pushAud(this, ${repeat.id});`);
+    addToSceneBtn.setAttribute("class", "image");
+    addToSceneBtn.setAttribute(
+      "data-source",
+      `https://pitchar.io/storage/${asset.audio}`
+    );
+
+    addToScene.appendChild(hr);
+    addToScene.appendChild(addToSceneBtn);
+
+    overlay.appendChild(repeat);
+    overlay.appendChild(playOnce);
+    overlay.appendChild(addToScene);
+
+    div.appendChild(node);
+    div.appendChild(overlay);
+
+    $("#unsplash_thumb_upload").append(div);
     // }
   }
   // for (var i = 0; i < data.length; i++) {
@@ -3237,7 +3330,7 @@ function fetchMarkers() {
         //         )}<span></p>
         //       </div>
         //   `;
-          var elem = `
+        var elem = `
           <div class="upload__wrap">
             <div class="dropdown">
               <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
@@ -3474,7 +3567,7 @@ $(".template_asset").click(async function () {
   for (var i = 0; i < data.length; i++) {
     var asset = data[i];
     var src = asset.video;
-    console.log('assets', asset);
+    console.log("assets", asset);
     // if (asset.video) {
     //   src = `https://pitchar.io/storage/${asset.video}`;
     // } else if (asset.audio) {
@@ -3572,5 +3665,4 @@ $(".template_asset").click(async function () {
     $(elem).appendTo("#unsplash_thumb_upload");
     // }
   }
-
 });
