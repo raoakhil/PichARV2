@@ -310,6 +310,29 @@ function delimg(id) {
   });
 }
 
+function delMarker(id) {
+  $.ajax({
+    method: "DELETE",
+    url: `https://pitchar.io/api/v1/markers/${id}`,
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    success(data) {
+      console.log(data);
+      $("#delete_alert").show();
+      setTimeout(() => {
+        $("#delete_alert").hide();
+      }, 4000);
+      fetchUplodsPics();
+      fetchUploadMedia();
+      fetchMarkers();
+      // $(e).closest(".img-panel").hide();
+      // e.parentNode.parentNode.style.display = 'none';
+    },
+  });
+}
+
 function editimg(e) {
   console.log(e.parentNode.parentNode.childNodes[0].id);
 
@@ -760,10 +783,11 @@ function editNameAsset(id, newName, checkIcon, assetType) {
     name: newName.value,
     // type: "image",
   };
+  const assetTypeUpdate = assetType === 'marker' ? 'markers' : 'assets'
   // if (edittype == "a") {
   $.ajax({
     method: "PUT",
-    url: `https://pitchar.io/api/v1/assets/${id}`,
+    url: `https://pitchar.io/api/v1/${assetTypeUpdate}/${id}`,
     data: JSON.stringify(assetData),
     processData: false,
     contentType: false,
@@ -3191,25 +3215,56 @@ function fetchMarkers() {
       for (var i = 0; i < markers.length; i++) {
         marker = markers[i];
         let markerId = `markerimg${i}`;
-        var elem = `
-              <div
-                class="img__wrap"
-                onclick="clickMarker(${markerId})"
-              >
-                <img
-                  src="https://pitchar.io/storage/${marker.marker}"
-                  data-markerid="${marker.id}"
-                  id="${markerId}"
-                  onclick="selectMarker(this)"
-                  alt="Chania"
-                  crossorigin="anonymous"
-                />
-                <p class="img__description"><span>${marker.name.slice(
-                  0,
-                  10
-                )}<span></p>
+        let dropdownId = `myDropdownMarker${i}`;
+        let inputId = `inputMakrer${i}`;
+        let checkId = `rename__checkMarker${i}`;
+        // var elem = `
+        //       <div
+        //         class="img__wrap"
+        //         onclick="clickMarker(${markerId})"
+        //       >
+        //         <img
+        //           src="https://pitchar.io/storage/${marker.marker}"
+        //           data-markerid="${marker.id}"
+        //           id="${markerId}"
+        //           onclick="selectMarker(this)"
+        //           alt="Chania"
+        //           crossorigin="anonymous"
+        //         />
+        //         <p class="img__description"><span>${marker.name.slice(
+        //           0,
+        //           10
+        //         )}<span></p>
+        //       </div>
+        //   `;
+          var elem = `
+          <div class="upload__wrap">
+            <div class="dropdown">
+              <button onclick="myFunction(${dropdownId})" class="dropbtn upload__description">
+                <i style="color: black" class="fa fa-ellipsis-v"></i>
+              </button>
+              <div id="${dropdownId}" class="dropdown-content">
+                <div class="d-flex align-items-center">
+                  <input class="rename__input" id="${inputId}" readonly="true" style="padding: 0 9px; border: 0; width: 100%;" value="${marker.name}"/> <i id="${checkId}" onclick="editNameAsset(${marker.id}, ${inputId}, ${checkId}, 'marker')" style="opacity: 0; padding-right: 8px;" class="fas fa-check"></i>
+                </div>
+                <hr style="margin: .5em 0;">
+                <a onclick="renameAsset(${inputId}, ${checkId})" ><i style="padding-right: 4px" class="fas fa-pen"></i> <b>RENAME</b></a>
+                <a onclick="delMarker(${marker.id})" ><i style="padding-right: 6.2px" class="fas fa-trash"></i> <b>DELETE</b></a>
               </div>
-          `;
+            </div>
+            <div
+              onclick="clickMarker(${markerId})"
+            >
+              <img
+                src="https://pitchar.io/storage/${marker.marker}"
+                data-markerid="${marker.id}"
+                id="${markerId}"
+                onclick="selectMarker(this)"
+                alt="Chania"
+                crossorigin="anonymous"
+              />
+            </div>
+          </div>`;
         $("#unsplash_thumb_marker").append(elem);
       }
       setTimeout(() => {
