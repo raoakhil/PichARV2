@@ -1660,13 +1660,13 @@ $(".audio_assets").click(function () {
       // audioLoop.setAttribute('data-loop', false);
 
       var repeat = document.createElement("img");
-      repeat.src = "./repeat.png";
+      repeat.src = "./play_repeat.png";
       repeat.classList.add("repeat__btn");
       repeat.id = `fsrepeat${i}`;
       repeat.setAttribute("onclick", "toogleLoop(this, true)");
 
       var playOnce = document.createElement("img");
-      playOnce.src = "./repeat.png";
+      playOnce.src = "./play_once.png";
       playOnce.id = "play_once";
       playOnce.setAttribute("onclick", "toogleLoop(this, false)");
       playOnce.classList.add("play-once__btn");
