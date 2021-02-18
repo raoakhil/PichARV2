@@ -4,10 +4,12 @@ var start1 =
   "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>" +
   "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>" +
   "<script src='https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.14/dist/aframe-orbit-controls-component.min.js'></script><script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script><script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script></head>" +
+  `<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"></meta>` +
   "<body style='margin : 0px; overflow: hidden;'>" +
-  "<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam;debugUIEnabled: false;'><a-entity position='0 0 0' id='imglogo'></a-entity>";
+  "<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam;debugUIEnabled: false;'> <a-plane id='target' position='0 0 0' rotation='-90 0 0' width='4' height='4' color='#7BC8A4' material='opacity: 0'></a-plane><a-entity position='0 0 0' id='imglogo'></a-entity>";
 var marker =
-  "<a-marker-camera  orbit-controls='target: #imglogo;invertZoom:true;minPolarAngle:0.75;maxPolarAngle:1.5;enableKeys:false;' preset='hiro'>";
+  "<a-marker-camera  orbit-controls='autoRotate: false;target: #target;enableDamping: true;dampingFactor: 0.125;rotateSpeed:0.25;minDistance:3;maxDistance:100'"
+  // " orbit-controls='target: #imglogo;invertZoom:true;minPolarAngle:0.75;maxPolarAngle:1.5;enableKeys:false;' preset='hiro'>";
 var linkmarker = " ";
 var mid3d = " ";
 var mid2d = "</a-marker-camera ></a-scene>";
@@ -40,7 +42,7 @@ var markerId;
 if (experienceId) fetchExperience();
 
 function readFile() {
-  showEntities();
+  // showEntities();
   console.log(start1 + marker + mid3d + mid2d + end);
   var file = start1 + marker + mid3d + mid2d + end1 + end;
   return file;
@@ -79,7 +81,7 @@ function sharelnk(e) {
     let form = document.querySelector("#form0");
     let formData = new FormData(form);
     formData.append("name", exptxt.name);
-    formData.append("marker_id", markerId);
+    formData.append("marker_id", markerId || 0);
     console.log(exptxt);
     $.ajax({
       method: "POST",
@@ -170,8 +172,9 @@ function selectMarker(e) {
         "<html><head><script src='https://aframe.io/releases/1.0.0/aframe.min.js'></script><script src='https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js'></script>" +
         "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>" +
         "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script></head>" +
+        `<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"></meta>` +
         "<body style='margin : 0px; overflow: hidden;'>" +
-        "<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam;debugUIEnabled: false;'>";
+        "<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam;debugUIEnabled: false;'> <a-plane id='target' position='0 0 0' rotation='-90 0 0' width='4' height='4' color='#7BC8A4' material='opacity: 0'></a-plane>";
       end1 =
         "<div id='splashscreen' style='background-color: white; height:100% ; width:100%; position:absolute; top:0px; left:0px; z-index:4;'>" +
         "<img src='https://pitchar.io/storage/" + data.marker +"' width='40%' style='margin: 10px;float:left;'>" +
@@ -191,7 +194,7 @@ function selectMarker(e) {
       // marker =
       //   "<a-marker preset='pattern' type='pattern' url=" + "'" + data.patte +"'" +
       //   ">";
-      marker = `<a-marker preset='pattern' type='pattern' url="https://pitchar.io/storage/${data.pattern}"`
+      marker = `<a-marker orbit-controls='autoRotate: false;target: #target;enableDamping: true;dampingFactor: 0.125;rotateSpeed:0.25;minDistance:3;maxDistance:100' preset='pattern' type='pattern' url="https://pitchar.io/storage/${data.pattern}"`
       var logo = document.getElementById("imglogo");
       logo.setAttribute("src", "https://pitchar.io/storage/" + data.marker);
       //	logo.object3D.position.z = -1.5;
@@ -283,6 +286,7 @@ function markerless(e) {
     " <a-scene embedded arjs='debugUIEnabled: false;' vr-mode-ui='enabled: false'> ";
   marker = "";
   mid2d = "</a-scene>";
+  markerId = -1;
   var logo = document.getElementById("imglogo");
   logo.setAttribute("src", "#");
   //	logo.object3D.position.z = -1.5;
@@ -298,14 +302,16 @@ function fetchExperience() {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    success(data) {
-      console.log(data)
-      if (!data.data) return;
+    success({ data }) {
+      console.log('exp', data)
+      // if (!data.data) return;
       var dom = document.createElement("html");
       var scene = document.getElementById("perswin");
-      dom.innerHTML = data.data.experience;
+      dom.innerHTML = data.experience;
       var els = dom.querySelectorAll(".exp");
       var els2 = dom.querySelectorAll(".exp2");
+      console.log(dom);
+      console.log(els);
       console.log(els2);
       for (var i = 0; i < els.length; i++) {
         scene.appendChild(els[i]);
@@ -326,7 +332,7 @@ function editExperience(exptxt) {
       Accept: "application/json",
       Authorization: "Bearer " + accessToken,
     },
-    data: { experience: exptxt, marker_id: markerId, name: "experience" },
+    data: { experience: exptxt, marker_id: markerId || 0, name: "experience" },
     success(data) {
       console.log(data);
       const url = `https://pitchar.io/storage/${data.data.share_experience}`;

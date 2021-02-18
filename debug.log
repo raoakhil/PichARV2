@@ -329,3 +329,5 @@
 [0928/085356.561:ERROR:crash_report_database_win.cc(428)] unexpected header
 [0929/092956.032:ERROR:crash_report_database_win.cc(428)] unexpected header
 [1019/085033.367:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[0214/094311.804:ERROR:registration_protocol_win.cc(102)] CreateFile: The system cannot find the file specified. (0x2)
+[0214/094337.379:ERROR:registration_protocol_win.cc(102)] CreateFile: The system cannot find the file specified. (0x2)
